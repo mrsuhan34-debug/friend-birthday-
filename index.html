@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday! 🎂</title>
+  <!-- Google Fonts & Canvas Confetti -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #ffeef2, #ffd6e0, #ffb3c6);
+      min-height: 100vh;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Music Button */
+    .music-btn {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      background: #ff4d6d;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 77, 109, 0.35);
+      z-index: 100;
+      transition: transform 0.2s;
+    }
+    .music-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-top: 40px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      color: #c9184a;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .typing-text {
+      font-size: 1.15rem;
+      color: #590d22;
+      min-height: 28px;
+      font-weight: 500;
+    }
+
+    /* Celebration Button */
+    .blast-btn {
+      background: linear-gradient(135deg, #ff758f, #ff4d6d);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 20px 0 35px;
+      box-shadow: 0 6px 18px rgba(255, 77, 109, 0.4);
+      transition: all 0.25s ease;
+    }
+    .blast-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(255, 77, 109, 0.5);
+    }
+
+    /* Photo Gallery */
+    .gallery-title {
+      font-size: 1.4rem;
+      color: #800f2f;
+      margin-bottom: 16px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 35px;
+    }
+
+    .photo-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+    }
+    .photo-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .photo-card p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    /* Birthday Letter Card */
+    .letter-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+      text-align: left;
+      line-height: 1.7;
+      color: #444;
+      backdrop-filter: blur(8px);
+    }
+
+    .letter-card h3 {
+      color: #c9184a;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio Element -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Music Toggle Button -->
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵 Play Music</button>
+
+  <div class="container">
+    <div class="hero">
+      <h1 id="headline">Happy Birthday, [Name]! 🎉</h1>
+      <p class="typing-text" id="typewriter"></p>
+      <button class="blast-btn" onclick="fireConfetti()">Click For A Surprise! 🎈</button>
+    </div>
+
+    <!-- Photo Gallery -->
+    <h2 class="gallery-title">Memories & Smiles 📸</h2>
+    <div class="gallery">
+      <div class="photo-card">
+        <img src="photo1.jpg" alt="Memory 1" />
+        <p>Best times together ✨</p>
+      </div>
+      <div class="photo-card">
+        <img src="photo2.jpg" alt="Memory 2" />
+        <p>Unfiltered crazy moments 😂</p>
+      </div>
+      <div class="photo-card">
+        <img src="photo3.jpg" alt="Memory 3" />
+        <p>Always got your back 🤝</p>
+      </div>
+    </div>
+
+    <!-- Heartfelt Message -->
+    <div class="letter-card">
+      <h3>Dear Bestie, ✨</h3>
+      <p>
+        Wishing you the happiest birthday! Thank you for always listening to my endless talks, 
+        supporting me in everything, and being the truest friend. May this year bring you all the 
+        success, joy, and laughter you deserve. Keep shining always! 🌸
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Audio Controller
+    const audio = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause();
+        musicBtn.innerText = '🎵 Play Music';
+      } else {
+        audio.play().catch(() => {});
+        musicBtn.innerText = '⏸ Pause Music';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    // Confetti Effect
+    function fireConfetti() {
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      if (!isPlaying) {
+        toggleMusic();
+      }
+    }
+
+    // Typing Effect
+    const message = "To the best friend anyone could ever ask for... ✨";
+    let index = 0;
+    function typeEffect() {
+      if (index < message.length) {
+        document.getElementById("typewriter").innerHTML += message.charAt(index);
+        index++;
+        setTimeout(typeEffect, 60);
+      }
+    }
+
+    window.onload = () => {
+      typeEffect();
+      fireConfetti();
+    };
+  </script>
+</body>
+</html>
