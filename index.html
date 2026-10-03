@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=no" />
   <title>Happy Birthday! ✨</title>
-  <!-- Google Fonts & Libraries -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@1,600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -13,637 +13,578 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      -webkit-tap-highlight-color: transparent;
     }
 
-    body {
-      background: #0d0e12;
-      color: #fff;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
     }
 
-    /* SECTION 1: Vintage Broadway Banner */
-    .broadway-curtain {
-      background: radial-gradient(circle, #68131d 0%, #2b0408 100%);
-      padding: 50px 20px;
-      text-align: center;
-      border-bottom: 3px solid #d4af37;
-      position: relative;
-    }
-    .curtain-ribbon {
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      letter-spacing: 4px;
-      color: #f7d070;
-      text-transform: uppercase;
-      margin-bottom: 15px;
-    }
-    .broadway-title {
-      font-family: 'Cinzel', serif;
-      font-size: 2.8rem;
-      letter-spacing: 3px;
-      color: #fff4d1;
-      text-shadow: 0 0 20px rgba(255, 235, 160, 0.4);
-    }
-    .curtain-sub {
-      font-family: 'Caveat', cursive;
-      font-size: 1.4rem;
-      color: #fca311;
-      margin-top: 5px;
-    }
-
-    /* SECTION 2: 11 Candle Burn Screen */
-    .hero-burn-section {
-      min-height: 90vh;
-      position: relative;
-      display: flex;
+    /* Screen Management */
+    .screen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: #000;
       overflow: hidden;
+      z-index: 10;
     }
-    .hero-bg-photo {
+    .screen.active {
+      display: flex;
+    }
+
+    /* ========================================================
+       SCREEN 1: THEATRE CURTAIN OPENING
+       ======================================================== */
+    #screen-curtain {
+      background: #0b0204;
+      cursor: pointer;
+    }
+    .curtain-wrapper {
       position: absolute;
       inset: 0;
-      background: url('photo1.jpg') center/cover no-repeat;
-      filter: brightness(0.35) blur(3px);
-      opacity: 0;
-      transition: opacity 1.5s ease;
-      z-index: 1;
+      display: flex;
+      z-index: 20;
     }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
+    .curtain-half {
+      width: 50%;
+      height: 100%;
+      background: repeating-linear-gradient(90deg, #780016, #780016 35px, #4a000e 70px);
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+      transition: transform 1.6s cubic-bezier(0.77, 0, 0.175, 1);
     }
+    .curtain-half.left { transform-origin: left center; }
+    .curtain-half.right { transform-origin: right center; }
     
-    /* 11 Candle Number with Burn Effect */
-    .candle-number {
+    .curtain-wrapper.open .curtain-half.left {
+      transform: translateX(-100%);
+    }
+    .curtain-wrapper.open .curtain-half.right {
+      transform: translateX(100%);
+    }
+
+    .curtain-banner {
+      position: absolute;
+      z-index: 25;
+      text-align: center;
+      color: #ffd166;
+      transition: opacity 0.5s ease;
+    }
+    .curtain-banner h2 {
       font-family: 'Cinzel', serif;
-      font-size: 8rem;
-      font-weight: 800;
-      color: #ffffff;
+      letter-spacing: 5px;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .curtain-banner h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      letter-spacing: 4px;
+      color: #fff3b0;
+      text-shadow: 0 0 25px rgba(255, 243, 176, 0.6);
+    }
+    .tap-curtain-hint {
+      margin-top: 25px;
+      font-size: 0.9rem;
+      color: #ff9e00;
+      animation: pulseText 1.2s infinite alternate;
+    }
+
+    /* ========================================================
+       SCREEN 2: REALISTIC BURNING "11"
+       ======================================================== */
+    #screen-burn {
+      background: #000;
+    }
+    .burn-box {
+      text-align: center;
       cursor: pointer;
+      position: relative;
+    }
+    .burn-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 8.5rem;
+      font-weight: 900;
+      color: #f7f7f7;
       position: relative;
       display: inline-block;
-      text-shadow: 0 0 35px rgba(255, 140, 0, 0.8), 0 0 60px rgba(255, 69, 0, 0.5);
-      transition: transform 0.3s;
-    }
-    .flame-tip {
-      position: absolute;
-      top: -20px;
-      left: 45%;
-      width: 20px;
-      height: 35px;
-      background: #ffaa00;
-      border-radius: 50% 50% 20% 20%;
-      box-shadow: 0 0 25px #ff6600, 0 0 45px #ffdd00;
-      animation: flicker 0.15s infinite alternate;
-    }
-    @keyframes flicker {
-      0% { transform: scale(1) rotate(-2deg); }
-      100% { transform: scale(1.15) rotate(2deg); }
-    }
-    .candle-number.burning {
-      animation: meltBurn 2.2s forwards;
-    }
-    @keyframes meltBurn {
-      0% { filter: brightness(1.5); }
-      40% { filter: contrast(2) drop-shadow(0 0 40px #ff3300); transform: scale(1.05); }
-      80% { opacity: 0.8; transform: scaleY(0.4) translateY(80px); filter: blur(4px); }
-      100% { opacity: 0; transform: scaleY(0) translateY(120px); display: none; }
-    }
-    .tap-hint {
-      color: #ff9e00;
-      margin-top: 15px;
-      font-size: 0.95rem;
-      letter-spacing: 2px;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(255,255,255,0.2);
     }
 
-    /* Floating Balloons & Birthday Reveal */
-    .reveal-header {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 1s ease;
-      display: none;
+    /* Realistic Ash & Fire Burn effect */
+    .burn-title.on-fire {
+      animation: burnPaper 2.2s forwards ease-in-out;
     }
-    .reveal-header.show {
-      opacity: 1;
-      transform: translateY(0);
+
+    @keyframes burnPaper {
+      0% {
+        filter: brightness(1) drop-shadow(0 0 0px #ff3300);
+      }
+      30% {
+        color: #ff5400;
+        filter: brightness(2) drop-shadow(0 -15px 30px #ff3300);
+      }
+      65% {
+        color: #222;
+        filter: contrast(3) drop-shadow(0 -30px 45px #ff7700);
+        transform: scale(0.96) skewX(-2deg);
+        clip-path: polygon(0 40%, 100% 25%, 100% 100%, 0 100%);
+      }
+      90% {
+        opacity: 0.4;
+        transform: scale(0.85) translateY(20px);
+        filter: blur(4px);
+        clip-path: polygon(0 80%, 100% 75%, 100% 100%, 0 100%);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.7) translateY(40px);
+        visibility: hidden;
+      }
+    }
+
+    /* Sparkles & Ash */
+    .ember {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #ffaa00;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ff3300, 0 0 20px #ffaa00;
+      pointer-events: none;
+      animation: riseEmber 1.5s infinite ease-out;
+    }
+    @keyframes riseEmber {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--x), -160px) scale(0); opacity: 0; }
+    }
+
+    /* ========================================================
+       SCREEN 3: CLEAN SPIRAL FILMSTRIP COLLAGE
+       ======================================================== */
+    #screen-collage {
+      background: #ffffff;
+      color: #111;
+      padding: 30px 20px;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+    .collage-header {
+      margin-top: 25px;
+      text-align: left;
+      width: 100%;
+      max-width: 500px;
+    }
+    .collage-header h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #111;
+    }
+    .collage-header span {
+      color: #f77f00;
       display: block;
     }
-    .floating-balloon {
-      position: absolute;
-      font-size: 3rem;
-      animation: floatUp 4s infinite linear;
-      z-index: 2;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(100vh); opacity: 1; }
-      100% { transform: translateY(-20vh); opacity: 0; }
-    }
-
-    /* Spotify Bottom Mini Player */
-    .spotify-bar {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(18, 18, 18, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(14px);
-      padding: 8px 16px;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      z-index: 999;
-      width: 90%;
-      max-width: 380px;
-    }
-    .spotify-cover {
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-    .spotify-info {
-      flex: 1;
-      text-align: left;
-    }
-    .spotify-song {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #fff;
-    }
-    .spotify-artist {
-      font-size: 0.7rem;
-      color: #b3b3b3;
-    }
-    .play-pause-btn {
-      background: none;
-      border: none;
-      font-size: 1.3rem;
-      color: #1db954;
-      cursor: pointer;
-    }
-
-    /* SECTION 3: Spiral Filmstrip Collage (Black & White to Color) */
-    .section-collage {
-      background: #faf8f5;
-      color: #111;
-      padding: 80px 20px;
-      text-align: center;
-      overflow: hidden;
-    }
-    .section-collage h2 {
-      font-size: 2.2rem;
-      font-family: 'Playfair Display', serif;
-      margin-bottom: 8px;
-    }
-    .collage-sub {
+    .collage-header p {
       color: #777;
       font-size: 0.95rem;
-      margin-bottom: 40px;
+      margin-top: 10px;
     }
-    .spiral-track {
+    .spiral-grid {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      gap: 14px;
-      max-width: 780px;
-      margin: 0 auto;
+      justify-content: center;
+      gap: 12px;
+      margin: 35px 0 25px;
+      max-width: 480px;
     }
-    .spiral-photo {
-      width: 110px;
-      height: 140px;
+    .spiral-card {
+      width: 100px;
+      height: 130px;
+      border-radius: 8px;
       object-fit: cover;
-      border-radius: 12px;
       filter: grayscale(100%);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-      transition: all 0.4s ease;
-      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       border: 3px solid #fff;
     }
-    .spiral-photo:hover, .spiral-photo:active {
+    .spiral-card:active, .spiral-card:hover {
       filter: grayscale(0%);
-      transform: scale(1.1) rotate(2deg);
-      box-shadow: 0 12px 24px rgba(255, 77, 109, 0.35);
+      transform: scale(1.12) rotate(-2deg);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
       z-index: 10;
     }
 
-    /* SECTION 4: Draggable Board & Butterfly */
-    .board-section {
-      background: #15161e;
-      padding: 70px 20px;
-      text-align: center;
-      position: relative;
-      min-height: 520px;
-      overflow: hidden;
-    }
-    .board-title {
-      font-size: 1.8rem;
-      color: #ff9ebb;
-      margin-bottom: 25px;
-    }
-    .draggable-pin {
-      position: absolute;
-      background: #fff;
-      padding: 8px 8px 20px;
-      border-radius: 8px;
-      cursor: grab;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      width: 125px;
-      user-select: none;
-      touch-action: none;
-    }
-    .draggable-pin img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 6px;
-      pointer-events: none;
-    }
-    .pin-label {
-      color: #333;
-      font-family: 'Caveat', cursive;
-      font-size: 1.1rem;
-      margin-top: 6px;
-    }
-    .butterfly {
-      font-size: 2.2rem;
-      cursor: pointer;
-      position: absolute;
-      animation: flutter 3s infinite alternate ease-in-out;
-      z-index: 50;
-    }
-    @keyframes flutter {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(40px, -30px) rotate(15deg); }
-      100% { transform: translate(-20px, -50px) rotate(-10deg); }
-    }
-    .butterfly-dialog {
-      background: rgba(255, 255, 255, 0.95);
-      color: #c9184a;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      position: absolute;
-      display: none;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      z-index: 51;
-    }
-
-    /* SECTION 5: 4-Page Spiral Scrapbook */
-    .scrapbook-section {
-      background: #e9e5dc;
-      color: #222;
-      padding: 80px 16px;
-      text-align: center;
-    }
-    .notebook {
-      max-width: 480px;
-      margin: 0 auto;
-      background: #fffdfa;
-      border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.18);
-      border-left: 14px solid #3d3a37;
-      padding: 24px;
-      min-height: 380px;
-      position: relative;
-    }
-    .notebook-page {
-      display: none;
-      animation: fadeIn 0.4s ease;
-    }
-    .notebook-page.active {
-      display: block;
-    }
-    .scrap-sticker {
-      position: absolute;
-      top: 12px;
-      right: 15px;
-      font-size: 2rem;
-    }
-    .page-nav-btns {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 25px;
-    }
-    .scrap-btn {
-      background: #3d3a37;
+    /* Next floating button */
+    .next-btn {
+      background: #111;
       color: #fff;
       border: none;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
+      margin: 20px 0 40px;
     }
 
-    /* SECTION 6: 3D Galaxy World */
-    .galaxy-section {
-      background: #040508;
-      padding: 80px 20px;
-      text-align: center;
-      overflow: hidden;
+    /* ========================================================
+       SCREEN 4: DRAGGABLE POLAROIDS & BUTTERFLY CANVAS
+       ======================================================== */
+    #screen-board {
+      background: #ebe7df;
+      touch-action: none;
     }
-    .sphere-container {
-      width: 280px;
-      height: 280px;
-      margin: 40px auto;
-      perspective: 800px;
-    }
-    .sphere {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.1s linear;
-    }
-    .sphere-item {
+    .canvas-bg-grid {
       position: absolute;
-      width: 70px;
-      height: 70px;
-      border-radius: 12px;
+      inset: 0;
+      background-image: radial-gradient(#d3cec4 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+    .drag-photo {
+      position: absolute;
+      background: #ffffff;
+      padding: 8px 8px 24px 8px;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+      cursor: grab;
+      touch-action: none;
+      width: 140px;
+      z-index: 5;
+    }
+    .drag-photo:active {
+      cursor: grabbing;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.28);
+      z-index: 50 !important;
+    }
+    .drag-photo img {
+      width: 100%;
+      height: 135px;
       object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.7);
-      box-shadow: 0 0 15px rgba(255, 117, 143, 0.5);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .drag-photo .caption {
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      color: #333;
+      margin-top: 6px;
+    }
+    .heart-tape {
+      position: absolute;
+      top: -12px;
+      left: 45%;
+      font-size: 1.2rem;
     }
 
-    /* SECTION 7: iPhone Chat UI */
-    .chat-section {
-      background: #090a0f;
-      padding: 80px 20px 120px;
-      display: flex;
-      justify-content: center;
+    /* Fluttering Butterflies */
+    .fly-butterfly {
+      position: absolute;
+      font-size: 2.2rem;
+      cursor: pointer;
+      z-index: 60;
+      animation: floatWings 3s infinite alternate ease-in-out;
     }
-    .iphone {
-      width: 100%;
-      max-width: 360px;
-      background: #000;
+    @keyframes floatWings {
+      0% { transform: translate(0, 0) rotate(5deg); }
+      50% { transform: translate(25px, -20px) rotate(-10deg) scale(1.05); }
+      100% { transform: translate(-20px, -45px) rotate(15deg); }
+    }
+    .butterfly-popup {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #ffd166;
+      color: #a53860;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 12px 22px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      display: none;
+      z-index: 100;
+      text-align: center;
+      width: 85%;
+      max-width: 380px;
+    }
+
+    /* Fixed Spotify Mini-Player */
+    .spotify-pill {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(18, 18, 18, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
       border-radius: 40px;
-      border: 3px solid #333;
-      padding: 20px 16px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-      position: relative;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 90%;
+      max-width: 340px;
+      z-index: 999;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
     }
-    .dynamic-island {
-      width: 90px;
-      height: 22px;
-      background: #111;
-      border-radius: 20px;
-      margin: 0 auto 15px;
+    .spotify-pill img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: cover;
     }
-    .chat-bubble {
-      background: #0b93f6;
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 20px 20px 4px 20px;
-      font-size: 0.95rem;
-      line-height: 1.5;
+    .spotify-titles {
+      flex: 1;
       text-align: left;
-      margin-left: 30px;
-      margin-top: 40px;
-      box-shadow: 0 4px 15px rgba(11, 147, 246, 0.3);
     }
-    .chat-time {
-      font-size: 0.7rem;
-      color: #777;
-      margin-top: 8px;
-      text-align: right;
+    .spotify-titles h4 {
+      font-size: 0.8rem;
+      color: #fff;
+    }
+    .spotify-titles p {
+      font-size: 0.65rem;
+      color: #a7a7a7;
+    }
+    .spotify-play-btn {
+      background: none;
+      border: none;
+      color: #1db954;
+      font-size: 1.2rem;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Audio -->
-  <audio id="mainAudio" loop preload="auto">
+  <!-- Audio Element -->
+  <audio id="bgMusic" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- 1. BROADWAY RETRO CURTAIN -->
-  <div class="broadway-curtain">
-    <div class="curtain-ribbon">★ SAVE THE DATE • OCTOBER 11 ★</div>
-    <h1 class="broadway-title">NOW SHOWING</h1>
-    <p class="curtain-sub">A special birthday edition, made for you</p>
+  <!-- ==========================================
+       SCREEN 1: THEATRE CURTAIN
+       ========================================== -->
+  <div class="screen active" id="screen-curtain" onclick="openCurtains()">
+    <div class="curtain-banner" id="curtainText">
+      <h2>★ SAVE THE DATE • AUGUST 11 ★</h2>
+      <h1>NOW SHOWING</h1>
+      <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: #ffbe0b; margin-top: 6px;">
+        A special birthday story, just for you
+      </p>
+      <div class="tap-curtain-hint">TAP TO OPEN STAGE 🎭</div>
+    </div>
+    <div class="curtain-wrapper" id="curtainWrap">
+      <div class="curtain-half left"></div>
+      <div class="curtain-half right"></div>
+    </div>
   </div>
 
-  <!-- 2. CANDLE BURN & SPOTIFY SECTION -->
-  <section class="hero-burn-section" id="burnSection">
-    <div class="hero-bg-photo" id="heroBg"></div>
-
-    <div class="hero-content">
-      <div id="candleHolder" onclick="burnCandle()">
-        <div class="candle-number" id="candleNum">
-          <div class="flame-tip" id="flame"></div>
-          11
-        </div>
-        <p class="tap-hint" id="burnHint">Tap to light the candle flame 🔥</p>
-      </div>
-
-      <div class="reveal-header" id="revealHeader">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #ff758f; margin-bottom: 8px;">Happy 11th Birthday! 🎂</h1>
-        <p style="color: #ddd;">May your day be filled with warm smiles and soft melodies ✨</p>
-      </div>
+  <!-- ==========================================
+       SCREEN 2: REALISTIC BURNING "11"
+       ========================================== -->
+  <div class="screen" id="screen-burn">
+    <div class="burn-box" onclick="igniteBurn()">
+      <div class="burn-title" id="burnNumber">11</div>
+      <p style="color: #ff9e00; margin-top: 25px; letter-spacing: 2px; font-size: 0.9rem;" id="burnHint">
+        TAP THE 11 TO IGNITE 🔥
+      </p>
     </div>
-  </section>
-
-  <!-- SPOTIFY MINI PLAYER -->
-  <div class="spotify-bar" id="spotifyBar">
-    <img src="photo1.jpg" class="spotify-cover" alt="Album" />
-    <div class="spotify-info">
-      <div class="spotify-song">Dandelions • Ruth B</div>
-      <div class="spotify-artist">Birthday Special Playlist</div>
-    </div>
-    <button class="play-pause-btn" onclick="toggleAudio()">▶</button>
   </div>
 
-  <!-- 3. SPIRAL FILMSTRIP COLLAGE -->
-  <section class="section-collage">
-    <h2>Happy Birthday, Sweety ✨</h2>
-    <p class="collage-sub">Hover / tap each memory to bring colors back to life</p>
-    <div class="spiral-track">
-      <img src="photo1.jpg" class="spiral-photo" alt="Memory" />
-      <img src="photo2.jpg" class="spiral-photo" alt="Memory" />
-      <img src="photo3.jpg" class="spiral-photo" alt="Memory" />
-      <img src="photo1.jpg" class="spiral-photo" alt="Memory" />
-      <img src="photo2.jpg" class="spiral-photo" alt="Memory" />
-      <img src="photo3.jpg" class="spiral-photo" alt="Memory" />
+  <!-- ==========================================
+       SCREEN 3: CLEAN SPIRAL FILMSTRIP
+       ========================================== -->
+  <div class="screen" id="screen-collage">
+    <div class="collage-header">
+      <div style="font-size: 0.8rem; letter-spacing: 3px; color: #999; margin-bottom: 4px;">AUG 11</div>
+      <h1>Happy<br>Birthday<br><span>Sweety</span></h1>
+      <p>May this year bring you closer to everything you're chasing.</p>
     </div>
-  </section>
 
-  <!-- 4. PINBOARD & BUTTERFLY -->
-  <section class="board-section" id="pinboard">
-    <h3 class="board-title">Memory Board 📌</h3>
-    <p style="color: #888; font-size: 0.85rem; margin-bottom: 25px;">Drag photos around freely & catch the butterflies!</p>
+    <div class="spiral-grid">
+      <img src="photo1.jpg" class="spiral-card" alt="Memory" />
+      <img src="photo2.jpg" class="spiral-card" alt="Memory" />
+      <img src="photo3.jpg" class="spiral-card" alt="Memory" />
+      <img src="photo1.jpg" class="spiral-card" alt="Memory" />
+      <img src="photo2.jpg" class="spiral-card" alt="Memory" />
+      <img src="photo3.jpg" class="spiral-card" alt="Memory" />
+    </div>
+
+    <button class="next-btn" onclick="goToScreen('screen-board')">Open Memory Board →</button>
+  </div>
+
+  <!-- ==========================================
+       SCREEN 4: DRAGGABLE POLAROIDS & BUTTERFLY
+       ========================================== -->
+  <div class="screen" id="screen-board">
+    <div class="canvas-bg-grid"></div>
 
     <!-- Draggable Polaroids -->
-    <div class="draggable-pin" style="top: 100px; left: 20px;">
+    <div class="drag-photo" style="top: 15%; left: 8%;">
+      <span class="heart-tape">❤️</span>
       <img src="photo1.jpg" alt="Memory" />
-      <div class="pin-label">Cutie 🌸</div>
+      <div class="caption">Cutie 🌸</div>
     </div>
-    <div class="draggable-pin" style="top: 140px; right: 25px;">
+
+    <div class="drag-photo" style="top: 25%; right: 8%;">
+      <span class="heart-tape">✨</span>
       <img src="photo2.jpg" alt="Memory" />
-      <div class="pin-label">Dream Girl ✨</div>
+      <div class="caption">Baddie 🕶️</div>
     </div>
 
-    <!-- Interactive Butterfly -->
-    <div class="butterfly" style="top: 280px; left: 45%;" onclick="catchButterfly(this, event)">🦋</div>
-    <div class="butterfly-dialog" id="butterflyMsg">"Looks like you're really good at catching butterflies! 🦋✨"</div>
-  </section>
-
-  <!-- 5. VINTAGE 4-PAGE SCRAPBOOK -->
-  <section class="scrapbook-section">
-    <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 30px;">Our Scrapbook 📖</h2>
-    <div class="notebook">
-      <div class="scrap-sticker">🎀</div>
-
-      <!-- Page 1 -->
-      <div class="notebook-page active" id="page1">
-        <h3 style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #a53860;">Page 1: The Beginning</h3>
-        <img src="photo1.jpg" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin: 12px 0;" alt="Memory" />
-        <p style="font-family: 'Caveat', cursive; font-size: 1.25rem;">"You are the star in my dark and cold nights — shining and unwavering."</p>
-      </div>
-
-      <!-- Page 2 -->
-      <div class="notebook-page" id="page2">
-        <h3 style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #a53860;">Page 2: Crazy Days</h3>
-        <img src="photo2.jpg" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin: 12px 0;" alt="Memory" />
-        <p style="font-family: 'Caveat', cursive; font-size: 1.25rem;">"May the flowers remind us why the rain was so necessary."</p>
-      </div>
-
-      <!-- Page 3 -->
-      <div class="notebook-page" id="page3">
-        <h3 style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #a53860;">Page 3: Pure Bond</h3>
-        <img src="photo3.jpg" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin: 12px 0;" alt="Memory" />
-        <p style="font-family: 'Caveat', cursive; font-size: 1.25rem;">"Always grateful to have you as my closest confidante!"</p>
-      </div>
-
-      <!-- Page 4 -->
-      <div class="notebook-page" id="page4">
-        <h3 style="font-family: 'Caveat', cursive; font-size: 1.8rem; color: #a53860;">Page 4: The Promise</h3>
-        <div style="font-size: 3rem; margin: 20px 0;">🌸✨💫</div>
-        <p style="font-family: 'Caveat', cursive; font-size: 1.4rem;">"Stay just as wonderful, kind, and radiant as you are today and always!"</p>
-      </div>
-
-      <div class="page-nav-btns">
-        <button class="scrap-btn" onclick="flipPage(-1)">← Prev</button>
-        <span id="pageIndicator" style="font-weight: 600; font-size: 0.9rem;">1 / 4</span>
-        <button class="scrap-btn" onclick="flipPage(1)">Next →</button>
-      </div>
+    <div class="drag-photo" style="top: 52%; left: 12%;">
+      <span class="heart-tape">💖</span>
+      <img src="photo3.jpg" alt="Memory" />
+      <div class="caption">Dream Girl 💫</div>
     </div>
-  </section>
 
-  <!-- 6. 3D ROTATING GALAXY -->
-  <section class="galaxy-section">
-    <h2 style="font-family: 'Playfair Display', serif; color: #fff; margin-bottom: 8px;">3D Memory Universe 🪐</h2>
-    <p style="color: #888; font-size: 0.85rem;">Drag / swipe to rotate our world of pictures</p>
-    <div class="sphere-container" id="sphereBox">
-      <div class="sphere" id="sphere">
-        <img src="photo1.jpg" class="sphere-item" style="transform: rotateY(0deg) translateZ(120px);" />
-        <img src="photo2.jpg" class="sphere-item" style="transform: rotateY(72deg) translateZ(120px);" />
-        <img src="photo3.jpg" class="sphere-item" style="transform: rotateY(144deg) translateZ(120px);" />
-        <img src="photo1.jpg" class="sphere-item" style="transform: rotateY(216deg) translateZ(120px);" />
-        <img src="photo2.jpg" class="sphere-item" style="transform: rotateY(288deg) translateZ(120px);" />
-      </div>
+    <div class="drag-photo" style="top: 48%; right: 10%;">
+      <span class="heart-tape">👑</span>
+      <img src="photo1.jpg" alt="Memory" />
+      <div class="caption">Queen 🌸</div>
     </div>
-  </section>
 
-  <!-- 7. IPHONE CHAT WISH -->
-  <section class="chat-section">
-    <div class="iphone">
-      <div class="dynamic-island"></div>
-      <div style="text-align: center; color: #888; font-size: 0.75rem; margin-bottom: 20px;">Today 12:00 AM</div>
-      
-      <div class="chat-bubble" id="chatMessage">
-        Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, and dreams coming true. Always keep shining! 💖
-      </div>
-      <div class="chat-time">Delivered • Just now</div>
+    <!-- Interactive Butterflies -->
+    <div class="fly-butterfly" style="top: 38%; left: 45%;" onclick="catchButterfly(event)">🦋</div>
+    <div class="fly-butterfly" style="top: 65%; right: 35%;" onclick="catchButterfly(event)">🦋</div>
+
+    <!-- Butterfly Dialog -->
+    <div class="butterfly-popup" id="butterMsg">
+      "Looks like you're really good at catching butterflies! 🦋✨"
     </div>
-  </section>
+  </div>
+
+  <!-- FLOATING SPOTIFY BAR -->
+  <div class="spotify-pill" id="spotifyPill" style="display: none;">
+    <img src="photo1.jpg" alt="Track" />
+    <div class="spotify-titles">
+      <h4>Dandelions</h4>
+      <p>Ruth B. • Birthday Special</p>
+    </div>
+    <button class="spotify-play-btn" onclick="toggleMusic(this)">❚❚</button>
+  </div>
 
   <script>
-    const audio = document.getElementById('mainAudio');
-    const playBtn = document.querySelector('.play-pause-btn');
+    const audio = document.getElementById('bgMusic');
 
-    // 1. Burn Candle & Reveal
-    function burnCandle() {
-      const candle = document.getElementById('candleNum');
+    function goToScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+
+    // 1. Stage Curtains Open
+    function openCurtains() {
+      document.getElementById('curtainText').style.opacity = '0';
+      document.getElementById('curtainWrap').classList.add('open');
+      
+      setTimeout(() => {
+        goToScreen('screen-burn');
+      }, 1400);
+    }
+
+    // 2. Burning Paper 11
+    let isBurned = false;
+    function igniteBurn() {
+      if (isBurned) return;
+      isBurned = true;
+      
+      const num = document.getElementById('burnNumber');
       const hint = document.getElementById('burnHint');
-      const heroBg = document.getElementById('heroBg');
-      const reveal = document.getElementById('revealHeader');
-
-      candle.classList.add('burning');
       hint.style.display = 'none';
 
-      // Play audio instantly
-      audio.play().catch(() => {});
-      playBtn.innerText = '❚❚';
+      // Start ember sparks
+      for (let i = 0; i < 25; i++) {
+        createEmber(num);
+      }
 
-      confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+      num.classList.add('on-fire');
+
+      // Start music smoothly
+      audio.play().catch(() => {});
+      document.getElementById('spotifyPill').style.display = 'flex';
+
+      confetti({ particleCount: 70, spread: 70, origin: { y: 0.6 } });
 
       setTimeout(() => {
-        heroBg.style.opacity = '1';
-        reveal.classList.add('show');
-        launchBalloons();
-      }, 1800);
+        goToScreen('screen-collage');
+      }, 2200);
     }
 
-    function toggleAudio() {
+    function createEmber(parent) {
+      const em = document.createElement('div');
+      em.className = 'ember';
+      em.style.left = (Math.random() * 80 + 10) + '%';
+      em.style.top = '60%';
+      em.style.setProperty('--x', (Math.random() * 80 - 40) + 'px');
+      parent.appendChild(em);
+    }
+
+    // 3. Butterfly Click
+    function catchButterfly(e) {
+      const msg = document.getElementById('butterMsg');
+      msg.style.display = 'block';
+      confetti({ particleCount: 40, spread: 50 });
+      setTimeout(() => {
+        msg.style.display = 'none';
+      }, 3500);
+    }
+
+    // 4. Smooth Draggable Photos
+    document.querySelectorAll('.drag-photo').forEach(photo => {
+      let isDragging = false, startX, startY, origX, origY;
+
+      const start = (e) => {
+        isDragging = true;
+        const pt = e.touches ? e.touches[0] : e;
+        startX = pt.clientX;
+        startY = pt.clientY;
+        origX = photo.offsetLeft;
+        origY = photo.offsetTop;
+      };
+
+      const move = (e) => {
+        if (!isDragging) return;
+        const pt = e.touches ? e.touches[0] : e;
+        photo.style.left = (origX + pt.clientX - startX) + 'px';
+        photo.style.top = (origY + pt.clientY - startY) + 'px';
+      };
+
+      const end = () => isDragging = false;
+
+      photo.addEventListener('mousedown', start);
+      window.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', end);
+
+      photo.addEventListener('touchstart', start, { passive: true });
+      window.addEventListener('touchmove', move, { passive: true });
+      window.addEventListener('touchend', end);
+    });
+
+    // Spotify Controller
+    function toggleMusic(btn) {
       if (audio.paused) {
         audio.play();
-        playBtn.innerText = '❚❚';
+        btn.innerText = '❚❚';
       } else {
         audio.pause();
-        playBtn.innerText = '▶';
+        btn.innerText = '▶';
       }
     }
-
-    function launchBalloons() {
-      const emojis = ['🎈', '💖', '✨', '🌸'];
-      for (let i = 0; i < 12; i++) {
-        const b = document.createElement('div');
-        b.className = 'floating-balloon';
-        b.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        b.style.left = Math.random() * 85 + 'vw';
-        b.style.animationDelay = (Math.random() * 2) + 's';
-        document.getElementById('burnSection').appendChild(b);
-      }
-    }
-
-    // 2. Butterfly Catch
-    function catchButterfly(el, ev) {
-      const msg = document.getElementById('butterflyMsg');
-      msg.style.display = 'block';
-      msg.style.left = (ev.clientX - 100) + 'px';
-      msg.style.top = (ev.clientY - 40) + 'px';
-      confetti({ particleCount: 30, spread: 40 });
-      setTimeout(() => { msg.style.display = 'none'; }, 3000);
-    }
-
-    // 3. Draggable Pins (Touch & Mouse)
-    document.querySelectorAll('.draggable-pin').forEach(pin => {
-      let isDragging = false, startX, startY, origX, origY;
-      
-      const onStart = (e) => {
-        isDragging = true;
-        const evt = e.touches ? e.touches[0] : e;
-        startX = evt.clientX;
-        startY = evt.clientY;
-        origX = pin.offsetLeft;
-        origY = pin.offsetTop;
-      };
-      const onMove = (e) => {
-        if (!isDragging) return;
-        const evt = e.touches ? e.touches[0] : e;
-  
+  </script>
+</body>
+</html>
