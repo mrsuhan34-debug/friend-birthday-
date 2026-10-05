@@ -25,6 +25,36 @@
       color: #fff;
     }
 
+    /* Top Nav Controls */
+    .nav-bar {
+      position: fixed;
+      top: 14px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 18px;
+      z-index: 99999;
+    }
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: transform 0.15s;
+    }
+    .nav-btn:active { transform: scale(0.92); }
+    .nav-btn.dark {
+      background: rgba(0, 0, 0, 0.12);
+      border-color: rgba(0, 0, 0, 0.25);
+      color: #111;
+    }
+
     /* Screen Frame System */
     .screen {
       position: fixed;
@@ -42,57 +72,25 @@
       display: flex;
     }
 
-    /* Top Nav Controls */
-    .nav-bar {
-      position: fixed;
-      top: 14px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 18px;
-      z-index: 500;
-      pointer-events: none;
-    }
-    .nav-btn {
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #fff;
-      padding: 7px 15px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      backdrop-filter: blur(12px);
-      pointer-events: auto;
-      transition: transform 0.2s;
-    }
-    .nav-btn:active { transform: scale(0.92); }
-    .nav-btn.dark {
-      background: rgba(0, 0, 0, 0.08);
-      border-color: rgba(0, 0, 0, 0.2);
-      color: #111;
-    }
-
-    /* =========================================================
-       PAGE 1: THEATRE CURTAIN
-       ========================================================= */
+    /* ================= PAGE 1: THEATRE CURTAIN ================= */
     #page-curtain {
       background: #0d0103;
       cursor: pointer;
+      z-index: 50;
     }
     .curtain-container {
       position: absolute;
       inset: 0;
       display: flex;
-      z-index: 20;
+      z-index: 60;
+      pointer-events: none;
     }
     .curtain-panel {
       width: 50%;
       height: 100%;
       background: repeating-linear-gradient(90deg, #8a0019, #8a0019 36px, #4d000f 72px);
       box-shadow: inset 0 0 60px rgba(0,0,0,0.85);
-      transition: transform 1.7s cubic-bezier(0.77, 0, 0.175, 1);
+      transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
     }
     .curtain-panel.left { transform-origin: left center; }
     .curtain-panel.right { transform-origin: right center; }
@@ -100,9 +98,10 @@
     .curtain-container.opened .curtain-panel.right { transform: translateX(100%); }
 
     .curtain-text {
-      position: absolute;
-      z-index: 25;
+      position: relative;
+      z-index: 70;
       text-align: center;
+      pointer-events: none;
       transition: opacity 0.5s ease;
     }
     .curtain-text h2 {
@@ -137,9 +136,7 @@
       to { opacity: 1; transform: scale(1.04); }
     }
 
-    /* =========================================================
-       PAGE 2: REALISTIC BURNING "11"
-       ======================================================== */
+    /* ================= PAGE 2: REALISTIC BURNING "11" ================= */
     #page-burn {
       background: #000;
       position: relative;
@@ -148,7 +145,7 @@
       text-align: center;
       cursor: pointer;
       position: relative;
-      z-index: 10;
+      z-index: 20;
     }
     .glow-num {
       font-family: 'Playfair Display', serif;
@@ -156,7 +153,6 @@
       font-weight: 900;
       color: #fff;
       line-height: 1;
-      position: relative;
       display: inline-block;
       text-shadow: 0 0 20px rgba(255,255,255,0.25);
     }
@@ -192,12 +188,10 @@
       left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
-      z-index: 12;
+      z-index: 25;
     }
 
-    /* =========================================================
-       PAGE 3: HAPPY BIRTHDAY SWEETY
-       ========================================================= */
+    /* ================= PAGE 3: HAPPY BIRTHDAY SWEETY ================= */
     #page-sweety {
       background: #faf8f5;
       color: #111;
@@ -244,9 +238,7 @@
       box-shadow: 0 10px 24px rgba(247, 127, 0, 0.3);
     }
 
-    /* =========================================================
-       PAGE 4: DRAGGABLE MEMORY CANVAS & 7 BUTTERFLIES
-       ========================================================= */
+    /* ================= PAGE 4: DRAGGABLE CANVAS & BUTTERFLIES ================= */
     #page-canvas {
       background: #eee8de;
       touch-action: none;
@@ -296,8 +288,6 @@
       left: 42%;
       font-size: 1.2rem;
     }
-
-    /* 7 Animated Butterflies */
     .butterfly-unit {
       position: absolute;
       font-size: 2.1rem;
@@ -325,9 +315,7 @@
       max-width: 360px;
     }
 
-    /* =========================================================
-       PAGE 5: REALISTIC 3D SCRAPBOOK (Flip Book Effect)
-       ========================================================= */
+    /* ================= PAGE 5: 3D SCRAPBOOK ================= */
     #page-scrapbook {
       background: #231d1a;
       padding: 60px 16px 85px;
@@ -429,9 +417,7 @@
       cursor: pointer;
     }
 
-    /* =========================================================
-       PAGE 6: 3D GALAXY MEMORY UNIVERSE (No Title + Zoom Modal)
-       ========================================================= */
+    /* ================= PAGE 6: 3D GALAXY WORLD ================= */
     #page-galaxy {
       background: #020206;
       overflow: hidden;
@@ -466,9 +452,7 @@
       box-shadow: 0 0 20px rgba(255, 117, 143, 0.6);
       background: #111;
       cursor: pointer;
-      transition: transform 0.2s;
     }
-    /* Photo Zoom Modal */
     .photo-zoom-modal {
       position: fixed;
       inset: 0;
@@ -487,9 +471,7 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
 
-    /* =========================================================
-       PAGE 7: FULL REALISTIC IPHONE (Reference matched)
-       ========================================================= */
+    /* ================= PAGE 7: REALISTIC IPHONE ================= */
     #page-iphone {
       background: #0a0b10;
       padding: 40px 16px 85px;
@@ -508,7 +490,6 @@
       overflow: hidden;
       padding: 12px 14px 18px;
     }
-    /* iPhone Status Bar & Dynamic Island */
     .iphone-top-bar {
       display: flex;
       justify-content: space-between;
@@ -517,24 +498,9 @@
       height: 28px;
       margin-bottom: 8px;
     }
-    .status-clock {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #fff;
-    }
-    .dynamic-island-cutout {
-      width: 82px;
-      height: 22px;
-      background: #000;
-      border-radius: 20px;
-    }
-    .status-icons {
-      font-size: 0.7rem;
-      display: flex;
-      gap: 5px;
-      color: #fff;
-    }
-    /* Chat App Header */
+    .status-clock { font-size: 0.8rem; font-weight: 700; color: #fff; }
+    .dynamic-island-cutout { width: 82px; height: 22px; background: #000; border-radius: 20px; }
+    .status-icons { font-size: 0.7rem; display: flex; gap: 5px; color: #fff; }
     .chat-app-nav {
       display: flex;
       align-items: center;
@@ -549,14 +515,8 @@
       object-fit: cover;
       background: #ff758f;
     }
-    .chat-user-name {
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
-    .chat-active-indicator {
-      font-size: 0.65rem;
-      color: #34c759;
-    }
+    .chat-user-name { font-size: 0.85rem; font-weight: 700; }
+    .chat-active-indicator { font-size: 0.65rem; color: #34c759; }
     .chat-date-pill {
       background: #1c1c1e;
       color: #8e8e93;
@@ -566,7 +526,6 @@
       align-self: center;
       margin: 18px 0;
     }
-    /* Message Bubbles */
     .chat-conversation {
       flex: 1;
       display: flex;
@@ -590,7 +549,6 @@
       align-self: flex-end;
       margin-right: 6px;
     }
-    /* iPhone Bottom Chat Bar */
     .iphone-input-bar {
       display: flex;
       align-items: center;
@@ -600,11 +558,7 @@
       padding: 6px 8px 6px 16px;
       margin-top: 10px;
     }
-    .input-mimic-text {
-      flex: 1;
-      font-size: 0.85rem;
-      color: #999;
-    }
+    .input-mimic-text { flex: 1; font-size: 0.85rem; color: #999; }
     .voice-play-round {
       width: 32px;
       height: 32px;
@@ -634,7 +588,7 @@
       gap: 12px;
       width: 90%;
       max-width: 340px;
-      z-index: 500;
+      z-index: 99999;
       box-shadow: 0 10px 28px rgba(0,0,0,0.6);
     }
     .spotify-dock img {
@@ -658,20 +612,18 @@
 </head>
 <body>
 
-  <!-- Background Music Loop -->
+  <!-- Audio Element -->
   <audio id="bgSong" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Global Nav Bar -->
+  <!-- Top Navigation Controls -->
   <div class="nav-bar">
     <button class="nav-btn" id="prevBtn" onclick="navStep(-1)">← Back</button>
     <button class="nav-btn" id="nextBtn" onclick="navStep(1)">Next →</button>
   </div>
 
-  <!-- =========================================================
-       PAGE 1: THEATRE CURTAIN
-       ========================================================= -->
+  <!-- ================= PAGE 1: THEATRE CURTAIN ================= -->
   <div class="screen active" id="page-curtain" onclick="openTheatreStage()">
     <div class="curtain-text" id="curtainIntro">
       <h2>★ SAVE THE DATE • AUGUST 11 ★</h2>
@@ -685,9 +637,7 @@
     </div>
   </div>
 
-  <!-- =========================================================
-       PAGE 2: REALISTIC BURNING "11"
-       ========================================================= -->
+  <!-- ================= PAGE 2: BURNING 11 ================= -->
   <div class="screen" id="page-burn">
     <canvas id="fireFxCanvas" width="400" height="400"></canvas>
     <div class="burn-stage" onclick="igniteCombustion()">
@@ -698,9 +648,7 @@
     </div>
   </div>
 
-  <!-- =========================================================
-       PAGE 3: HAPPY BIRTHDAY SWEETY
-       ========================================================= -->
+  <!-- ================= PAGE 3: HAPPY BIRTHDAY SWEETY ================= -->
   <div class="screen" id="page-sweety">
     <div class="sweety-box">
       <div style="font-size: 0.8rem; letter-spacing: 3px; color: #999; font-weight: 700;">AUG 11</div>
@@ -718,6 +666,437 @@
     </div>
   </div>
 
-  <!-- =========================================================
-       PAGE 4: MEMORY CANVAS & 7 BUTTERFLIES
-       ==================================================ll
+  <!-- ================= PAGE 4: CANVAS & BUTTERFLIES ================= -->
+  <div class="screen" id="page-canvas">
+    <div class="grid-dots"></div>
+
+    <div class="drag-photo" style="top: 14%; left: 8%;">
+      <span class="tape-tag">❤</span>
+      <img src="photo1.jpg" onerror="this.src='https://picsum.photos/200/200?1'" />
+      <div class="photo-caption">Cutie 🌸</div>
+    </div>
+    <div class="drag-photo" style="top: 20%; right: 8%;">
+      <span class="tape-tag">✨</span>
+      <img src="photo2.jpg" onerror="this.src='https://picsum.photos/200/200?2'" />
+      <div class="photo-caption">Baddie 🕶️</div>
+    </div>
+    <div class="drag-photo" style="top: 48%; left: 12%;">
+      <span class="tape-tag">💖</span>
+      <img src="photo3.jpg" onerror="this.src='https://picsum.photos/200/200?3'" />
+      <div class="photo-caption">Dream Girl 💫</div>
+    </div>
+    <div class="drag-photo" style="top: 45%; right: 10%;">
+      <span class="tape-tag">👑</span>
+      <img src="photo1.jpg" onerror="this.src='https://picsum.photos/200/200?4'" />
+      <div class="photo-caption">Queen 🌸</div>
+    </div>
+
+    <div class="butterfly-unit" id="bf0" onclick="triggerButterfly(event)">🦋</div>
+    <div class="butterfly-unit" id="bf1" onclick="triggerButterfly(event)">🦋</div>
+    <div class="butterfly-unit" id="bf2" onclick="triggerButterfly(event)">🦋</div>
+    <div class="butterfly-unit" id="bf3" onclick="triggerButterfly(event)">🦋</div>
+    <div class="butterfly-unit" id="bf4" onclick="triggerButterfly(event)">🦋</div>
+    <div class="butterfly-unit" id="bf5" onclick="triggerButterfly(event)">🦋</div>
+    <div class="butterfly-unit" id="bf6" onclick="triggerButterfly(event)">🦋</div>
+
+    <div class="butterfly-bubble" id="bfDialog">
+      "Looks like you're really good at catching butterflies! 🦋✨"
+    </div>
+  </div>
+
+  <!-- ================= PAGE 5: 3D SCRAPBOOK ================= -->
+  <div class="screen" id="page-scrapbook">
+    <div class="book-wrapper">
+      <div class="spiral-spine">
+        <div class="binder-wire"></div>
+        <div class="binder-wire"></div>
+        <div class="binder-wire"></div>
+        <div class="binder-wire"></div>
+        <div class="binder-wire"></div>
+        <div class="binder-wire"></div>
+        <div class="binder-wire"></div>
+      </div>
+
+      <div class="scrap-sheet" id="sheet1">
+        <div class="washi-tape">Core Memory</div>
+        <div class="scrap-photo-frame">
+          <img src="photo1.jpg" onerror="this.src='https://picsum.photos/400/260?1'" />
+        </div>
+        <p class="handwriting">"You are the stars in my dark and cold nights—shining and unwavering."</p>
+        <div class="scrap-nav-footer">
+          <span>Page 1 of 3</span>
+          <button class="page-flip-btn" onclick="turnScrapPage(1, true)">Turn Page →</button>
+        </div>
+      </div>
+
+      <div class="scrap-sheet" id="sheet2">
+        <div class="washi-tape">Crazy Days</div>
+        <div class="scrap-photo-frame">
+          <img src="photo2.jpg" onerror="this.src='https://picsum.photos/400/260?2'" />
+        </div>
+        <p class="handwriting">"May the flowers remind us why the rain was so necessary. Keep shining!"</p>
+        <div class="scrap-nav-footer">
+          <button class="page-flip-btn" onclick="turnScrapPage(1, false)">← Back</button>
+          <span>Page 2 of 3</span>
+          <button class="page-flip-btn" onclick="turnScrapPage(2, true)">Turn Page →</button>
+        </div>
+      </div>
+
+      <div class="scrap-sheet" id="sheet3">
+        <div class="washi-tape">Forever Bond</div>
+        <div class="scrap-photo-frame">
+          <img src="photo3.jpg" onerror="this.src='https://picsum.photos/400/260?3'" />
+        </div>
+        <p class="handwriting">"Wishing you endless laughs, smiles, and dreams accomplished. Happy Birthday! 💖"</p>
+        <div class="scrap-nav-footer">
+          <button class="page-flip-btn" onclick="turnScrapPage(2, false)">← Back</button>
+          <span>Page 3 of 3</span>
+          <span>✨</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PAGE 6: 3D GALAXY UNIVERSE ================= -->
+  <div class="screen" id="page-galaxy">
+    <canvas id="starsCanvas"></canvas>
+    
+    <div class="galaxy-3d-box" id="galaxyTouchZone">
+      <div class="orbit-world" id="orbitSphere">
+        <img src="photo1.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(0deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?1'" />
+        <img src="photo2.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(45deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?2'" />
+        <img src="photo3.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(90deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?3'" />
+        <img src="photo1.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(135deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?4'" />
+        <img src="photo2.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(180deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?5'" />
+        <img src="photo3.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(225deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?6'" />
+        <img src="photo1.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(270deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?7'" />
+        <img src="photo2.jpg" class="orbit-photo" onclick="zoomGalaxyPhoto(this.src)" style="transform: rotateY(315deg) translateZ(150px);" onerror="this.src='https://picsum.photos/200/260?8'" />
+      </div>
+    </div>
+
+    <div class="photo-zoom-modal" id="photoModal" onclick="this.style.display='none'">
+      <img id="zoomImg" src="" alt="Enlarged Memory" />
+    </div>
+  </div>
+
+  <!-- ================= PAGE 7: REALISTIC IPHONE ================= -->
+  <div class="screen" id="page-iphone">
+    <div class="iphone-body">
+      <div class="iphone-top-bar">
+        <span class="status-clock">8:03 PM</span>
+        <div class="dynamic-island-cutout"></div>
+        <div class="status-icons">
+          <span>5G</span>
+          <span>🔋</span>
+        </div>
+      </div>
+
+      <div class="chat-app-nav">
+        <img src="photo1.jpg" class="chat-user-img" onerror="this.src='https://picsum.photos/100/100?1'" />
+        <div>
+          <div class="chat-user-name">Bestie ✨</div>
+          <div class="chat-active-indicator">Active now</div>
+        </div>
+      </div>
+
+      <div class="chat-conversation">
+        <div class="chat-date-pill">TODAY 8:03 PM</div>
+        <div class="recv-bubble" id="liveChatBubble"></div>
+        <div class="bubble-timestamp">Delivered • Just now</div>
+      </div>
+
+      <div class="iphone-input-bar">
+        <div class="input-mimic-text" id="inputMimic">Happpyyeee birthday</div>
+        <div class="voice-play-round" onclick="retypeWish()">▶</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPOTIFY DOCK -->
+  <div class="spotify-dock">
+    <img src="photo1.jpg" onerror="this.src='https://picsum.photos/100/100?1'" />
+    <div class="spotify-track">
+      <h5>Dandelions</h5>
+      <p>Ruth B • Birthday Special</p>
+    </div>
+    <button class="spotify-play-btn" onclick="toggleSong(this)">❚❚</button>
+  </div>
+
+  <script>
+    const screenList = [
+      'page-curtain',
+      'page-burn',
+      'page-sweety',
+      'page-canvas',
+      'page-scrapbook',
+      'page-galaxy',
+      'page-iphone'
+    ];
+    let activeIdx = 0;
+    const bgAudio = document.getElementById('bgSong');
+
+    // Auto pause audio when switching tab or leaving
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) bgAudio.pause();
+      else if (activeIdx > 0) bgAudio.play().catch(() => {});
+    });
+    window.addEventListener('pagehide', () => bgAudio.pause());
+    window.addEventListener('beforeunload', () => bgAudio.pause());
+
+    function refreshNav() {
+      document.getElementById('prevBtn').style.display = activeIdx === 0 ? 'none' : 'block';
+      document.getElementById('nextBtn').style.display = activeIdx === screenList.length - 1 ? 'none' : 'block';
+
+      const isLight = screenList[activeIdx] === 'page-sweety' || screenList[activeIdx] === 'page-canvas';
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (isLight) btn.classList.add('dark');
+        else btn.classList.remove('dark');
+      });
+
+      if (screenList[activeIdx] === 'page-iphone') {
+        typeWish();
+      }
+    }
+
+    function navStep(dir) {
+      const target = activeIdx + dir;
+      if (target >= 0 && target < screenList.length) {
+        document.getElementById(screenList[activeIdx]).classList.remove('active');
+        activeIdx = target;
+        document.getElementById(screenList[activeIdx]).classList.add('active');
+        refreshNav();
+      }
+    }
+
+    // 1. Curtain Tap Music & Opening
+    let curtainOpened = false;
+    function openTheatreStage() {
+      if (curtainOpened) return;
+      curtainOpened = true;
+
+      // Unmute & play audio smoothly
+      bgAudio.play().catch(e => console.log('Audio init'));
+      
+      document.getElementById('curtainIntro').style.opacity = '0';
+      document.getElementById('theatreCurtains').classList.add('opened');
+      setTimeout(() => navStep(1), 1500);
+    }
+
+    // 2. Realistic Canvas Fire
+    const fireCanvas = document.getElementById('fireFxCanvas');
+    const fCtx = fireCanvas.getContext('2d');
+    let sparks = [];
+    let fireLoopId;
+
+    function createSpark() {
+      return {
+        x: fireCanvas.width / 2 + (Math.random() * 140 - 70),
+        y: fireCanvas.height / 2 + 55,
+        vx: (Math.random() - 0.5) * 2.5,
+        vy: -(Math.random() * 4.5 + 3),
+        size: Math.random() * 12 + 6,
+        color: `hsl(${Math.random() * 38 + 12}, 100%, 50%)`,
+        alpha: 1
+      };
+    }
+
+    function stepFire() {
+      fCtx.clearRect(0, 0, fireCanvas.width, fireCanvas.height);
+      for (let i = 0; i < 7; i++) sparks.push(createSpark());
+
+      for (let i = 0; i < sparks.length; i++) {
+        let s = sparks[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.size *= 0.94;
+        s.alpha -= 0.024;
+        fCtx.fillStyle = s.color;
+        fCtx.globalAlpha = Math.max(0, s.alpha);
+        fCtx.beginPath();
+        fCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        fCtx.fill();
+      }
+      sparks = sparks.filter(s => s.alpha > 0);
+    }
+
+    let isIgnited = false;
+    function igniteCombustion() {
+      if (isIgnited) return;
+      isIgnited = true;
+      document.getElementById('burnGuideText').style.display = 'none';
+
+      fireLoopId = setInterval(stepFire, 20);
+      document.getElementById('number11').classList.add('burn-active');
+      confetti({ particleCount: 75, spread: 80 });
+
+      setTimeout(() => {
+        clearInterval(fireLoopId);
+        fCtx.clearRect(0, 0, fireCanvas.width, fireCanvas.height);
+        navStep(1);
+      }, 2350);
+    }
+
+    // 4. Butterflies Flying Physics
+    const butterflies = [];
+    for (let i = 0; i < 7; i++) {
+      butterflies.push({
+        el: document.getElementById('bf' + i),
+        baseX: (i % 2 === 0 ? 50 : 220) + (i * 15),
+        baseY: 100 + (i * 55),
+        t: i * 1.2,
+        speed: 0.02 + (i * 0.003)
+      });
+    }
+
+    function renderButterflies() {
+      butterflies.forEach(b => {
+        b.t += b.speed;
+        const x = b.baseX + Math.sin(b.t) * 45;
+        const y = b.baseY + Math.cos(b.t * 1.4) * 25;
+        const tilt = Math.cos(b.t) * 20;
+        b.el.style.transform = `translate(${x}px, ${y}px) rotate(${tilt}deg)`;
+      });
+      requestAnimationFrame(renderButterflies);
+    }
+    renderButterflies();
+
+    function triggerButterfly(ev) {
+      const dialog = document.getElementById('bfDialog');
+      dialog.style.display = 'block';
+      confetti({ particleCount: 40, spread: 50 });
+      setTimeout(() => { dialog.style.display = 'none'; }, 3200);
+    }
+
+    // Draggable Polaroids
+    document.querySelectorAll('.drag-photo').forEach(elem => {
+      let dragging = false, sX, sY, oX, oY;
+      const start = (e) => {
+        dragging = true;
+        const p = e.touches ? e.touches[0] : e;
+        sX = p.clientX;
+        sY = p.clientY;
+        oX = elem.offsetLeft;
+        oY = elem.offsetTop;
+      };
+      const move = (e) => {
+        if (!dragging) return;
+        const p = e.touches ? e.touches[0] : e;
+        elem.style.left = (oX + p.clientX - sX) + 'px';
+        elem.style.top = (oY + p.clientY - sY) + 'px';
+      };
+      const end = () => dragging = false;
+
+      elem.addEventListener('mousedown', start);
+      window.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', end);
+      elem.addEventListener('touchstart', start, { passive: true });
+      window.addEventListener('touchmove', move, { passive: true });
+      window.addEventListener('touchend', end);
+    });
+
+    // 5. 3D Scrapbook Page Turn
+    function turnScrapPage(pageNum, forward) {
+      const sheet = document.getElementById('sheet' + pageNum);
+      if (forward) sheet.classList.add('turned');
+      else sheet.classList.remove('turned');
+    }
+
+    // 6. Stars Canvas & 3D Galaxy Orbit
+    const sCanvas = document.getElementById('starsCanvas');
+    const sCtx = sCanvas.getContext('2d');
+    let starsArr = [];
+
+    function resizeStars() {
+      sCanvas.width = window.innerWidth;
+      sCanvas.height = window.innerHeight;
+      starsArr = [];
+      for (let i = 0; i < 110; i++) {
+        starsArr.push({
+          x: Math.random() * sCanvas.width,
+          y: Math.random() * sCanvas.height,
+          radius: Math.random() * 1.5 + 0.5,
+          alpha: Math.random()
+        });
+      }
+    }
+    resizeStars();
+    window.addEventListener('resize', resizeStars);
+
+    function drawStars() {
+      sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
+      sCtx.fillStyle = '#ffffff';
+      starsArr.forEach(st => {
+        st.alpha += (Math.random() - 0.5) * 0.04;
+        st.alpha = Math.max(0.2, Math.min(1, st.alpha));
+        sCtx.globalAlpha = st.alpha;
+        sCtx.beginPath();
+        sCtx.arc(st.x, st.y, st.radius, 0, Math.PI * 2);
+        sCtx.fill();
+      });
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+
+    let sphereDeg = 0;
+    const orbit = document.getElementById('orbitSphere');
+    setInterval(() => {
+      sphereDeg += 0.45;
+      orbit.style.transform = `rotateY(${sphereDeg}deg)`;
+    }, 25);
+
+    const gZone = document.getElementById('galaxyTouchZone');
+    let gTouchX = 0;
+    gZone.addEventListener('touchstart', (e) => {
+      gTouchX = e.touches[0].clientX;
+    }, { passive: true });
+    gZone.addEventListener('touchmove', (e) => {
+      const diff = e.touches[0].clientX - gTouchX;
+      sphereDeg += diff * 0.4;
+      orbit.style.transform = `rotateY(${sphereDeg}deg)`;
+      gTouchX = e.touches[0].clientX;
+    }, { passive: true });
+
+    function zoomGalaxyPhoto(src) {
+      document.getElementById('zoomImg').src = src;
+      document.getElementById('photoModal').style.display = 'flex';
+    }
+
+    // 7. iPhone Chat Wish Delivery
+    let wishTyped = false;
+    function typeWish() {
+      if (wishTyped) return;
+      wishTyped = true;
+      const text = "Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Always keep shining! 💖✨";
+      let idx = 0;
+      const bubble = document.getElementById('liveChatBubble');
+      bubble.innerHTML = '';
+      const timer = setInterval(() => {
+        if (idx < text.length) {
+          bubble.innerHTML += text.charAt(idx);
+          idx++;
+        } else {
+          clearInterval(timer);
+          confetti({ particleCount: 160, spread: 100 });
+        }
+      }, 35);
+    }
+
+    function retypeWish() {
+      wishTyped = false;
+      typeWish();
+    }
+
+    function toggleSong(btn) {
+      if (bgAudio.paused) {
+        bgAudio.play();
+        btn.innerText = '❚❚';
+      } else {
+        bgAudio.pause();
+        btn.innerText = '▶';
+      }
+    }
+
+    refreshNav();
+  </script>
+</body>
+</html>
