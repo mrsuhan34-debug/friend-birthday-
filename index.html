@@ -25,16 +25,17 @@
       color: #fff;
     }
 
-    /* Top Navigation Bar */
-    .nav-bar {
+    /* Fixed Navigation Top Bar */
+    .top-nav {
       position: fixed;
       top: 14px;
       left: 0;
       right: 0;
       display: flex;
       justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 16px;
       z-index: 99999;
+      pointer-events: none;
     }
     .nav-btn {
       background: rgba(255, 255, 255, 0.22);
@@ -46,18 +47,19 @@
       font-weight: 700;
       cursor: pointer;
       backdrop-filter: blur(12px);
+      pointer-events: auto;
       transition: transform 0.15s;
     }
     .nav-btn:active { transform: scale(0.92); }
-    .nav-btn.dark {
+    .nav-btn.dark-btn {
       background: rgba(0, 0, 0, 0.12);
       border-color: rgba(0, 0, 0, 0.25);
       color: #111;
     }
 
-    /* Screen Management System */
-    .screen {
-      position: fixed;
+    /* Multi-screen container system */
+    .screen-view {
+      position: absolute;
       inset: 0;
       width: 100vw;
       height: 100vh;
@@ -68,86 +70,90 @@
       overflow: hidden;
       z-index: 10;
     }
-    .screen.active {
+    .screen-view.visible {
       display: flex;
     }
 
-    /* ================= PAGE 1: THEATRE CURTAIN ================= */
+    /* ========================================================
+       SCREEN 1: THEATRE CURTAIN
+       ======================================================== */
     #page-curtain {
       background: #0d0103;
       cursor: pointer;
       z-index: 50;
     }
-    .curtain-container {
+    .theatre-curtains {
       position: absolute;
       inset: 0;
       display: flex;
       z-index: 60;
       pointer-events: none;
     }
-    .curtain-panel {
+    .curtain-side {
       width: 50%;
       height: 100%;
       background: repeating-linear-gradient(90deg, #8a0019, #8a0019 36px, #4d000f 72px);
       box-shadow: inset 0 0 60px rgba(0,0,0,0.85);
       transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
     }
-    .curtain-panel.left { transform-origin: left center; }
-    .curtain-panel.right { transform-origin: right center; }
-    .curtain-container.opened .curtain-panel.left { transform: translateX(-100%); }
-    .curtain-container.opened .curtain-panel.right { transform: translateX(100%); }
+    .curtain-side.left { transform-origin: left center; }
+    .curtain-side.right { transform-origin: right center; }
+    .theatre-curtains.opened .curtain-side.left { transform: translateX(-100%); }
+    .theatre-curtains.opened .curtain-side.right { transform: translateX(100%); }
 
-    .curtain-text {
+    .curtain-intro {
       position: relative;
       z-index: 70;
       text-align: center;
       pointer-events: none;
       transition: opacity 0.5s ease;
     }
-    .curtain-text h2 {
+    .curtain-intro h2 {
       font-family: 'Cinzel', serif;
       letter-spacing: 5px;
       font-size: 0.85rem;
       color: #ffd166;
       margin-bottom: 10px;
     }
-    .curtain-text h1 {
+    .curtain-intro h1 {
       font-family: 'Cinzel', serif;
       font-size: 3.2rem;
       letter-spacing: 3px;
       color: #fff5d6;
       text-shadow: 0 0 25px rgba(255, 245, 214, 0.6);
     }
-    .curtain-text p {
+    .curtain-intro p {
       font-family: 'Caveat', cursive;
       font-size: 1.5rem;
       color: #fca311;
       margin-top: 6px;
     }
-    .tap-guide {
+    .curtain-guide {
       margin-top: 26px;
       font-size: 0.85rem;
       color: #ffd166;
       letter-spacing: 2px;
-      animation: pulse 1.2s infinite alternate;
+      animation: pulseAnim 1.2s infinite alternate;
     }
-    @keyframes pulse {
+    @keyframes pulseAnim {
       from { opacity: 0.5; }
       to { opacity: 1; transform: scale(1.04); }
     }
 
-    /* ================= PAGE 2: REALISTIC BURNING "11" ================= */
+    /* ========================================================
+       SCREEN 2: REAL BURNING "11"
+       ======================================================== */
     #page-burn {
       background: #000;
       position: relative;
     }
-    .burn-stage {
+    .burn-holder {
       text-align: center;
       cursor: pointer;
       position: relative;
       z-index: 20;
     }
-    .glow-num {
+    .number-display {
       font-family: 'Playfair Display', serif;
       font-size: 9.5rem;
       font-weight: 900;
@@ -156,10 +162,10 @@
       display: inline-block;
       text-shadow: 0 0 20px rgba(255,255,255,0.25);
     }
-    .glow-num.burn-active {
-      animation: realCombustion 2.5s forwards cubic-bezier(0.2, 0.8, 0.4, 1);
+    .number-display.combustion-on {
+      animation: paperFireBurn 2.5s forwards cubic-bezier(0.2, 0.8, 0.4, 1);
     }
-    @keyframes realCombustion {
+    @keyframes paperFireBurn {
       0% { filter: brightness(1); }
       15% {
         color: #ffaa00;
@@ -182,7 +188,7 @@
         visibility: hidden;
       }
     }
-    #fireFxCanvas {
+    #fireCanvas {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -191,7 +197,9 @@
       z-index: 25;
     }
 
-    /* ================= PAGE 3: HAPPY BIRTHDAY SWEETY ================= */
+    /* ========================================================
+       SCREEN 3: HAPPY BIRTHDAY SWEETY
+       ======================================================== */
     #page-sweety {
       background: #faf8f5;
       color: #111;
@@ -199,19 +207,19 @@
       justify-content: flex-start;
       overflow-y: auto;
     }
-    .sweety-box {
+    .sweety-title-block {
       width: 100%;
       max-width: 480px;
       margin-bottom: 20px;
     }
-    .sweety-title {
+    .sweety-heading {
       font-size: 2.8rem;
       font-weight: 900;
       line-height: 1.1;
       color: #111;
     }
-    .sweety-title span { color: #f77f00; }
-    .filmstrip-row {
+    .sweety-heading span { color: #f77f00; }
+    .filmstrip-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -219,7 +227,7 @@
       max-width: 480px;
       margin: 15px 0 25px;
     }
-    .film-tile {
+    .filmstrip-card {
       width: 105px;
       height: 135px;
       border-radius: 8px;
@@ -231,27 +239,29 @@
       cursor: pointer;
       overflow: hidden;
     }
-    .film-tile img { width: 100%; height: 100%; object-fit: cover; }
-    .film-tile:active, .film-tile:hover {
+    .filmstrip-card img { width: 100%; height: 100%; object-fit: cover; }
+    .filmstrip-card:active, .filmstrip-card:hover {
       filter: grayscale(0%);
       transform: scale(1.1) rotate(-2deg);
       box-shadow: 0 10px 24px rgba(247, 127, 0, 0.3);
     }
 
-    /* ================= PAGE 4: DRAGGABLE CANVAS & 3D REALISTIC BUTTERFLIES ================= */
+    /* ========================================================
+       SCREEN 4: DRAGGABLE CANVAS & 5 FLAPPING 3D BUTTERFLIES
+       ======================================================== */
     #page-canvas {
       background: #eee8de;
       touch-action: none;
       position: relative;
     }
-    .grid-dots {
+    .canvas-dots-pattern {
       position: absolute;
       inset: 0;
       background-image: radial-gradient(#d1c8ba 1.5px, transparent 1.5px);
       background-size: 22px 22px;
       pointer-events: none;
     }
-    .drag-photo {
+    .drag-photo-item {
       position: absolute;
       background: #fff;
       padding: 7px 7px 22px 7px;
@@ -262,12 +272,12 @@
       width: 130px;
       z-index: 10;
     }
-    .drag-photo:active {
+    .drag-photo-item:active {
       cursor: grabbing;
       box-shadow: 0 18px 35px rgba(0,0,0,0.25);
       z-index: 80 !important;
     }
-    .drag-photo img {
+    .drag-photo-item img {
       width: 100%;
       height: 125px;
       object-fit: cover;
@@ -275,22 +285,22 @@
       pointer-events: none;
       background: #f0f0f0;
     }
-    .photo-caption {
+    .item-caption {
       text-align: center;
       font-family: 'Caveat', cursive;
       font-size: 1.15rem;
       color: #333;
       margin-top: 5px;
     }
-    .tape-tag {
+    .tape-emoticon {
       position: absolute;
       top: -10px;
       left: 42%;
       font-size: 1.2rem;
     }
 
-    /* Realistic 3D Flapping Butterfly Structure */
-    .real-butterfly {
+    /* Realistic 3D Butterfly Dual Wings */
+    .realistic-butterfly {
       position: absolute;
       width: 44px;
       height: 38px;
@@ -300,11 +310,11 @@
       touch-action: none;
       filter: drop-shadow(0 6px 8px rgba(0,0,0,0.25));
     }
-    .real-butterfly:active {
+    .realistic-butterfly:active {
       cursor: grabbing;
       z-index: 120;
     }
-    .bf-body {
+    .butterfly-thorax {
       position: absolute;
       left: 20px;
       top: 6px;
@@ -313,7 +323,7 @@
       background: #111;
       border-radius: 3px;
     }
-    .bf-wing {
+    .butterfly-wing {
       position: absolute;
       width: 20px;
       height: 32px;
@@ -322,12 +332,12 @@
       border-radius: 16px 6px 14px 6px;
       top: 2px;
     }
-    .bf-wing.left-w {
+    .butterfly-wing.left-wing {
       left: 1px;
       transform-origin: right center;
       animation: flapL 0.28s infinite alternate ease-in-out;
     }
-    .bf-wing.right-w {
+    .butterfly-wing.right-wing {
       left: 23px;
       transform-origin: left center;
       border-radius: 6px 16px 6px 14px;
@@ -342,8 +352,8 @@
       100% { transform: rotateY(-70deg); }
     }
 
-    /* Butterfly Center Highlight Modal */
-    .center-quote-card {
+    /* Center Quote Modal */
+    .quote-center-modal {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.7);
@@ -351,10 +361,10 @@
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 99999;
       padding: 20px;
     }
-    .quote-box-inner {
+    .quote-box {
       background: #ffffff;
       border-radius: 20px;
       padding: 28px 22px;
@@ -362,23 +372,15 @@
       max-width: 320px;
       width: 100%;
       box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: popZoom 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    @keyframes popIn {
+    @keyframes popZoom {
       from { transform: scale(0.7) translateY(20px); opacity: 0; }
       to { transform: scale(1) translateY(0); opacity: 1; }
     }
-    .quote-box-inner h3 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
-    .quote-box-inner p {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #333;
-      line-height: 1.5;
-    }
-    .close-quote-btn {
+    .quote-box h3 { font-size: 2.2rem; margin-bottom: 10px; }
+    .quote-box p { font-size: 1rem; font-weight: 600; color: #333; line-height: 1.5; }
+    .close-btn {
       margin-top: 18px;
       background: #c9184a;
       color: #fff;
@@ -389,21 +391,22 @@
       cursor: pointer;
     }
 
-    /* ================= PAGE 5: REALISTIC 3D SKETCHBOOK (Reference Matched) ================= */
+    /* ========================================================
+       SCREEN 5: 3D SKETCHBOOK (Reference Cover + Pages)
+       ======================================================== */
     #page-scrapbook {
       background: #25201d;
       padding: 60px 16px 85px;
       perspective: 1200px;
     }
-    .sketchbook-container {
+    .sketchbook-stage {
       width: 100%;
       max-width: 400px;
       height: 490px;
       position: relative;
       transform-style: preserve-3d;
     }
-    /* Side Spiral Rings */
-    .book-spirals {
+    .spiral-coils-spine {
       position: absolute;
       left: 4px;
       top: 15px;
@@ -415,15 +418,14 @@
       z-index: 100;
       pointer-events: none;
     }
-    .ring-coil {
+    .coil-loop {
       width: 26px;
       height: 11px;
       background: linear-gradient(90deg, #dcdcdc, #ffffff 45%, #666666);
       border-radius: 6px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
-    /* Sheet Base */
-    .sketch-page {
+    .sketch-sheet {
       position: absolute;
       inset: 0;
       border-radius: 10px 16px 16px 10px;
@@ -437,23 +439,14 @@
       justify-content: space-between;
       padding: 18px 18px 18px 36px;
     }
-    .sketch-page.turned {
+    .sketch-sheet.flipped {
       transform: rotateY(-140deg);
       opacity: 0;
       pointer-events: none;
     }
-    /* Cover Page (Reference Matched) */
-    .cover-theme {
-      background: #121214;
-      color: #fff;
-    }
-    .cherry-badge {
-      font-size: 2.2rem;
-      text-align: center;
-      margin-bottom: 2px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
-    }
-    .sketch-title-block {
+    .cover-art-theme { background: #121214; color: #fff; }
+    .cherry-art { font-size: 2.2rem; text-align: center; margin-bottom: 2px; }
+    .cover-title-tag {
       font-family: 'Special Elite', cursive, sans-serif;
       font-size: 1.6rem;
       letter-spacing: 4px;
@@ -461,38 +454,30 @@
       color: #111;
       padding: 4px 10px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       margin-bottom: 12px;
       border-radius: 4px;
     }
-    /* Vintage Camera Frame Cut-out */
-    .vintage-cam-frame {
+    .retro-cam-block {
       width: 100%;
       height: 230px;
       background: #d8cfbe;
       border-radius: 12px;
       border: 3px solid #8e8474;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
       position: relative;
       padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .cam-lens-viewport {
+    .lens-view {
       width: 180px;
       height: 180px;
       border-radius: 12px;
       border: 3px solid #333;
       overflow: hidden;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
     }
-    .cam-lens-viewport img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .cam-dial {
+    .lens-view img { width: 100%; height: 100%; object-fit: cover; }
+    .cam-button-dial {
       position: absolute;
       right: 15px;
       top: 15px;
@@ -502,12 +487,8 @@
       border-radius: 50%;
       border: 2px solid #555;
     }
-    /* Inner Scrap Pages */
-    .inner-sheet-theme {
-      background: #fbf8f2;
-      color: #2b2b2b;
-    }
-    .washi-tag {
+    .inner-paper-theme { background: #fbf8f2; color: #2b2b2b; }
+    .scrap-washi-tape {
       position: absolute;
       top: 12px;
       right: 16px;
@@ -516,9 +497,8 @@
       font-family: 'Caveat', cursive;
       font-size: 0.95rem;
       transform: rotate(3deg);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .inner-scrap-photo {
+    .inner-sheet-frame {
       width: 100%;
       height: 230px;
       background: #fff;
@@ -527,26 +507,16 @@
       box-shadow: 0 8px 18px rgba(0,0,0,0.15);
       margin: 10px 0;
     }
-    .inner-scrap-photo img {
-      width: 100%;
-      height: 195px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-    .sketch-quote {
-      font-family: 'Caveat', cursive;
-      font-size: 1.35rem;
-      line-height: 1.4;
-      color: #333;
-    }
-    .sketch-footer {
+    .inner-sheet-frame img { width: 100%; height: 195px; object-fit: cover; border-radius: 4px; }
+    .handwritten-msg { font-family: 'Caveat', cursive; font-size: 1.35rem; line-height: 1.4; color: #333; }
+    .page-flip-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid #ddd6ca;
       padding-top: 8px;
     }
-    .flip-btn-pill {
+    .action-flip-btn {
       background: #2b2b2b;
       color: #fff;
       border: none;
@@ -556,32 +526,34 @@
       cursor: pointer;
     }
 
-    /* ================= PAGE 6: 3D MEMORY UNIVERSE (Continuous Auto + Drag Speed) ================= */
+    /* ========================================================
+       SCREEN 6: 3D CONTINUOUS ROTATING GALAXY
+       ======================================================== */
     #page-galaxy {
       background: #020206;
       overflow: hidden;
       touch-action: none;
     }
-    #starsCanvas {
+    #starsLayer {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: 1;
     }
-    .galaxy-3d-box {
+    .galaxy-viewport {
       width: 320px;
       height: 320px;
       perspective: 1000px;
       position: relative;
       z-index: 10;
     }
-    .orbit-world {
+    .galaxy-rotator {
       width: 100%;
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
     }
-    .orbit-photo {
+    .floating-orbit-pic {
       position: absolute;
       width: 82px;
       height: 105px;
@@ -591,9 +563,8 @@
       box-shadow: 0 0 20px rgba(255, 117, 143, 0.6);
       background: #111;
       cursor: pointer;
-      transition: transform 0.2s;
     }
-    .photo-zoom-modal {
+    .enlarged-modal {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.88);
@@ -603,7 +574,7 @@
       z-index: 99999;
       backdrop-filter: blur(8px);
     }
-    .photo-zoom-modal img {
+    .enlarged-modal img {
       max-width: 85%;
       max-height: 70%;
       border-radius: 16px;
@@ -611,12 +582,14 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
 
-    /* ================= PAGE 7: REALISTIC IPHONE WITH REAL VESSEL / NOTCH ================= */
+    /* ========================================================
+       SCREEN 7: FULL REALISTIC IPHONE WITH VESSEL & NOTCH
+       ======================================================== */
     #page-iphone {
       background: #0a0b10;
       padding: 30px 16px 85px;
     }
-    .iphone-body {
+    .iphone-device {
       width: 100%;
       max-width: 345px;
       height: 620px;
@@ -630,8 +603,7 @@
       overflow: hidden;
       padding: 10px 14px 18px;
     }
-    /* iPhone Black Bezel Vessel & Dynamic Island */
-    .iphone-vessel-top {
+    .iphone-vessel-notch {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -640,7 +612,7 @@
       position: relative;
       margin-bottom: 6px;
     }
-    .vessel-island-cutout {
+    .island-cutout {
       position: absolute;
       left: 50%;
       top: 6px;
@@ -653,25 +625,24 @@
     }
     .status-clock { font-size: 0.8rem; font-weight: 700; color: #fff; z-index: 5; }
     .status-icons { font-size: 0.7rem; display: flex; gap: 5px; color: #fff; z-index: 5; }
-    
-    /* Chat Content */
-    .chat-app-nav {
+
+    .chat-header {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 8px 6px 12px;
       border-bottom: 1px solid #1a1a1c;
     }
-    .chat-user-img {
+    .user-avatar-round {
       width: 36px;
       height: 36px;
       border-radius: 50%;
       object-fit: cover;
       background: #ff758f;
     }
-    .chat-user-name { font-size: 0.85rem; font-weight: 700; }
-    .chat-active-indicator { font-size: 0.65rem; color: #34c759; }
-    .chat-date-pill {
+    .user-contact-name { font-size: 0.85rem; font-weight: 700; }
+    .active-now-tag { font-size: 0.65rem; color: #34c759; }
+    .chat-timestamp-badge {
       background: #1c1c1e;
       color: #8e8e93;
       font-size: 0.7rem;
@@ -680,13 +651,13 @@
       align-self: center;
       margin: 18px 0;
     }
-    .chat-conversation {
+    .chat-scroll-area {
       flex: 1;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
     }
-    .recv-bubble {
+    .bubble-delivered-text {
       background: #0b84fe;
       color: #fff;
       padding: 12px 16px;
@@ -697,13 +668,13 @@
       margin-bottom: 6px;
       box-shadow: 0 4px 14px rgba(11, 132, 254, 0.3);
     }
-    .bubble-timestamp {
+    .delivery-receipt {
       font-size: 0.65rem;
       color: #636366;
       align-self: flex-end;
       margin-right: 6px;
     }
-    .iphone-input-bar {
+    .iphone-bottom-typing-bar {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -712,8 +683,8 @@
       padding: 6px 8px 6px 16px;
       margin-top: 10px;
     }
-    .input-mimic-text { flex: 1; font-size: 0.85rem; color: #999; }
-    .voice-play-round {
+    .input-box-mimic { flex: 1; font-size: 0.85rem; color: #999; }
+    .audio-play-round {
       width: 32px;
       height: 32px;
       background: #f5a623;
@@ -726,8 +697,8 @@
       cursor: pointer;
     }
 
-    /* Fixed Spotify Music Pill */
-    .spotify-dock {
+    /* Fixed Continuous Spotify Audio Pill */
+    .spotify-floating-dock {
       position: fixed;
       bottom: 12px;
       left: 50%;
@@ -745,17 +716,17 @@
       z-index: 99999;
       box-shadow: 0 10px 28px rgba(0,0,0,0.6);
     }
-    .spotify-dock img {
+    .spotify-floating-dock img {
       width: 32px;
       height: 32px;
       border-radius: 6px;
       object-fit: cover;
       background: #222;
     }
-    .spotify-track { flex: 1; text-align: left; }
-    .spotify-track h5 { font-size: 0.8rem; color: #fff; }
-    .spotify-track p { font-size: 0.65rem; color: #aaa; }
-    .spotify-play-btn {
+    .track-details { flex: 1; text-align: left; }
+    .track-details h5 { font-size: 0.8rem; color: #fff; }
+    .track-details p { font-size: 0.65rem; color: #aaa; }
+    .play-pause-toggle {
       background: none;
       border: none;
       color: #1db954;
@@ -766,11 +737,4 @@
 </head>
 <body>
 
-  <!-- Audio Element -->
-  <audio id="bgSong" loop preload="auto">
-    <source src="music.mp3" type="audio/mpeg" />
-  </audio>
-
-  <!-- Top Navigation Controls -->
-  <div class="nav-bar">
-  
+  <!-- Persisten
