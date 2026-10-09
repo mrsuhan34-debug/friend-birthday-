@@ -197,7 +197,7 @@
       z-index: 25;
     }
 
-    /* SCREEN 3: HAPPY BIRTHDAY SWEETY (photo1.jpg to photo6.jpg) */
+    /* SCREEN 3: HAPPY BIRTHDAY SWEETY */
     #page-sweety {
       background: #faf8f5;
       color: #111;
@@ -244,7 +244,7 @@
       box-shadow: 0 10px 24px rgba(247, 127, 0, 0.3);
     }
 
-    /* SCREEN 4: CANVAS (hoto7, photo8, photo9, photo10) */
+    /* SCREEN 4: CANVAS & ROAMING REALISTIC BUTTERFLIES */
     #page-canvas {
       background: #eee8de;
       touch-action: none;
@@ -295,7 +295,7 @@
       font-size: 1.2rem;
     }
 
-    /* Realistic Monarch Butterfly */
+    /* Detailed Realistic Butterfly */
     .realistic-butterfly {
       position: absolute;
       width: 48px;
@@ -722,7 +722,7 @@
       cursor: pointer;
     }
 
-    /* Spotify Floating Dock */
+    /* Clean Dandelions Music Pill */
     .spotify-floating-dock {
       position: fixed;
       bottom: 12px;
@@ -802,7 +802,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: HAPPY BIRTHDAY SWEETY (photo1.jpg to photo6.jpg) -->
+  <!-- SCREEN 3: HAPPY BIRTHDAY SWEETY (Exact filenames matching repo) -->
   <div class="screen-view" id="page-sweety">
     <div class="sweety-title-block">
       <div style="font-size: 0.8rem; letter-spacing: 3px; color: #999; font-weight: 700;">AUG 11</div>
@@ -816,17 +816,17 @@
       <div class="filmstrip-card"><img src="photo3.jpg" /></div>
       <div class="filmstrip-card"><img src="photo4.jpg" /></div>
       <div class="filmstrip-card"><img src="photo5.jpg" /></div>
-      <div class="filmstrip-card"><img src="photo6.jpg" /></div>
+      <div class="filmstrip-card"><img src="photo%206.jpg" onerror="this.src='photo 6.jpg'" /></div>
     </div>
   </div>
 
-  <!-- SCREEN 4: CANVAS (hoto7.jpg, photo8.jpg, photo9.jpg, photo10.jpg) -->
+  <!-- SCREEN 4: CANVAS (Exact filenames: photo7, photo8, photo9, photo10) -->
   <div class="screen-view" id="page-canvas">
     <div class="canvas-dots-pattern"></div>
 
     <div class="drag-photo-item" style="top: 14%; left: 8%;">
       <span class="tape-emoticon">❤</span>
-      <img src="hoto7.jpg" />
+      <img src="photo7.jpg" />
       <div class="item-caption">Cutie 🌸</div>
     </div>
     <div class="drag-photo-item" style="top: 18%; right: 8%;">
@@ -971,17 +971,17 @@
     </div>
   </div>
 
-  <!-- SCREEN 6: 3D CYLINDER CAROUSEL (photo13, photo6, photo8, photo1, jpg14, photo5) -->
+  <!-- SCREEN 6: 3D CYLINDER CAROUSEL (photo13, photo 6, photo8, photo1, photo14, photo5) -->
   <div class="screen-view" id="page-galaxy">
     <canvas id="starsLayer"></canvas>
     
     <div class="galaxy-viewport" id="galaxyZone">
       <div class="galaxy-rotator" id="galaxyOrbitWorld">
         <img src="photo13.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(0deg) translateZ(240px);" />
-        <img src="photo6.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(60deg) translateZ(240px);" />
+        <img src="photo%206.jpg" class="floating-orbit-pic" onerror="this.src='photo 6.jpg'" onclick="openZoomImage(this.src)" style="transform: rotateY(60deg) translateZ(240px);" />
         <img src="photo8.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(120deg) translateZ(240px);" />
         <img src="photo1.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(180deg) translateZ(240px);" />
-        <img src="jpg14.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(240deg) translateZ(240px);" />
+        <img src="photo14.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(240deg) translateZ(240px);" />
         <img src="photo5.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(300deg) translateZ(240px);" />
       </div>
     </div>
@@ -995,7 +995,7 @@
   <div class="screen-view" id="page-iphone">
     <div class="iphone-device">
       <div class="iphone-vessel-notch">
-        <span class="status-clock">12:00 am</span>
+        <span class="status-clock">8:03 PM</span>
         <div class="island-cutout"></div>
         <div class="status-icons">
           <span>5G</span>
@@ -1213,7 +1213,7 @@
         const ny = (oY + p.clientY - sY);
         element.style.left = nx + 'px';
         element.style.top = ny + 'px';
-        if (bfObj) { bfObj.x = nx; bfObj.y = ny; }
+        if (bfObj) { b.x = nx; b.y = ny; }
       };
       const end = () => {
         dragging = false;
