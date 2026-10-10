@@ -6,7 +6,7 @@
   <title>Happy Birthday! ✨</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Caveat:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- Three.js for Native Lightweight 3D iPhone 18 Pro Max -->
+  <!-- Three.js Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
@@ -196,7 +196,7 @@
       z-index: 25;
     }
 
-    /* SCREEN 3: HAPPY BIRTHDAY SWEETY */
+    /* SCREEN 3: HAPPY BIRTHDAY SWEETY (Strict Auto-Scroll Protected) */
     #page-sweety {
       background: #faf8f5;
       color: #111;
@@ -744,7 +744,7 @@
       cursor: pointer;
     }
 
-    /* SCREEN 8: 100% SEALED 3D GIFT BOX & NATIVE THREE.JS 3D IPHONE 18 PRO MAX */
+    /* SCREEN 8: REALISTIC SEALED GIFT BOX & NATIVE THREE.JS 3D IPHONE 18 PRO MAX */
     #page-gift {
       background: radial-gradient(circle at center, #260f17 0%, #0a0408 100%);
       padding: 20px 16px 85px;
@@ -759,10 +759,10 @@
     .gift-sub {
       color: #e5b3c2;
       font-size: 0.85rem;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
-    /* 100% TALL SEALED LUXURY GIFT BOX */
+    /* 100% FLUSH SEALED CUBE GIFT BOX */
     .gift-box-wrapper {
       width: 170px;
       height: 190px;
@@ -785,9 +785,9 @@
       filter: drop-shadow(0 20px 35px rgba(0,0,0,0.85));
     }
 
-    /* Native ThreeJS 3D Container (Transparent, No Grey Frame, No Copyright) */
+    /* Native Three.js 3D Container (Transparent, No Grey Frame, No Copyright) */
     .threejs-phone-container {
-      width: 300px;
+      width: 320px;
       height: 480px;
       position: absolute;
       top: 48%;
@@ -942,7 +942,7 @@
       <p style="color: #666; font-size: 0.95rem; margin-top: 6px;">May this year bring you closer to everything you're chasing.</p>
     </div>
 
-    <div class="filmstrip-grid">
+    <div class="filmstrip-grid" id="filmGrid">
       <div class="filmstrip-card"><img src="photo1.jpg" /></div>
       <div class="filmstrip-card"><img src="photo2.jpg" /></div>
       <div class="filmstrip-card"><img src="photo3.jpg" /></div>
@@ -1145,37 +1145,30 @@
     </div>
   </div>
 
-  <!-- SCREEN 8: 100% SEALED LUXURY GIFT BOX & NATIVE THREE.JS 3D IPHONE 18 PRO MAX -->
+  <!-- SCREEN 8: REALISTIC SEALED GIFT BOX & NATIVE THREE.JS 3D IPHONE 18 PRO MAX -->
   <div class="screen-view" id="page-gift">
     <h1 class="gift-title">A Special Gift 🎁</h1>
     <p class="gift-sub">Because you deserve the very best on your 20th</p>
 
-    <!-- 100% Perfectly Flush Sealed Luxury Gift Box (Deep Velvet Maroon + Gold Ribbons) -->
+    <!-- 100% Flush Sealed Luxury Gift Box -->
     <div class="gift-box-wrapper" id="giftBox" onclick="unboxIPhoneGift()">
       <svg class="sealed-box-svg" viewBox="0 0 200 220">
-        <!-- Ground Shadow -->
         <ellipse cx="100" cy="205" rx="78" ry="14" fill="rgba(0,0,0,0.6)" />
-        
-        <!-- Box Base Cube (Isometric Body) -->
         <polygon points="100,105 175,142 175,195 100,158" fill="#3b0814" />
         <polygon points="25,142 100,105 100,158 25,195" fill="#5c0f21" />
         
-        <!-- Yellow Ribbon Stripes on Base Body -->
         <polygon points="90,110 110,100 110,153 90,163" fill="#ffbe0b" />
         <polygon points="25,162 100,125 100,140 25,177" fill="#ffbe0b" />
         <polygon points="100,125 175,162 175,177 100,140" fill="#ffd166" />
 
-        <!-- Box Lid (TIGHT FLUSH SEAL OVER BASE) -->
         <polygon points="100,55 182,95 100,135 18,95" fill="#75152a" stroke="#24040b" stroke-width="2" />
         <polygon points="18,95 100,135 100,147 18,107" fill="#520e1d" />
         <polygon points="100,135 182,95 182,107 100,147" fill="#3b0814" />
 
-        <!-- Lid Gold Ribbon Cross -->
         <polygon points="92,59 108,51 108,131 92,139" fill="#ffd166" />
         <polygon points="26,99 100,63 100,77 34,111" fill="#ffbe0b" />
         <polygon points="100,63 174,99 166,111 100,77" fill="#ffbe0b" />
 
-        <!-- Big Silk Ribbon Knot & Bow on Top Center -->
         <ellipse cx="100" cy="95" rx="15" ry="12" fill="#ffd166" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.5))" />
         <path d="M100,95 C65,55 45,90 85,98 Z" fill="#ffbe0b" />
         <path d="M100,95 C135,55 155,90 115,98 Z" fill="#ffbe0b" />
@@ -1184,7 +1177,7 @@
       </svg>
     </div>
 
-    <!-- Native Three.js 3D iPhone 18 Pro Max Container (No third-party iframe / Transparent BG) -->
+    <!-- Native Three.js 3D Phone Stage -->
     <div class="threejs-phone-container" id="threePhoneStage">
       <canvas id="threeCanvas"></canvas>
     </div>
@@ -1269,10 +1262,15 @@
       setTimeout(() => navigateStep(1), 1400);
     }
 
-    // 2. SMOOTH SCROLL NAVIGATION (Calibrated Deliberate Swipe Threshold)
+    // 2. SMOOTH SCROLL NAVIGATION (Strict Protection against accidental swipe on Sweety page)
     let touchStartY = 0, touchStartX = 0;
     let isScrollCoolingDown = false;
     let isInteractingInternal = false;
+
+    // Block accidental swipe on Sweety gallery cards
+    const filmGrid = document.getElementById('filmGrid');
+    filmGrid.addEventListener('touchstart', () => { isInteractingInternal = true; }, { passive: true });
+    filmGrid.addEventListener('touchend', () => { setTimeout(() => { isInteractingInternal = false; }, 300); });
 
     window.addEventListener('touchstart', (e) => {
       touchStartY = e.touches[0].clientY;
@@ -1286,7 +1284,10 @@
       const deltaY = e.changedTouches[0].clientY - touchStartY;
       const deltaX = e.changedTouches[0].clientX - touchStartX;
 
-      if (Math.abs(deltaY) > 90 && Math.abs(deltaY) > Math.abs(deltaX) * 1.6) {
+      // Higher intentional threshold for Sweety page
+      const minDistance = (allScreens[currentStep] === 'page-sweety') ? 110 : 85;
+
+      if (Math.abs(deltaY) > minDistance && Math.abs(deltaY) > Math.abs(deltaX) * 1.8) {
         if (deltaY < 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
@@ -1299,7 +1300,7 @@
 
     window.addEventListener('wheel', (e) => {
       if (isInteractingInternal || isScrollCoolingDown) return;
-      if (Math.abs(e.deltaY) > 45) {
+      if (Math.abs(e.deltaY) > 50) {
         if (e.deltaY > 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
@@ -1513,7 +1514,7 @@
         st.alpha = Math.max(0.2, Math.min(1, st.alpha));
         sCtx.globalAlpha = st.alpha;
         sCtx.beginPath();
-        sCtx.arc(st.x, st.y, st.radius, 0, Math.PI * 2);
+        sCtx.arc(st.x, st.y, s.radius, 0, Math.PI * 2);
         sCtx.fill();
       });
       requestAnimationFrame(loopStars);
@@ -1589,7 +1590,7 @@
       playChatTypingAnimation();
     }
 
-    // 8. UNBOXING IPHONE 18 PRO MAX (NATIVE THREE.JS 3D RENDER ENGINE)
+    // 8. UNBOXING IPHONE 18 PRO MAX
     let isUnboxed = false;
     function unboxIPhoneGift() {
       if (isUnboxed) return;
@@ -1612,59 +1613,142 @@
       }, 700);
     }
 
-    // Native Three.js 3D iPhone 18 Pro Max Engine
+    // NATIVE THREE.JS 3D IPHONE 18 PRO MAX ENGINE
     let renderer, scene, camera, phoneGroup;
     let isDraggingPhone = false, prevMouseX = 0, prevMouseY = 0;
+
+    // Helper: Canvas-generated iOS Wallpaper with Lockscreen & Icons
+    function createFrontScreenTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512;
+      c.height = 1024;
+      const ctx = c.getContext('2d');
+
+      // Apple Dynamic Fluid Bloom Background
+      const g = ctx.createRadialGradient(256, 350, 50, 256, 512, 600);
+      g.addColorStop(0, '#7a1832');
+      g.addColorStop(0.5, '#400a16');
+      g.addColorStop(1, '#0e0205');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 512, 1024);
+
+      // Status Bar
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 36px -apple-system, sans-serif';
+      ctx.fillText('12:01', 45, 75);
+      ctx.font = '28px sans-serif';
+      ctx.fillText('5G 🔋', 410, 75);
+
+      // Dynamic Island Pill
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.roundRect(176, 45, 160, 44, 22);
+      ctx.fill();
+
+      // App Grid Icons
+      const colors = ['#34c759', '#007aff', '#ff9500', '#ff2d55', '#1c1c1e', '#fa2d48', '#ffcc00', '#5ac8fa', '#5856d6', '#af52de', '#ff3b30', '#30b0c7'];
+      const icons = ['📞', '💬', '📷', '🌸', '⚙️', '🎵', '📝', '🧭', '✉️', '⏰', '🗺️', '🛍️'];
+      let idx = 0;
+      for (let r = 0; r < 3; r++) {
+        for (let col = 0; col < 4; col++) {
+          const x = 45 + col * 115;
+          const y = 200 + r * 150;
+          ctx.fillStyle = colors[idx];
+          ctx.beginPath();
+          ctx.roundRect(x, y, 78, 78, 22);
+          ctx.fill();
+          ctx.font = '40px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(icons[idx], x + 39, y + 54);
+          idx++;
+        }
+      }
+
+      // Dock Area
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+      ctx.beginPath();
+      ctx.roundRect(30, 870, 452, 110, 38);
+      ctx.fill();
+      const dockIcons = ['📞', '💬', '🧭', '🎵'];
+      const dockCols = ['#34c759', '#007aff', '#5856d6', '#ff2d55'];
+      for (let i = 0; i < 4; i++) {
+        const dx = 50 + i * 112;
+        ctx.fillStyle = dockCols[i];
+        ctx.beginPath();
+        ctx.roundRect(dx, 885, 76, 76, 22);
+        ctx.fill();
+        ctx.font = '38px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(dockIcons[i], dx + 38, 938);
+      }
+
+      return new THREE.CanvasTexture(c);
+    }
+
+    // Helper: Canvas-generated Apple Logo Texture
+    function createAppleLogoTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512;
+      c.height = 512;
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, 512, 512);
+
+      ctx.fillStyle = '#fce4ec';
+      // High-precision Apple Silhouette Path
+      const p = new Path2D("M325 240c0-62 51-92 53-93-29-42-74-48-90-48-38-4-75 22-94 22s-50-22-82-22c-42 0-82 25-103 63-44 76-11 189 31 251 21 30 46 64 78 63 32-1 44-20 83-20s49 20 83 19c34-1 56-31 77-61 24-35 34-69 34-70-1-1-67-26-67-104zM276 72c16-20 27-48 24-76-24 1-52 16-69 36-15 17-28 46-24 73 26 2 53-14 69-33z");
+      ctx.save();
+      ctx.translate(56, 40);
+      ctx.scale(0.8, 0.8);
+      ctx.fill(p);
+      ctx.restore();
+
+      return new THREE.CanvasTexture(c);
+    }
 
     function initThreeJSPhone() {
       const container = document.getElementById('threePhoneStage');
       const canvas = document.getElementById('threeCanvas');
-      const width = container.clientWidth || 300;
+      const width = container.clientWidth || 320;
       const height = container.clientHeight || 480;
 
-      // Renderer with Alpha (Transparent Background)
       renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
       renderer.setSize(width, height);
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.shadowMap.enabled = true;
 
       scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-      camera.position.set(0, 0, 9);
+      camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+      camera.position.set(0, 0, 11); // Perfectly centered view
 
-      // Studio Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+      // 3-Point Studio Lighting Setup
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
       scene.add(ambientLight);
 
-      const dirLight1 = new THREE.DirectionalLight(0xffecd1, 1.8);
-      dirLight1.position.set(5, 8, 6);
-      scene.add(dirLight1);
+      const keyLight = new THREE.DirectionalLight(0xffeedd, 2.2);
+      keyLight.position.set(6, 7, 8);
+      scene.add(keyLight);
 
-      const dirLight2 = new THREE.DirectionalLight(0xff94b8, 1.2);
-      dirLight2.position.set(-6, -4, 4);
-      scene.add(dirLight2);
+      const fillLight = new THREE.DirectionalLight(0xffb3c6, 1.5);
+      fillLight.position.set(-6, -4, 5);
+      scene.add(fillLight);
+
+      const rimLight = new THREE.DirectionalLight(0xffffff, 2.0);
+      rimLight.position.set(0, 8, -6);
+      scene.add(rimLight);
 
       phoneGroup = new THREE.Group();
       scene.add(phoneGroup);
 
-      // Deep Velvet Maroon Titanium Material
-      const titaniumMaroonMat = new THREE.MeshStandardMaterial({
-        color: 0x480e1d,
-        metalness: 0.85,
-        roughness: 0.25
+      // Deep Maroon Velvet Titanium Chassis Material
+      const chassisMat = new THREE.MeshStandardMaterial({
+        color: 0x4f1222,
+        metalness: 0.82,
+        roughness: 0.28
       });
 
-      // Front & Back Glass Plate Material
-      const frontGlassMat = new THREE.MeshBasicMaterial({ color: 0x050103 });
-      const backMaroonGlassMat = new THREE.MeshStandardMaterial({
-        color: 0x541223,
-        metalness: 0.7,
-        roughness: 0.2
-      });
-
-      // Construct Smooth Rounded Phone Body using ExtrudeGeometry
+      // Construct Smooth Rounded Curved iPhone Body
       const shape = new THREE.Shape();
-      const pw = 2.1, ph = 4.3, pr = 0.42;
+      const pw = 1.95, ph = 4.05, pr = 0.44;
       shape.moveTo(-pw + pr, -ph);
       shape.lineTo(pw - pr, -ph);
       shape.quadraticCurveTo(pw, -ph, pw, -ph + pr);
@@ -1677,34 +1761,49 @@
 
       const extrudeSettings = {
         steps: 2,
-        depth: 0.26,
+        depth: 0.22,
         bevelEnabled: true,
-        bevelThickness: 0.06,
-        bevelSize: 0.06,
-        bevelSegments: 5
+        bevelThickness: 0.05,
+        bevelSize: 0.05,
+        bevelSegments: 6
       };
 
       const phoneGeo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
       phoneGeo.center();
-      const phoneMesh = new THREE.Mesh(phoneGeo, titaniumMaroonMat);
+      const phoneMesh = new THREE.Mesh(phoneGeo, chassisMat);
       phoneGroup.add(phoneMesh);
 
-      // Front Screen Mesh
-      const screenGeo = new THREE.PlaneGeometry(pw * 1.85, ph * 1.88);
-      const screenMesh = new THREE.Mesh(screenGeo, frontGlassMat);
-      screenMesh.position.z = 0.20;
+      // Front Screen Face with Real iOS Texture
+      const frontTex = createFrontScreenTexture();
+      const frontMat = new THREE.MeshBasicMaterial({ map: frontTex });
+      const screenGeo = new THREE.PlaneGeometry(pw * 1.88, ph * 1.9);
+      const screenMesh = new THREE.Mesh(screenGeo, frontMat);
+      screenMesh.position.z = 0.17;
       phoneGroup.add(screenMesh);
 
-      // Dynamic Island on Screen
-      const islandGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.48, 16);
-      islandGeo.rotateZ(Math.PI / 2);
-      const islandMesh = new THREE.Mesh(islandGeo, new THREE.MeshBasicMaterial({ color: 0x000000 }));
-      islandMesh.position.set(0, 1.72, 0.21);
-      phoneGroup.add(islandMesh);
+      // Back Face Glass Panel
+      const backMat = new THREE.MeshStandardMaterial({
+        color: 0x400b1a,
+        metalness: 0.65,
+        roughness: 0.22
+      });
+      const backPlaneGeo = new THREE.PlaneGeometry(pw * 1.88, ph * 1.9);
+      const backPlaneMesh = new THREE.Mesh(backPlaneGeo, backMat);
+      backPlaneMesh.position.z = -0.17;
+      backPlaneMesh.rotateY(Math.PI);
+      phoneGroup.add(backPlaneMesh);
+
+      // Apple Logo on Back Glass
+      const appleTex = createAppleLogoTexture();
+      const appleMat = new THREE.MeshBasicMaterial({ map: appleTex, transparent: true });
+      const applePlane = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.7), appleMat);
+      applePlane.position.set(0, 0.1, -0.175);
+      applePlane.rotateY(Math.PI);
+      phoneGroup.add(applePlane);
 
       // Triple Camera Island on Back
       const bumpShape = new THREE.Shape();
-      const bw = 0.65, bh = 0.65, br = 0.2;
+      const bw = 0.68, bh = 0.68, br = 0.22;
       bumpShape.moveTo(-bw + br, -bh);
       bumpShape.lineTo(bw - br, -bh);
       bumpShape.quadraticCurveTo(bw, -bh, bw, -bh + br);
@@ -1715,44 +1814,47 @@
       bumpShape.lineTo(-bw, -bh + br);
       bumpShape.quadraticCurveTo(-bw, -bh, -bw + br, -bh);
 
-      const bumpGeo = new THREE.ExtrudeGeometry(bumpShape, { depth: 0.08, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3 });
-      const bumpMesh = new THREE.Mesh(bumpGeo, backMaroonGlassMat);
-      bumpMesh.position.set(-0.95, 1.15, -0.27);
+      const bumpGeo = new THREE.ExtrudeGeometry(bumpShape, { depth: 0.08, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.025, bevelSegments: 3 });
+      const bumpMesh = new THREE.Mesh(bumpGeo, backMat);
+      bumpMesh.position.set(-0.85, 1.05, -0.25);
       bumpMesh.rotateY(Math.PI);
       phoneGroup.add(bumpMesh);
 
-      // 3 Sapphire Lenses
-      const lensMat = new THREE.MeshStandardMaterial({ color: 0x111116, metalness: 0.95, roughness: 0.1 });
-      const lensRimMat = new THREE.MeshStandardMaterial({ color: 0x7a2238, metalness: 0.9, roughness: 0.2 });
+      // 3 Sapphire Camera Lenses with Metallic Chamfer Rims
+      const lensMat = new THREE.MeshStandardMaterial({ color: 0x08080c, metalness: 0.95, roughness: 0.1 });
+      const lensRimMat = new THREE.MeshStandardMaterial({ color: 0x822238, metalness: 0.9, roughness: 0.15 });
 
       function createLens(x, y) {
-        const lensGroup = new THREE.Group();
-        const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.19, 0.06, 24), lensRimMat);
+        const g = new THREE.Group();
+        const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.20, 0.20, 0.06, 24), lensRimMat);
         rim.rotateX(Math.PI / 2);
-        const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.07, 24), lensMat);
+        const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.07, 24), lensMat);
         glass.rotateX(Math.PI / 2);
-        lensGroup.add(rim);
-        lensGroup.add(glass);
-        lensGroup.position.set(x, y, -0.32);
-        phoneGroup.add(lensGroup);
+        g.add(rim);
+        g.add(glass);
+        g.position.set(x, y, -0.30);
+        phoneGroup.add(g);
       }
-      createLens(-0.65, 1.5);
-      createLens(-0.65, 0.85);
-      createLens(-1.25, 1.18);
+      createLens(-0.55, 1.4);
+      createLens(-0.55, 0.75);
+      createLens(-1.15, 1.08);
 
-      // Laser Apple Logo on Back
-      const appleLogoGeo = new THREE.CircleGeometry(0.24, 32);
-      const appleLogoMat = new THREE.MeshStandardMaterial({ color: 0xffd3de, metalness: 0.8, roughness: 0.2 });
-      const appleMesh = new THREE.Mesh(appleLogoGeo, appleLogoMat);
-      appleMesh.position.set(0, 0, -0.20);
-      appleMesh.rotateY(Math.PI);
-      phoneGroup.add(appleMesh);
+      // LiDAR & True Tone Flash
+      const flashMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.04, 16), new THREE.MeshBasicMaterial({ color: 0xfff6cf }));
+      flashMesh.rotateX(Math.PI / 2);
+      flashMesh.position.set(-1.15, 1.4, -0.28);
+      phoneGroup.add(flashMesh);
+
+      const lidarMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.04, 16), new THREE.MeshBasicMaterial({ color: 0x111111 }));
+      lidarMesh.rotateX(Math.PI / 2);
+      lidarMesh.position.set(-1.15, 0.75, -0.28);
+      phoneGroup.add(lidarMesh);
 
       // Initial Aesthetic Angle
-      phoneGroup.rotation.y = 0.55;
-      phoneGroup.rotation.x = -0.15;
+      phoneGroup.rotation.y = 0.45;
+      phoneGroup.rotation.x = -0.12;
 
-      // Touch / Mouse Rotation Controls
+      // Interactive 360 Rotation
       canvas.addEventListener('touchstart', (e) => {
         isDraggingPhone = true;
         isInteractingInternal = true;
@@ -1779,7 +1881,7 @@
       function animateThree() {
         requestAnimationFrame(animateThree);
         if (!isDraggingPhone) {
-          phoneGroup.rotation.y += 0.005; // Gentle floating auto-rotation
+          phoneGroup.rotation.y += 0.005; // Floating smooth idle spin
         }
         renderer.render(scene, camera);
       }
