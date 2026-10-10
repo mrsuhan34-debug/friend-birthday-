@@ -252,6 +252,53 @@
       box-shadow: 0 10px 24px rgba(247, 127, 0, 0.3);
     }
 
+    /* SCREEN 3 ADDITION: TAP HINT + MIC DOODLE */
+    .tap-hint {
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      color: #f77f00;
+      text-align: center;
+      margin-top: 4px;
+      animation: pulseAnim 1.2s infinite alternate;
+    }
+    .sweety-title-block, .filmstrip-grid, .tap-hint {
+      transition: filter 1s ease;
+    }
+    #page-sweety.blur-mode .sweety-title-block,
+    #page-sweety.blur-mode .filmstrip-grid,
+    #page-sweety.blur-mode .tap-hint {
+      filter: blur(10px);
+    }
+    .mic-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(40px);
+      transition: opacity 0.5s ease, transform 0.6s ease;
+      z-index: 30;
+    }
+    .mic-overlay.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .mic-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.9rem;
+      line-height: 1.3;
+      text-align: center;
+      color: #111;
+      max-width: 320px;
+      min-height: 150px;
+    }
+    .mic-doodle { width: 170px; }
+
     /* SCREEN 4: CANVAS & ROAMING BUTTERFLIES */
     #page-canvas {
       background: #eee8de;
@@ -1502,6 +1549,26 @@
       <div class="filmstrip-card"><img src="photo5.jpg" /></div>
       <div class="filmstrip-card"><img src="photo6.jpg" /></div>
     </div>
+
+    <!-- NEW: tap hint -->
+    <p class="tap-hint">👆 Tap any photo</p>
+
+    <!-- NEW: mic doodle + flowing text -->
+    <div class="mic-overlay" id="micOverlay">
+      <div class="mic-text" id="micText"></div>
+      <svg class="mic-doodle" viewBox="0 0 200 220">
+        <g fill="#fff" stroke="#111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M55 205 C58 140 66 100 92 82 C112 68 142 70 156 84 C160 90 158 96 152 98 L150 98 L150 205"/>
+          <path fill="none" d="M96 100 Q120 106 148 98"/>
+          <path fill="none" d="M66 130 L50 60 M50 60 L42 44 M50 60 L58 42"/>
+          <path fill="none" d="M150 125 Q172 120 168 138 Q160 146 150 144"/>
+        </g>
+        <circle cx="108" cy="84" r="2.5" fill="#111"/>
+        <circle cx="140" cy="84" r="2.5" fill="#111"/>
+        <circle cx="96" cy="112" r="9" fill="#111"/>
+        <path d="M102 120 L116 144" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+      </svg>
+    </div>
   </div>
 
   <!-- SCREEN 4: CANVAS (photo7 to photo10) -->
@@ -1613,7 +1680,7 @@
         <div class="inner-sheet-frame">
           <img src="photo2.jpg" />
         </div>
-        <p class="handwritten-msg">"You are the stars in my dark and cold nights—shining and unwavering."</p>
+        <p class="handwritten-msg">"Out of all my random memories, you're the one I'd save forever. Thanks for being my person! 🤍"</p>
         <div class="page-index-label">1 / 3</div>
       </div>
 
@@ -1622,7 +1689,7 @@
         <div class="inner-sheet-frame">
           <img src="photo11.jpg" />
         </div>
-        <p class="handwritten-msg">"May the flowers remind us why the rain was so necessary. Keep glowing!"</p>
+        <p class="handwritten-msg">"Thanks for every crazy laugh and silly moment. Life is way more fun with you around! 😂"</p>
         <div class="page-index-label">2 / 3</div>
       </div>
 
@@ -2482,6 +2549,39 @@
         stack.appendChild(d);
       }
     })();
+
+    // HERO PAGE: tap photo -> blur -> mic doodle + text flow
+    const MIC_TEXT = "Happy Birthday Sweety! 🎉 May this year bring you closer to everything you're chasing.";
+    let micBusy = false;
+
+    function startMicShow() {
+      if (micBusy) return;
+      micBusy = true;
+      isInteractingInternal = true;
+
+      const page = document.getElementById('page-sweety');
+      const mic = document.getElementById('micOverlay');
+      const micText = document.getElementById('micText');
+
+      page.classList.add('blur-mode');            // page blurs for 1 sec
+
+      setTimeout(() => {
+        mic.classList.add('show');                // doodle appears
+        typeText(micText, MIC_TEXT, 45, () => {   // English text flows
+          setTimeout(() => {
+            mic.classList.remove('show');         // doodle goes away
+            page.classList.remove('blur-mode');   // page clear again
+            micText.textContent = '';
+            micBusy = false;
+            isInteractingInternal = false;
+          }, 1800);
+        });
+      }, 1000);
+    }
+
+    document.querySelectorAll('.filmstrip-card').forEach(c => {
+      c.addEventListener('click', startMicShow);
+    });
 
     // MASTER LOOP: only the visible screen is animated
     let lastTime = performance.now();
