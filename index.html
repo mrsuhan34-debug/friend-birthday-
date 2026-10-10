@@ -1178,7 +1178,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: HAPPY BIRTHDAY SWEETY (Zero Auto-scroll bug) -->
+  <!-- SCREEN 3: HAPPY BIRTHDAY SWEETY -->
   <div class="screen-view" id="page-sweety">
     <div class="sweety-title-block">
       <div style="font-size: 0.8rem; letter-spacing: 3px; color: #999; font-weight: 700;">AUG 11</div>
@@ -1186,7 +1186,7 @@
       <p style="color: #666; font-size: 0.95rem; margin-top: 6px;">May this year bring you closer to everything you're chasing.</p>
     </div>
 
-    <div class="filmstrip-grid">
+    <div class="filmstrip-grid" id="filmGrid">
       <div class="filmstrip-card"><img src="photo1.jpg" /></div>
       <div class="filmstrip-card"><img src="photo2.jpg" /></div>
       <div class="filmstrip-card"><img src="photo3.jpg" /></div>
@@ -1394,13 +1394,13 @@
     <h1 class="gift-title">A Special Surprise ✨</h1>
     <p class="gift-sub">Guess what's waiting for you on your 20th</p>
 
-    <!-- Interactive Guess Card (English) -->
+    <!-- Interactive Guess Card -->
     <div class="guess-card-container" id="guessCard">
       <h3>🎁 Surprise for you!</h3>
-      <p>I have a surprise for you, guess what it is! 🎁✨</p>
+      <p>Tomar jonno akta surprise ache, guess koro dekhi ki hote pare? 🤔</p>
       <input type="text" id="userGuessInput" class="guess-input-field" placeholder="Type your guess here..." autocomplete="off" />
       <br/>
-      <button class="guess-submit-btn" onclick="submitGuessAnswer()">Submit Guess 💫</button>
+      <button class="guess-submit-btn" id="guessBtn" onclick="submitGuessAnswer()">Submit Guess 💫</button>
       <div class="guess-feedback-msg" id="guessFeedback"></div>
     </div>
 
@@ -1460,7 +1460,7 @@
           </div>
         </div>
 
-        <!-- Back Face: Deep Velvet Maroon Titanium (Clean Apple Logo Only) -->
+        <!-- Back Face: Deep Velvet Maroon Titanium -->
         <div class="iphone-face-back">
           <div class="i18-camera-bump">
             <div class="lens l1"></div>
@@ -1562,6 +1562,10 @@
           stageOpened = false;
         }
 
+        if (allScreens[currentStep] === 'page-galaxy') {
+          currentVelocity = baseCarouselSpeed;
+        }
+
         if (allScreens[currentStep] === 'page-iphone') {
           playChatTypingAnimation();
         }
@@ -1593,34 +1597,32 @@
     window.addEventListener('touchend', (e) => {
       if (isInteractingInternal) return;
       if (isScrollCoolingDown) return;
-      // Do not navigate while typing in surprise input box
       if (e.target && e.target.id === 'userGuessInput') return;
 
       const deltaY = e.changedTouches[0].clientY - touchStartY;
       const deltaX = e.changedTouches[0].clientX - touchStartX;
 
-      // Swipe Threshold: 90px vertical & clear angle
-      if (Math.abs(deltaY) > 90 && Math.abs(deltaY) > Math.abs(deltaX) * 1.6) {
+      if (Math.abs(deltaY) > 80 && Math.abs(deltaY) > Math.abs(deltaX) * 1.5) {
         if (deltaY < 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
           navigateStep(-1);
         }
         isScrollCoolingDown = true;
-        setTimeout(() => { isScrollCoolingDown = false; }, 700);
+        setTimeout(() => { isScrollCoolingDown = false; }, 600);
       }
     }, { passive: true });
 
     window.addEventListener('wheel', (e) => {
       if (isInteractingInternal || isScrollCoolingDown) return;
-      if (Math.abs(e.deltaY) > 45) {
+      if (Math.abs(e.deltaY) > 40) {
         if (e.deltaY > 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
           navigateStep(-1);
         }
         isScrollCoolingDown = true;
-        setTimeout(() => { isScrollCoolingDown = false; }, 700);
+        setTimeout(() => { isScrollCoolingDown = false; }, 600);
       }
     }, { passive: true });
 
@@ -1899,7 +1901,7 @@
             isTypingRunning = false;
           }
         }, 32);
-      }, 1100);
+      }, 1000);
     }
 
     function replayChatTyping() {
@@ -1912,7 +1914,8 @@
     function submitGuessAnswer() {
       if (guessAnswered) return;
       const inputEl = document.getElementById('userGuessInput');
-      const val = (inputEl.value || '').trim().toLowerCase();
+      const rawVal = (inputEl.value || '').trim().toLowerCase();
+      const val = rawVal.replace(/\s+/g, ''); // Removes spaces (handles "18promax", "18 pro max", "iphone18", etc.)
       const feedbackEl = document.getElementById('guessFeedback');
       const cardEl = document.getElementById('guessCard');
       const phoneStage = document.getElementById('phoneStage');
@@ -1921,12 +1924,12 @@
       guessAnswered = true;
       feedbackEl.style.display = 'block';
 
-      // Check if user guessed 18 Pro Max
-      if (val.includes('18') || val.includes('pro max') || val.includes('iphone 18')) {
+      // Smart Matching (checks for 18, promax, iphone 18)
+      if (val.includes('18') || val.includes('promax') || val.includes('iphone18') || val.includes('apple')) {
         feedbackEl.innerHTML = "You are always correct cutie! 🥰💖";
         confetti({ particleCount: 220, spread: 100 });
       } else {
-        feedbackEl.innerHTML = "No worries cutie, take a look now! 😉✨";
+        feedbackEl.innerHTML = "Kono byapar na cutie, ekhon dekhe nao! 😉✨";
         confetti({ particleCount: 150, spread: 80 });
       }
 
@@ -1937,8 +1940,8 @@
           cardEl.style.display = 'none';
           phoneStage.classList.add('revealed');
           rotateHint.style.display = 'block';
-        }, 500);
-      }, 1600);
+        }, 400);
+      }, 1400);
     }
 
     // 3D 360-degree rotation with seamless rim shell
