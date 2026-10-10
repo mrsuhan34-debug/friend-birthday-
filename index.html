@@ -674,30 +674,6 @@
       overflow-y: auto;
     }
 
-    .typing-indicator {
-      display: none;
-      align-items: center;
-      gap: 4px;
-      background: #262629;
-      padding: 10px 14px;
-      border-radius: 18px;
-      width: fit-content;
-      margin-bottom: 8px;
-    }
-    .typing-dot {
-      width: 7px;
-      height: 7px;
-      background: #8e8e93;
-      border-radius: 50%;
-      animation: bounceDot 1.4s infinite ease-in-out;
-    }
-    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounceDot {
-      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
-      40% { transform: scale(1.1); opacity: 1; }
-    }
-
     .bubble-delivered-text {
       background: #0b84fe;
       color: #fff;
@@ -708,15 +684,13 @@
       margin-left: 10px;
       margin-bottom: 6px;
       box-shadow: 0 4px 14px rgba(11, 132, 254, 0.3);
-      display: none;
-      min-height: 48px;
+      animation: popZoom 0.4s ease;
     }
     .delivery-receipt {
       font-size: 0.65rem;
       color: #636366;
       align-self: flex-end;
       margin-right: 6px;
-      display: none;
     }
     .iphone-bottom-typing-bar {
       display: flex;
@@ -741,9 +715,9 @@
       cursor: pointer;
     }
 
-    /* SCREEN 8: LUXURY 3D SEALED GIFT BOX & PROPER 3D IPHONE 18 PRO MAX */
+    /* SCREEN 8: 100% SEALED LUXURY GIFT BOX & AESTHETIC 3D IPHONE 18 PRO MAX */
     #page-gift {
-      background: radial-gradient(circle at center, #230811 0%, #060204 100%);
+      background: radial-gradient(circle at center, #240913 0%, #060204 100%);
       padding: 20px 16px 85px;
       perspective: 1200px;
     }
@@ -760,109 +734,33 @@
       margin-bottom: 15px;
     }
 
-    /* REAL LUXURY 3D SEALED GIFT BOX */
-    .gift-box-3d {
-      width: 160px;
-      height: 160px;
+    /* REAL LUXURY 3D ISOMETRIC SEALED GIFT BOX */
+    .gift-box-stage {
+      width: 170px;
+      height: 170px;
+      margin: 25px auto 20px;
       position: relative;
-      transform-style: preserve-3d;
-      transform: rotateX(-18deg) rotateY(25deg);
       cursor: pointer;
-      margin: 30px auto 25px;
-      transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.5s ease, opacity 0.4s ease;
     }
-    .gift-cube-face {
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      background: linear-gradient(135deg, #590d1e, #33040e);
-      border: 2px solid #851b32;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
-    }
-    /* Gold Ribbon Cross On Body */
-    .gift-cube-face::before {
-      content: '';
-      position: absolute;
-      left: 66px;
-      top: 0;
-      width: 28px;
-      height: 100%;
-      background: linear-gradient(90deg, #ffd166, #ffbe0b);
-      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
-    }
-    .gift-cube-face::after {
-      content: '';
-      position: absolute;
-      top: 66px;
-      left: 0;
-      width: 100%;
-      height: 28px;
-      background: linear-gradient(180deg, #ffd166, #ffbe0b);
-      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
-    }
-    .face-front  { transform: translateZ(80px); }
-    .face-back   { transform: rotateY(180deg) translateZ(80px); }
-    .face-left   { transform: rotateY(-90deg) translateZ(80px); }
-    .face-right  { transform: rotateY(90deg) translateZ(80px); }
-    .face-bottom { transform: rotateX(-90deg) translateZ(80px); }
-    
-    /* 100% TIGHT FLUSH LID ON TOP */
-    .face-lid {
-      position: absolute;
-      width: 168px;
-      height: 168px;
-      left: -4px;
-      top: -4px;
-      background: linear-gradient(135deg, #78152c, #4a0715);
-      border: 2.5px solid #ffd166;
-      transform: rotateX(90deg) translateZ(81px);
-      transform-origin: top center;
-      transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-      box-shadow: 0 0 25px rgba(0,0,0,0.8);
-    }
-    .face-lid::before {
-      content: '';
-      position: absolute;
-      left: 70px;
-      top: 0;
-      width: 28px;
-      height: 100%;
-      background: linear-gradient(90deg, #ffd166, #ffbe0b);
-    }
-    .face-lid::after {
-      content: '';
-      position: absolute;
-      top: 70px;
-      left: 0;
-      width: 100%;
-      height: 28px;
-      background: linear-gradient(180deg, #ffd166, #ffbe0b);
-    }
-    .ribbon-bow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 3rem;
-      filter: drop-shadow(0 4px 12px rgba(255, 209, 102, 0.9));
-      z-index: 10;
-    }
-
-    /* Unboxed Transition */
-    .gift-box-3d.opened .face-lid {
-      transform: rotateX(150deg) translateZ(200px) translateY(-100px);
+    .gift-box-stage.opened {
+      transform: scale(0.2) translateY(300px);
       opacity: 0;
-    }
-    .gift-box-3d.opened {
-      transform: rotateX(0deg) rotateY(0deg) scale(0.3) translateY(280px);
-      opacity: 0.1;
       pointer-events: none;
     }
+    .isometric-gift-box {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 20px 35px rgba(0,0,0,0.85));
+    }
 
-    /* THE ICONIC 3D IPHONE 18 PRO MAX (Aesthetic & Seamless) */
+    /* THE ICONIC 3D IPHONE 18 PRO MAX */
     .phone-stage-3d {
-      width: 210px;
-      height: 420px;
+      width: 215px;
+      height: 430px;
       perspective: 1400px;
       position: absolute;
       top: 45%;
@@ -974,7 +872,7 @@
       margin-top: auto;
     }
 
-    /* Back Face: Velvet Deep Maroon Titanium (Clean Apple Logo Only) */
+    /* Back Face: Velvet Deep Maroon Titanium */
     .iphone-face-back {
       position: absolute;
       inset: 0;
@@ -1044,7 +942,7 @@
       filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
     }
 
-    /* FULL SOLID METALLIC RIM SHELL WITH ROUNDED CORNERS */
+    /* SOLID METALLIC RIM SHELL */
     .iphone-side-rim {
       position: absolute;
       inset: -1px;
@@ -1344,7 +1242,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: IPHONE SCREEN -->
+  <!-- SCREEN 7: IPHONE SCREEN (INSTANT SMOOTH LOAD) -->
   <div class="screen-view" id="page-iphone">
     <div class="iphone-device">
       <div class="iphone-vessel-notch">
@@ -1366,45 +1264,57 @@
 
       <div class="chat-scroll-area">
         <div class="chat-timestamp-badge">TODAY 12:01 AM</div>
-        
-        <div class="typing-indicator" id="typeIndicator">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
+        <div class="bubble-delivered-text" id="liveWishBubble">
+          Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨
         </div>
-
-        <div class="bubble-delivered-text" id="liveWishBubble"></div>
-        <div class="delivery-receipt" id="delivReceipt">Delivered • 12:01 AM</div>
+        <div class="delivery-receipt">Delivered • 12:01 AM</div>
       </div>
 
       <div class="iphone-bottom-typing-bar">
         <div class="input-box-mimic">Happpyyeee birthday</div>
-        <div class="audio-play-round" onclick="replayChatTyping()">🎉</div>
+        <div class="audio-play-round" onclick="celebrateWishBurst()">🎉</div>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 8: LUXURY 3D SEALED GIFT BOX & PROPER 3D IPHONE 18 PRO MAX -->
+  <!-- SCREEN 8: REALISTIC 3D SEALED GIFT BOX & VELVET MAROON IPHONE 18 PRO MAX -->
   <div class="screen-view" id="page-gift">
     <h1 class="gift-title">A Special Gift 🎁</h1>
     <p class="gift-sub">Because you deserve the very best on your 20th</p>
 
-    <!-- REAL LUXURY 3D SEALED GIFT BOX -->
-    <div class="gift-box-3d" id="giftBox" onclick="unboxIPhoneGift()">
-      <div class="gift-cube-face face-front"></div>
-      <div class="gift-cube-face face-back"></div>
-      <div class="gift-cube-face face-left"></div>
-      <div class="gift-cube-face face-right"></div>
-      <div class="gift-cube-face face-bottom"></div>
-      <div class="face-lid">
-        <div class="ribbon-bow">🎀</div>
-      </div>
+    <!-- 100% SEALED LUXURY GIFT BOX -->
+    <div class="gift-box-stage" id="giftBox" onclick="unboxIPhoneGift()">
+      <svg class="isometric-gift-box" viewBox="0 0 200 200">
+        <!-- Ground Shadow -->
+        <ellipse cx="100" cy="180" rx="72" ry="16" fill="rgba(0,0,0,0.6)" />
+        <!-- Cube Body Left & Right -->
+        <polygon points="30,110 100,75 100,140 30,175" fill="#540e1e" />
+        <polygon points="100,75 170,110 170,175 100,140" fill="#380712" />
+        <!-- Gold Ribbon on Body -->
+        <polygon points="25,135 100,98 100,118 25,155" fill="#ffbe0b" />
+        <polygon points="100,98 175,135 175,155 100,118" fill="#ffd166" />
+        <polygon points="90,80 110,70 110,135 90,145" fill="#ffbe0b" />
+        <!-- Lid Flush on Top (SEALED) -->
+        <polygon points="100,40 180,78 100,116 20,78" fill="#75152a" stroke="#26040c" stroke-width="2" />
+        <polygon points="20,78 100,116 100,126 20,88" fill="#570d1d" />
+        <polygon points="100,116 180,78 180,88 100,126" fill="#3b0814" />
+        <!-- Gold Ribbon Cross on Lid -->
+        <polygon points="90,45 110,35 110,111 90,121" fill="#ffd166" />
+        <polygon points="25,82 100,46 100,60 33,96" fill="#ffbe0b" />
+        <polygon points="100,46 175,82 167,96 100,60" fill="#ffbe0b" />
+        <!-- Bow Knot on Top -->
+        <ellipse cx="100" cy="78" rx="14" ry="12" fill="#ffd166" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.5))" />
+        <path d="M100,78 C68,45 48,78 86,84 Z" fill="#ffbe0b" />
+        <path d="M100,78 C132,45 152,78 114,84 Z" fill="#ffbe0b" />
+        <path d="M100,78 C78,98 68,120 84,115 Z" fill="#ffd166" />
+        <path d="M100,78 C122,98 132,120 116,115 Z" fill="#ffd166" />
+      </svg>
     </div>
 
-    <!-- THE ICONIC 3D IPHONE 18 PRO MAX (SEAMLESS CURVES & ZERO GAPS) -->
+    <!-- THE ICONIC 3D IPHONE 18 PRO MAX -->
     <div class="phone-stage-3d" id="phoneStage">
       <div class="iphone-18-chassis" id="i18Chassis">
-        <!-- Front Screen Face (z = +8px) -->
+        <!-- Front Screen Face -->
         <div class="iphone-face-front">
           <div class="front-wallpaper"></div>
           
@@ -1457,7 +1367,7 @@
           </div>
         </div>
 
-        <!-- Back Face: Velvet Deep Maroon Titanium (Clean Apple Logo Only) -->
+        <!-- Back Face: Velvet Deep Maroon Titanium -->
         <div class="iphone-face-back">
           <div class="i18-camera-bump">
             <div class="lens l1"></div>
@@ -1472,7 +1382,7 @@
           </svg>
         </div>
 
-        <!-- FULL SOLID METALLIC RIM SHELL WITH ROUNDED CORNERS -->
+        <!-- Solid Rim Shell -->
         <div class="iphone-side-rim"></div>
       </div>
     </div>
@@ -1540,7 +1450,7 @@
         }
 
         if (allScreens[currentStep] === 'page-iphone') {
-          playChatTypingAnimation();
+          confetti({ particleCount: 150, spread: 90 });
         }
       }
     }
@@ -1557,14 +1467,9 @@
       setTimeout(() => navigateStep(1), 1400);
     }
 
-    // 2. SMOOTH SCROLL NAVIGATION (Strict Protection against accidental swipe on Sweety page)
+    // 2. BULLETPROOF TOUCH NAVIGATION (NO FREEZE EVER)
     let touchStartY = 0, touchStartX = 0;
-    let isScrollCoolingDown = false;
-    let isInteractingInternal = false;
-
-    const filmGrid = document.getElementById('filmGrid');
-    filmGrid.addEventListener('touchstart', () => { isInteractingInternal = true; }, { passive: true });
-    filmGrid.addEventListener('touchend', () => { setTimeout(() => { isInteractingInternal = false; }, 300); });
+    let isCoolingDown = false;
 
     window.addEventListener('touchstart', (e) => {
       touchStartY = e.touches[0].clientY;
@@ -1572,35 +1477,32 @@
     }, { passive: true });
 
     window.addEventListener('touchend', (e) => {
-      if (isInteractingInternal) return;
-      if (isScrollCoolingDown) return;
+      if (isCoolingDown) return;
 
       const deltaY = e.changedTouches[0].clientY - touchStartY;
       const deltaX = e.changedTouches[0].clientX - touchStartX;
 
-      const minDistance = (allScreens[currentStep] === 'page-sweety') ? 110 : 85;
-
-      if (Math.abs(deltaY) > minDistance && Math.abs(deltaY) > Math.abs(deltaX) * 1.8) {
+      if (Math.abs(deltaY) > 80 && Math.abs(deltaY) > Math.abs(deltaX) * 1.5) {
         if (deltaY < 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
           navigateStep(-1);
         }
-        isScrollCoolingDown = true;
-        setTimeout(() => { isScrollCoolingDown = false; }, 700);
+        isCoolingDown = true;
+        setTimeout(() => { isCoolingDown = false; }, 600);
       }
     }, { passive: true });
 
     window.addEventListener('wheel', (e) => {
-      if (isInteractingInternal || isScrollCoolingDown) return;
-      if (Math.abs(e.deltaY) > 50) {
+      if (isCoolingDown) return;
+      if (Math.abs(e.deltaY) > 40) {
         if (e.deltaY > 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
           navigateStep(-1);
         }
-        isScrollCoolingDown = true;
-        setTimeout(() => { isScrollCoolingDown = false; }, 700);
+        isCoolingDown = true;
+        setTimeout(() => { isCoolingDown = false; }, 600);
       }
     }, { passive: true });
 
@@ -1707,7 +1609,6 @@
       let dragging = false, sX, sY, oX, oY;
       const start = (e) => {
         dragging = true;
-        isInteractingInternal = true;
         if (bfObj) bfObj.isDragging = true;
         const p = e.touches ? e.touches[0] : e;
         sX = p.clientX;
@@ -1726,7 +1627,6 @@
       };
       const end = () => {
         dragging = false;
-        setTimeout(() => { isInteractingInternal = false; }, 200);
         if (bfObj) {
           bfObj.x = element.offsetLeft;
           bfObj.y = element.offsetTop;
@@ -1843,47 +1743,12 @@
       document.getElementById('zoomModal').style.display = 'flex';
     }
 
-    // 7. iPHONE CHAT LIVE TYPING
-    let isTypingRunning = false;
-    function playChatTypingAnimation() {
-      if (isTypingRunning) return;
-      isTypingRunning = true;
-
-      const indicator = document.getElementById('typeIndicator');
-      const bubble = document.getElementById('liveWishBubble');
-      const receipt = document.getElementById('delivReceipt');
-      const fullText = "Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨";
-
-      bubble.style.display = 'none';
-      bubble.innerHTML = '';
-      receipt.style.display = 'none';
-      indicator.style.display = 'flex';
-
-      setTimeout(() => {
-        indicator.style.display = 'none';
-        bubble.style.display = 'block';
-
-        let charPos = 0;
-        const typeInterval = setInterval(() => {
-          if (charPos < fullText.length) {
-            bubble.innerHTML += fullText.charAt(charPos);
-            charPos++;
-          } else {
-            clearInterval(typeInterval);
-            receipt.style.display = 'block';
-            confetti({ particleCount: 140, spread: 90 });
-            isTypingRunning = false;
-          }
-        }, 32);
-      }, 1100);
+    // 7. iPHONE CHAT
+    function celebrateWishBurst() {
+      confetti({ particleCount: 150, spread: 90 });
     }
 
-    function replayChatTyping() {
-      isTypingRunning = false;
-      playChatTypingAnimation();
-    }
-
-    // 8. UNBOXING IPHONE 18 PRO MAX 3D
+    // 8. UNBOXING IPHONE 18 PRO MAX
     let isUnboxed = false;
     function unboxIPhoneGift() {
       if (isUnboxed) return;
@@ -1902,10 +1767,10 @@
       setTimeout(() => {
         phoneStage.classList.add('revealed');
         rotateHint.style.display = 'block';
-      }, 800);
+      }, 600);
     }
 
-    // 3D 360-degree rotation with seamless rim shell
+    // 3D 360-degree rotation for iPhone 18 Pro Max
     const phoneStageEl = document.getElementById('phoneStage');
     const i18ChassisEl = document.getElementById('i18Chassis');
     let phoneRotX = 0, phoneRotY = 0;
@@ -1914,7 +1779,6 @@
 
     phoneStageEl.addEventListener('touchstart', (e) => {
       isPhoneRotating = true;
-      isInteractingInternal = true;
       pStartX = e.touches[0].clientX;
       pStartY = e.touches[0].clientY;
     }, { passive: true });
@@ -1935,7 +1799,6 @@
 
     phoneStageEl.addEventListener('touchend', () => {
       isPhoneRotating = false;
-      setTimeout(() => { isInteractingInternal = false; }, 200);
     });
 
     function toggleAudioPlayback(btn) {
