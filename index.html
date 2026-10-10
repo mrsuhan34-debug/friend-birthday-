@@ -23,10 +23,9 @@
       overflow: hidden;
       background: #0d0103;
       color: #fff;
-      touch-action: none;
     }
 
-    /* Screen Views - Smooth Transitions */
+    /* Screen Views */
     .screen-view {
       position: absolute;
       inset: 0;
@@ -38,39 +37,45 @@
       align-items: center;
       overflow: hidden;
       z-index: 10;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     .screen-view.visible {
       display: flex !important;
-      opacity: 1;
-      transform: translateY(0);
       z-index: 20;
     }
 
-    /* Subtle Swipe Hint on all pages */
-    .scroll-hint-bar {
+    /* Top Subtle Navigation Dots */
+    .screen-indicator {
       position: fixed;
       top: 14px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.55);
+      display: flex;
+      gap: 6px;
       z-index: 9999;
       pointer-events: none;
-      background: rgba(0,0,0,0.35);
-      padding: 4px 14px;
+      background: rgba(0,0,0,0.4);
+      padding: 6px 14px;
       border-radius: 20px;
       backdrop-filter: blur(8px);
+    }
+    .indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+    .indicator-dot.active {
+      background: #ffd166;
+      width: 18px;
+      border-radius: 10px;
     }
 
     /* SCREEN 1: THEATRE CURTAIN */
     #page-curtain {
       background: #0d0103;
       cursor: pointer;
+      z-index: 50;
     }
     .theatre-curtains {
       position: absolute;
@@ -238,7 +243,7 @@
       box-shadow: 0 10px 24px rgba(247, 127, 0, 0.3);
     }
 
-    /* SCREEN 4: CANVAS (photo7 to photo10) */
+    /* SCREEN 4: CANVAS & ROAMING BUTTERFLIES */
     #page-canvas {
       background: #eee8de;
       position: relative;
@@ -382,7 +387,7 @@
       cursor: pointer;
     }
 
-    /* SCREEN 5: REALISTIC SWIPE SCRAPBOOK */
+    /* SCREEN 5: SCRAPBOOK */
     #page-scrapbook {
       background: #f4efe6;
       padding: 50px 16px 85px;
@@ -598,7 +603,7 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
 
-    /* SCREEN 7: IPHONE SCREEN (12:01 AM & Real Typewriter) */
+    /* SCREEN 7: IPHONE SCREEN */
     #page-iphone {
       background: #0a0b10;
       padding: 30px 16px 85px;
@@ -672,7 +677,6 @@
       overflow-y: auto;
     }
 
-    /* Typing Dots Indicator */
     .typing-indicator {
       display: none;
       align-items: center;
@@ -759,7 +763,6 @@
       margin-bottom: 25px;
     }
 
-    /* 3D Gift Box */
     .gift-box-3d {
       width: 170px;
       height: 170px;
@@ -770,9 +773,6 @@
       margin: 40px auto 30px;
       transition: transform 0.4s ease;
     }
-    .gift-box-3d:active {
-      transform: rotateX(-18deg) rotateY(25deg) scale(0.96);
-    }
     .gift-cube-face {
       position: absolute;
       width: 170px;
@@ -781,7 +781,6 @@
       border: 2px solid #9d4edd;
       box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
     }
-    /* Ribbon Stripes */
     .gift-cube-face::before {
       content: '';
       position: absolute;
@@ -827,7 +826,6 @@
       filter: drop-shadow(0 4px 10px rgba(255, 209, 102, 0.8));
     }
 
-    /* Unboxed Box State */
     .gift-box-3d.opened .face-lid {
       transform: rotateX(150deg) translateZ(180px) translateY(-80px);
       opacity: 0;
@@ -837,7 +835,7 @@
       opacity: 0.3;
     }
 
-    /* 3D Interactive iPhone 18 Pro Max */
+    /* 3D iPhone 18 Pro Max */
     .phone-stage-3d {
       width: 200px;
       height: 400px;
@@ -866,7 +864,6 @@
       transition: transform 0.08s linear;
     }
 
-    /* Front Screen Face */
     .iphone-face-front {
       position: absolute;
       inset: 0;
@@ -913,7 +910,6 @@
       margin-top: 4px;
     }
 
-    /* Back Ceramic/Titanium Face with Triple Camera Island */
     .iphone-face-back {
       position: absolute;
       inset: 0;
@@ -924,7 +920,6 @@
       overflow: hidden;
       padding: 16px;
     }
-    /* Triple Camera Island */
     .i18-camera-bump {
       width: 85px;
       height: 85px;
@@ -998,7 +993,7 @@
       letter-spacing: 1px;
     }
 
-    /* Spotify Floating Pill */
+    /* Spotify Floating Dock */
     .spotify-floating-dock {
       position: fixed;
       bottom: 12px;
@@ -1046,10 +1041,19 @@
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Global Subtle Scroll Guide -->
-  <div class="scroll-hint-bar" id="swipeGuide">⇅ Scroll / Swipe to Navigate</div>
+  <!-- Indicator Dots -->
+  <div class="screen-indicator" id="dotsContainer">
+    <div class="indicator-dot active"></div>
+    <div class="indicator-dot"></div>
+    <div class="indicator-dot"></div>
+    <div class="indicator-dot"></div>
+    <div class="indicator-dot"></div>
+    <div class="indicator-dot"></div>
+    <div class="indicator-dot"></div>
+    <div class="indicator-dot"></div>
+  </div>
 
-  <!-- SCREEN 1: THEATRE CURTAIN -->
+  <!-- SCREEN 1: THEATRE CURTAIN (Tap-only) -->
   <div class="screen-view visible" id="page-curtain" style="display: flex;" onclick="triggerTheatreStage()">
     <div class="curtain-intro" id="curtainIntro">
       <h2>★ SAVE THE DATE • AUGUST 11 ★</h2>
@@ -1160,9 +1164,9 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: SCRAPBOOK (Swipe/Tap to Turn Pages) -->
+  <!-- SCREEN 5: SCRAPBOOK -->
   <div class="screen-view" id="page-scrapbook">
-    <div class="swipe-hint-badge">📖 Tap edges or swipe to flip pages</div>
+    <div class="swipe-hint-badge">📖 Tap sides to flip scrapbook pages</div>
     <div class="sketchbook-stage" id="bookStage">
       <div class="spiral-coils-spine">
         <div class="coil-loop"></div>
@@ -1251,7 +1255,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: IPHONE SCREEN (12:01 AM & Live Typing) -->
+  <!-- SCREEN 7: IPHONE SCREEN (12:01 AM Live Typing) -->
   <div class="screen-view" id="page-iphone">
     <div class="iphone-device">
       <div class="iphone-vessel-notch">
@@ -1274,14 +1278,12 @@
       <div class="chat-scroll-area">
         <div class="chat-timestamp-badge">TODAY 12:01 AM</div>
         
-        <!-- Live iMessage Typing Indicator -->
         <div class="typing-indicator" id="typeIndicator">
           <div class="typing-dot"></div>
           <div class="typing-dot"></div>
           <div class="typing-dot"></div>
         </div>
 
-        <!-- Delivered Wish Bubble -->
         <div class="bubble-delivered-text" id="liveWishBubble"></div>
         <div class="delivery-receipt" id="delivReceipt">Delivered • 12:01 AM</div>
       </div>
@@ -1293,12 +1295,11 @@
     </div>
   </div>
 
-  <!-- SCREEN 8: BRAND NEW 3D GIFT UNBOXING (iPhone 18 Pro Max) -->
+  <!-- SCREEN 8: 3D UNBOXING GIFT BOX (iPhone 18 Pro Max) -->
   <div class="screen-view" id="page-gift">
     <h1 class="gift-title">A Special Gift 🎁</h1>
     <p class="gift-sub">Because you deserve the very best on your 20th</p>
 
-    <!-- 3D Luxury Gift Box -->
     <div class="gift-box-3d" id="giftBox" onclick="unboxIPhoneGift()">
       <div class="gift-cube-face face-front"></div>
       <div class="gift-cube-face face-back"></div>
@@ -1310,10 +1311,8 @@
       </div>
     </div>
 
-    <!-- 3D Rotatable iPhone 18 Pro Max -->
     <div class="phone-stage-3d" id="phoneStage">
       <div class="iphone-18-chassis" id="i18Chassis">
-        <!-- Front Screen Face -->
         <div class="iphone-face-front">
           <div class="i18-wallpaper"></div>
           <div class="i18-island"></div>
@@ -1325,7 +1324,6 @@
           <div style="z-index: 5; font-size: 0.65rem; text-align: center; color: #aaa;">Happy 20th Birthday! 💫</div>
         </div>
 
-        <!-- Back Face with Triple Camera Bump & LiDAR -->
         <div class="iphone-face-back">
           <div class="i18-camera-bump">
             <div class="lens l1"></div>
@@ -1343,7 +1341,7 @@
     <div class="rotate-hint-3d" id="rotateHint">✨ Swipe finger on the phone to rotate in 3D! ✨</div>
   </div>
 
-  <!-- Spotify Bar -->
+  <!-- Spotify Dock -->
   <div class="spotify-floating-dock">
     <div class="music-album-icon">🌼</div>
     <div class="track-details">
@@ -1374,6 +1372,14 @@
     window.addEventListener('pagehide', () => audioTrack.pause());
     window.addEventListener('beforeunload', () => audioTrack.pause());
 
+    function updateDots() {
+      const dots = document.querySelectorAll('.indicator-dot');
+      dots.forEach((dot, idx) => {
+        if (idx === currentStep) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+
     function navigateStep(direction) {
       const targetStep = currentStep + direction;
       if (targetStep >= 0 && targetStep < allScreens.length) {
@@ -1385,55 +1391,15 @@
         const nextEl = document.getElementById(allScreens[currentStep]);
         nextEl.classList.add('visible');
         nextEl.style.display = 'flex';
+        updateDots();
 
-        // Trigger Screen Actions
         if (allScreens[currentStep] === 'page-iphone') {
           playChatTypingAnimation();
         }
       }
     }
 
-    // 1. GLOBAL TOUCH SWIPE (Scroll Down / Up to navigate smoothly)
-    let touchStartY = 0;
-    let touchStartX = 0;
-    let isTouchBusy = false;
-
-    window.addEventListener('touchstart', (e) => {
-      touchStartY = e.touches[0].clientY;
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-
-    window.addEventListener('touchend', (e) => {
-      if (isTouchBusy) return;
-      const deltaY = e.changedTouches[0].clientY - touchStartY;
-      const deltaX = e.changedTouches[0].clientX - touchStartX;
-
-      // Vertical Swipe Check (Avoid conflict with horizontal scrapbook or photo dragging)
-      if (Math.abs(deltaY) > 55 && Math.abs(deltaY) > Math.abs(deltaX) * 1.4) {
-        if (deltaY < 0) {
-          // Swipe Up / Scroll Down -> Next Page
-          navigateStep(1);
-        } else {
-          // Swipe Down / Scroll Up -> Prev Page
-          navigateStep(-1);
-        }
-        isTouchBusy = true;
-        setTimeout(() => { isTouchBusy = false; }, 650);
-      }
-    }, { passive: true });
-
-    // Wheel Scroll Support (for desktop)
-    window.addEventListener('wheel', (e) => {
-      if (isTouchBusy) return;
-      if (Math.abs(e.deltaY) > 30) {
-        if (e.deltaY > 0) navigateStep(1);
-        else navigateStep(-1);
-        isTouchBusy = true;
-        setTimeout(() => { isTouchBusy = false; }, 650);
-      }
-    }, { passive: true });
-
-    // 1. Curtain Tap Music & Opening
+    // 1. CURTAIN TAP ACTION
     let stageOpened = false;
     function triggerTheatreStage() {
       if (stageOpened) return;
@@ -1445,7 +1411,47 @@
       setTimeout(() => navigateStep(1), 1500);
     }
 
-    // 2. 19 Burns & 20 Glows Transition
+    // 2. SMOOTH SCROLL NAVIGATION (Only active after Curtain opens)
+    let touchStartY = 0, touchStartX = 0;
+    let isScrollCoolingDown = false;
+
+    window.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      if (currentStep === 0) return; // Curtain is tap-only
+      if (isScrollCoolingDown) return;
+
+      const deltaY = e.changedTouches[0].clientY - touchStartY;
+      const deltaX = e.changedTouches[0].clientX - touchStartX;
+
+      // Vertical swipe detection
+      if (Math.abs(deltaY) > 50 && Math.abs(deltaY) > Math.abs(deltaX) * 1.3) {
+        if (deltaY < 0) {
+          // Swipe Up -> Next Screen
+          navigateStep(1);
+        } else {
+          // Swipe Down -> Prev Screen
+          navigateStep(-1);
+        }
+        isScrollCoolingDown = true;
+        setTimeout(() => { isScrollCoolingDown = false; }, 600);
+      }
+    }, { passive: true });
+
+    window.addEventListener('wheel', (e) => {
+      if (currentStep === 0 || isScrollCoolingDown) return;
+      if (Math.abs(e.deltaY) > 30) {
+        if (e.deltaY > 0) navigateStep(1);
+        else navigateStep(-1);
+        isScrollCoolingDown = true;
+        setTimeout(() => { isScrollCoolingDown = false; }, 600);
+      }
+    }, { passive: true });
+
+    // 3. 19 BURNS & 20 GLOWS
     const fireCanvas = document.getElementById('fireCanvas');
     const fCtx = fireCanvas.getContext('2d');
     let emberSparks = [];
@@ -1510,7 +1516,7 @@
       }, 2100);
     }
 
-    // 4. Free-Roaming Butterflies Engine
+    // 4. BUTTERFLIES ROAMING & DRAGGING
     const butterflyNodes = [
       { el: document.getElementById('bf0'), x: 50, y: 80, vx: 0.8, vy: 0.6, t: 0 },
       { el: document.getElementById('bf1'), x: 260, y: 120, vx: -0.7, vy: 0.5, t: 1.2 },
@@ -1592,7 +1598,7 @@
       document.getElementById('quoteModal').style.display = 'none';
     }
 
-    // 5. SCRAPBOOK SWIPE & TAP FLIP ENGINE
+    // 5. SCRAPBOOK PAGE FLIP
     let currentFlippedSheet = 0;
     const totalSheets = 4;
 
@@ -1602,7 +1608,6 @@
         currentFlippedSheet++;
       }
     }
-
     function flipPrevSheet() {
       if (currentFlippedSheet > 0) {
         currentFlippedSheet--;
@@ -1611,29 +1616,14 @@
     }
 
     const bookStage = document.getElementById('bookStage');
-    let bStartX = 0, bStartY = 0;
-
-    bookStage.addEventListener('touchstart', (e) => {
-      bStartX = e.touches[0].clientX;
-      bStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    bookStage.addEventListener('touchend', (e) => {
-      const diffX = e.changedTouches[0].clientX - bStartX;
-      const diffY = e.changedTouches[0].clientY - bStartY;
-      
-      if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX < 0) flipNextSheet();
-        else flipPrevSheet();
-      } else if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15) {
-        const rect = bookStage.getBoundingClientRect();
-        const clickX = e.changedTouches[0].clientX - rect.left;
-        if (clickX > rect.width * 0.4) flipNextSheet();
-        else flipPrevSheet();
-      }
+    bookStage.addEventListener('click', (e) => {
+      const rect = bookStage.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      if (clickX > rect.width * 0.4) flipNextSheet();
+      else flipPrevSheet();
     });
 
-    // 6. Stars Canvas & 3D Carousel Cylinder
+    // 6. 3D CYLINDER CAROUSEL & STARS
     const sCanvas = document.getElementById('starsLayer');
     const sCtx = sCanvas.getContext('2d');
     let starsArr = [];
@@ -1683,14 +1673,14 @@
     animateCarouselShowcase();
 
     const galaxyTouchZone = document.getElementById('galaxyZone');
-    let touchStartX = 0;
+    let touchStartX_C = 0;
     galaxyTouchZone.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
+      touchStartX_C = e.touches[0].clientX;
     }, { passive: true });
     galaxyTouchZone.addEventListener('touchmove', (e) => {
-      const deltaX = e.touches[0].clientX - touchStartX;
+      const deltaX = e.touches[0].clientX - touchStartX_C;
       currentVelocity = deltaX * 0.35;
-      touchStartX = e.touches[0].clientX;
+      touchStartX_C = e.touches[0].clientX;
     }, { passive: true });
 
     function openZoomImage(src) {
@@ -1698,7 +1688,7 @@
       document.getElementById('zoomModal').style.display = 'flex';
     }
 
-    // 7. iPhone Real Live Typewriter Animation
+    // 7. iPHONE CHAT LIVE TYPING
     let isTypingRunning = false;
     function playChatTypingAnimation() {
       if (isTypingRunning) return;
@@ -1714,7 +1704,6 @@
       receipt.style.display = 'none';
       indicator.style.display = 'flex';
 
-      // 1.2s typing dots then start typing text
       setTimeout(() => {
         indicator.style.display = 'none';
         bubble.style.display = 'block';
@@ -1731,7 +1720,7 @@
             isTypingRunning = false;
           }
         }, 32);
-      }, 1200);
+      }, 1100);
     }
 
     function replayChatTyping() {
@@ -1753,7 +1742,6 @@
       giftBox.classList.add('opened');
       unboxBtn.style.display = 'none';
 
-      // Golden Confetti shower
       confetti({ particleCount: 220, spread: 120, origin: { y: 0.5 } });
 
       setTimeout(() => {
@@ -1762,7 +1750,7 @@
       }, 800);
     }
 
-    // 3D 360-Degree Interactive Drag for iPhone 18 Pro Max
+    // 3D 360-degree rotation for iPhone 18 Pro Max
     const phoneStageEl = document.getElementById('phoneStage');
     const i18ChassisEl = document.getElementById('i18Chassis');
     let phoneRotX = 0, phoneRotY = 0;
@@ -1782,7 +1770,7 @@
 
       phoneRotY += dX * 0.9;
       phoneRotX -= dY * 0.7;
-      phoneRotX = Math.max(-50, Math.min(50, phoneRotX)); // clamp pitch
+      phoneRotX = Math.max(-50, Math.min(50, phoneRotX));
 
       i18ChassisEl.style.transform = `rotateX(${phoneRotX}deg) rotateY(${phoneRotY}deg)`;
       pStartX = e.touches[0].clientX;
