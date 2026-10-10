@@ -196,7 +196,7 @@
       z-index: 25;
     }
 
-    /* SCREEN 3: HAPPY BIRTHDAY SWEETY */
+    /* SCREEN 3: HAPPY BIRTHDAY SWEETY (photo1.jpg to photo6.jpg) */
     #page-sweety {
       background: #faf8f5;
       color: #111;
@@ -744,49 +744,51 @@
       cursor: pointer;
     }
 
-    /* SCREEN 8: 3D UNBOXING GIFT BOX & IPHONE 18 PRO MAX */
+    /* SCREEN 8: 3D UNBOXING GIFT BOX & DEEP MAROON TITANIUM IPHONE 18 PRO MAX */
     #page-gift {
-      background: radial-gradient(circle at center, #1c1328 0%, #06030c 100%);
-      padding: 30px 16px 85px;
+      background: radial-gradient(circle at center, #220f17 0%, #080306 100%);
+      padding: 20px 16px 85px;
       perspective: 1200px;
     }
     .gift-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       color: #ffd166;
       text-shadow: 0 0 20px rgba(255, 209, 102, 0.4);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .gift-sub {
-      color: #bfa8e0;
-      font-size: 0.9rem;
-      margin-bottom: 25px;
+      color: #e2b4c1;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
     }
 
+    /* 3D Gift Box (Perfect Sealed Box at start) */
     .gift-box-3d {
-      width: 170px;
-      height: 170px;
+      width: 160px;
+      height: 160px;
       position: relative;
       transform-style: preserve-3d;
-      transform: rotateX(-18deg) rotateY(25deg);
+      transform: rotateX(-15deg) rotateY(25deg);
       cursor: pointer;
-      margin: 40px auto 30px;
-      transition: transform 0.4s ease;
+      margin: 30px auto 25px;
+      transition: transform 0.4s ease, opacity 0.5s ease;
     }
     .gift-cube-face {
       position: absolute;
-      width: 170px;
-      height: 170px;
-      background: linear-gradient(135deg, #7b2cbf, #5a189a);
-      border: 2px solid #9d4edd;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+      width: 160px;
+      height: 160px;
+      background: linear-gradient(135deg, #670d22, #400513);
+      border: 1.5px solid #a82040;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
     }
+    /* Gold Ribbon Cross */
     .gift-cube-face::before {
       content: '';
       position: absolute;
-      left: 70px;
+      left: 66px;
       top: 0;
-      width: 30px;
+      width: 28px;
       height: 100%;
       background: linear-gradient(90deg, #ffd166, #ffbe0b);
       box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
@@ -794,54 +796,60 @@
     .gift-cube-face::after {
       content: '';
       position: absolute;
-      top: 70px;
+      top: 66px;
       left: 0;
       width: 100%;
-      height: 30px;
+      height: 28px;
       background: linear-gradient(180deg, #ffd166, #ffbe0b);
       box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
     }
-    .face-front  { transform: translateZ(85px); }
-    .face-back   { transform: rotateY(180deg) translateZ(85px); }
-    .face-left   { transform: rotateY(-90deg) translateZ(85px); }
-    .face-right  { transform: rotateY(90deg) translateZ(85px); }
-    .face-bottom { transform: rotateX(-90deg) translateZ(85px); }
+    .face-front  { transform: translateZ(80px); }
+    .face-back   { transform: rotateY(180deg) translateZ(80px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(80px); }
+    .face-right  { transform: rotateY(90deg) translateZ(80px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(80px); }
+    
+    /* Box Lid - Sealed on Top */
     .face-lid {
       position: absolute;
-      width: 180px;
-      height: 180px;
-      left: -5px;
-      background: linear-gradient(135deg, #9d4edd, #5a189a);
-      border: 3px solid #ffbe0b;
-      transform: rotateX(90deg) translateZ(92px);
+      width: 168px;
+      height: 168px;
+      left: -4px;
+      top: -4px;
+      background: linear-gradient(135deg, #8a1330, #5c081b);
+      border: 2px solid #ffd166;
+      transform: rotateX(90deg) translateZ(82px);
       transform-origin: top center;
       transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
     }
     .ribbon-bow {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 3rem;
+      font-size: 2.8rem;
       filter: drop-shadow(0 4px 10px rgba(255, 209, 102, 0.8));
     }
 
+    /* Unboxed Box State */
     .gift-box-3d.opened .face-lid {
-      transform: rotateX(150deg) translateZ(180px) translateY(-80px);
+      transform: rotateX(150deg) translateZ(160px) translateY(-80px);
       opacity: 0;
     }
     .gift-box-3d.opened {
-      transform: rotateX(0deg) rotateY(0deg) scale(0.6) translateY(140px);
-      opacity: 0.3;
+      transform: rotateX(0deg) rotateY(0deg) scale(0.4) translateY(220px);
+      opacity: 0.2;
+      pointer-events: none;
     }
 
-    /* 3D iPhone 18 Pro Max */
+    /* 3D Realistic iPhone 18 Pro Max */
     .phone-stage-3d {
-      width: 200px;
-      height: 400px;
+      width: 210px;
+      height: 425px;
       perspective: 1200px;
       position: absolute;
-      top: 48%;
+      top: 45%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.2);
       opacity: 0;
@@ -864,83 +872,133 @@
       transition: transform 0.08s linear;
     }
 
-    .iphone-face-front {
+    /* Slim Solid Titanium Border (No hollow gap!) */
+    .iphone-face-front, .iphone-face-back {
       position: absolute;
       inset: 0;
-      background: #000;
       border-radius: 40px;
-      border: 4px solid #3d3b43;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(157, 78, 221, 0.4);
-      transform: translateZ(10px);
+      backface-visibility: hidden;
       overflow: hidden;
+    }
+
+    /* Front Screen with Real iOS Icons & Dynamic Island */
+    .iphone-face-front {
+      background: #000;
+      border: 4px solid #4a1523;
+      transform: translateZ(5px);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 10px;
+      padding: 10px 12px 14px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.9), inset 0 0 10px rgba(255,255,255,0.08);
     }
-    .i18-wallpaper {
+    .front-wallpaper {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 30%, #5a189a, #03071e 80%);
+      background: radial-gradient(circle at 50% 20%, #681126, #140409 85%);
       z-index: 1;
     }
+    .ios-status-row {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 6px;
+      margin-bottom: 4px;
+    }
+    .ios-clock { font-size: 0.72rem; font-weight: 700; color: #fff; }
     .i18-island {
-      width: 65px;
+      width: 66px;
       height: 18px;
       background: #000;
       border-radius: 16px;
-      margin: 0 auto;
-      z-index: 5;
-      box-shadow: 0 0 4px rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.12);
     }
-    .i18-screen-content {
+    .ios-icons { font-size: 0.65rem; color: #fff; }
+
+    /* iOS 4x4 App Grid */
+    .ios-app-grid {
+      position: relative;
       z-index: 5;
-      text-align: center;
-      margin-top: 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px 8px;
+      margin-top: 25px;
+      padding: 0 4px;
     }
-    .i18-hello {
-      font-size: 1.8rem;
-      font-weight: 800;
+    .ios-app-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .app-icon-squircle {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+    .app-label {
+      font-size: 0.55rem;
       color: #fff;
-      letter-spacing: 2px;
-    }
-    .i18-sub {
-      font-size: 0.75rem;
-      color: #ffd166;
-      margin-top: 4px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
     }
 
-    .iphone-face-back {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(145deg, #2b2833, #15141a);
-      border-radius: 40px;
-      border: 4px solid #4a4754;
-      transform: rotateY(180deg) translateZ(10px);
-      overflow: hidden;
-      padding: 16px;
-    }
-    .i18-camera-bump {
-      width: 85px;
-      height: 85px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.15);
+    /* iOS Dock at Bottom */
+    .ios-dock {
       position: relative;
+      z-index: 5;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 6px 4px;
+      margin-top: auto;
+    }
+
+    /* Back Face: Maroon Titanium + Vector Apple Logo + Triple Camera */
+    .iphone-face-back {
+      background: linear-gradient(145deg, #4d101d, #2d0710 80%);
+      border: 4px solid #5a1424;
+      transform: rotateY(180deg) translateZ(5px);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+    }
+    /* Triple Camera Bump Island */
+    .i18-camera-bump {
+      width: 90px;
+      height: 90px;
+      align-self: flex-start;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(14px);
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.18);
+      position: relative;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
     }
     .lens {
       position: absolute;
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #050508 40%, #1c1c24 80%, #555);
-      border: 2px solid #666;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      border: 2px solid #731e33;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.7);
     }
     .lens.l1 { top: 8px; left: 8px; }
     .lens.l2 { bottom: 8px; left: 8px; }
-    .lens.l3 { top: 28px; right: 8px; }
+    .lens.l3 { top: 30px; right: 8px; }
     .lidar-dot {
       position: absolute;
       bottom: 12px;
@@ -949,26 +1007,34 @@
       height: 10px;
       border-radius: 50%;
       background: #111;
-      border: 1px solid #333;
+      border: 1px solid #444;
     }
-    .apple-logo-laser {
+    .flash-dot {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2.2rem;
-      opacity: 0.75;
+      top: 12px;
+      right: 14px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #fff9db;
+      border: 1px solid #d4af37;
+    }
+
+    /* Vector SVG Apple Logo */
+    .apple-logo-svg {
+      width: 38px;
+      height: 46px;
+      fill: #e8b0bd;
+      opacity: 0.85;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
     }
     .titanium-badge {
-      position: absolute;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 0.65rem;
       letter-spacing: 2px;
-      color: #999;
+      color: #df9aa8;
       text-transform: uppercase;
-      white-space: nowrap;
+      margin-bottom: 8px;
+      font-weight: 700;
     }
 
     .unbox-instruction-btn {
@@ -983,14 +1049,23 @@
       box-shadow: 0 8px 25px rgba(255, 209, 102, 0.4);
       animation: pulseAnim 1.4s infinite alternate;
       z-index: 100;
+      margin-top: 10px;
     }
     .rotate-hint-3d {
       color: #ffd166;
-      font-size: 0.85rem;
-      margin-top: 15px;
+      font-size: 0.82rem;
+      position: absolute;
+      bottom: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
       display: none;
       z-index: 100;
       letter-spacing: 1px;
+      background: rgba(0,0,0,0.5);
+      padding: 5px 16px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
     }
 
     /* Spotify Floating Dock */
@@ -1053,7 +1128,7 @@
     <div class="indicator-dot"></div>
   </div>
 
-  <!-- SCREEN 1: THEATRE CURTAIN (Tap-only) -->
+  <!-- SCREEN 1: THEATRE CURTAIN -->
   <div class="screen-view visible" id="page-curtain" style="display: flex;" onclick="triggerTheatreStage()">
     <div class="curtain-intro" id="curtainIntro">
       <h2>★ SAVE THE DATE • AUGUST 11 ★</h2>
@@ -1255,7 +1330,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: IPHONE SCREEN (12:01 AM Live Typing) -->
+  <!-- SCREEN 7: IPHONE SCREEN -->
   <div class="screen-view" id="page-iphone">
     <div class="iphone-device">
       <div class="iphone-vessel-notch">
@@ -1295,11 +1370,12 @@
     </div>
   </div>
 
-  <!-- SCREEN 8: 3D UNBOXING GIFT BOX (iPhone 18 Pro Max) -->
+  <!-- SCREEN 8: BRAND NEW 3D DEEP MAROON IPHONE 18 PRO MAX -->
   <div class="screen-view" id="page-gift">
     <h1 class="gift-title">A Special Gift 🎁</h1>
     <p class="gift-sub">Because you deserve the very best on your 20th</p>
 
+    <!-- 3D Luxury Sealed Gift Box -->
     <div class="gift-box-3d" id="giftBox" onclick="unboxIPhoneGift()">
       <div class="gift-cube-face face-front"></div>
       <div class="gift-cube-face face-back"></div>
@@ -1311,28 +1387,79 @@
       </div>
     </div>
 
+    <!-- 3D iPhone 18 Pro Max with Real iOS Apps & Deep Maroon Titanium -->
     <div class="phone-stage-3d" id="phoneStage">
       <div class="iphone-18-chassis" id="i18Chassis">
+        <!-- Front Screen with Real iOS Apps -->
         <div class="iphone-face-front">
-          <div class="i18-wallpaper"></div>
-          <div class="i18-island"></div>
-          <div class="i18-screen-content">
-            <div class="i18-hello">iPhone 18</div>
-            <div class="i18-sub">Pro Max • 1TB</div>
-            <p style="font-size: 0.65rem; color: #fff; margin-top: 15px; opacity: 0.8;">Cosmic Titanium Edition</p>
+          <div class="front-wallpaper"></div>
+          
+          <div class="ios-status-row">
+            <span class="ios-clock">12:01</span>
+            <div class="i18-island"></div>
+            <div class="ios-icons">5G 🔋</div>
           </div>
-          <div style="z-index: 5; font-size: 0.65rem; text-align: center; color: #aaa;">Happy 20th Birthday! 💫</div>
+
+          <div class="ios-app-grid">
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: linear-gradient(135deg, #34c759, #30b0c7);">📞</div>
+              <span class="app-label">Phone</span>
+            </div>
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: linear-gradient(135deg, #007aff, #5856d6);">💬</div>
+              <span class="app-label">Messages</span>
+            </div>
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: linear-gradient(135deg, #ff9500, #ff3b30);">📷</div>
+              <span class="app-label">Camera</span>
+            </div>
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: linear-gradient(135deg, #ff2d55, #ff375f);">🌸</div>
+              <span class="app-label">Photos</span>
+            </div>
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: #1c1c1e;">⚙️</div>
+              <span class="app-label">Settings</span>
+            </div>
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: linear-gradient(135deg, #fa2d48, #d81b60);">🎵</div>
+              <span class="app-label">Music</span>
+            </div>
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: #ffcc00; color: #111;">📝</div>
+              <span class="app-label">Notes</span>
+            </div>
+            <div class="ios-app-item">
+              <div class="app-icon-squircle" style="background: linear-gradient(135deg, #5ac8fa, #007aff);">🧭</div>
+              <span class="app-label">Safari</span>
+            </div>
+          </div>
+
+          <!-- Bottom Dock -->
+          <div class="ios-dock">
+            <div class="app-icon-squircle" style="background: #34c759; width: 30px; height: 30px; font-size: 0.95rem;">📞</div>
+            <div class="app-icon-squircle" style="background: #007aff; width: 30px; height: 30px; font-size: 0.95rem;">💬</div>
+            <div class="app-icon-squircle" style="background: #5856d6; width: 30px; height: 30px; font-size: 0.95rem;">🧭</div>
+            <div class="app-icon-squircle" style="background: #ff2d55; width: 30px; height: 30px; font-size: 0.95rem;">🎵</div>
+          </div>
         </div>
 
+        <!-- Back Face with Maroon Titanium & Official Vector Apple Logo -->
         <div class="iphone-face-back">
           <div class="i18-camera-bump">
             <div class="lens l1"></div>
             <div class="lens l2"></div>
             <div class="lens l3"></div>
             <div class="lidar-dot"></div>
+            <div class="flash-dot"></div>
           </div>
-          <div class="apple-logo-laser"></div>
-          <div class="titanium-badge">iPhone 18 Pro Max • Titanium</div>
+
+          <!-- Real Vector Apple Logo SVG -->
+          <svg class="apple-logo-svg" viewBox="0 0 170 170">
+            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.08-7.83-8.12-12.44-15.11-6.08-9.18-10.9-19.46-14.47-30.82-3.56-11.36-5.35-22.37-5.35-33.02 0-14.28 3.56-25.9 10.67-34.87 7.11-8.97 16.03-13.56 26.75-13.78 4.22 0 9.14 1.18 14.76 3.53 5.61 2.36 9.4 3.59 11.37 3.7 2.18-.22 6.13-1.54 11.87-3.96 5.73-2.43 10.38-3.53 13.96-3.32 10.5.54 19.14 4.54 25.93 12.01-9.27 5.66-13.8 13.62-13.6 23.88.22 8.07 3.28 14.88 9.19 20.44 5.9 5.56 12.98 8.84 21.22 9.85-2.29 6.87-5.06 13.9-8.31 21.09zM119.22 31.86c0-6.76 2.45-13.11 7.35-19.06 4.9-5.94 10.87-9.69 17.92-11.23.44 1.3.66 2.61.66 3.92 0 6.64-2.5 12.93-7.51 18.88-5.02 5.95-11.13 9.64-18.34 11.08-.08-1.22-.08-2.42-.08-3.59z"/>
+          </svg>
+
+          <div class="titanium-badge">Deep Maroon Titanium</div>
         </div>
       </div>
     </div>
@@ -1393,6 +1520,13 @@
         nextEl.style.display = 'flex';
         updateDots();
 
+        // If returned to curtain screen, reset curtain state cleanly
+        if (currentStep === 0) {
+          document.getElementById('curtainIntro').style.opacity = '1';
+          document.getElementById('theatreCurtains').classList.remove('opened');
+          stageOpened = false;
+        }
+
         if (allScreens[currentStep] === 'page-iphone') {
           playChatTypingAnimation();
         }
@@ -1408,10 +1542,10 @@
       
       document.getElementById('curtainIntro').style.opacity = '0';
       document.getElementById('theatreCurtains').classList.add('opened');
-      setTimeout(() => navigateStep(1), 1500);
+      setTimeout(() => navigateStep(1), 1400);
     }
 
-    // 2. SMOOTH SCROLL NAVIGATION (Only active after Curtain opens)
+    // 2. SMOOTH SCROLL NAVIGATION (Fully bidirectional down & up!)
     let touchStartY = 0, touchStartX = 0;
     let isScrollCoolingDown = false;
 
@@ -1421,7 +1555,6 @@
     }, { passive: true });
 
     window.addEventListener('touchend', (e) => {
-      if (currentStep === 0) return; // Curtain is tap-only
       if (isScrollCoolingDown) return;
 
       const deltaY = e.changedTouches[0].clientY - touchStartY;
@@ -1430,10 +1563,12 @@
       // Vertical swipe detection
       if (Math.abs(deltaY) > 50 && Math.abs(deltaY) > Math.abs(deltaX) * 1.3) {
         if (deltaY < 0) {
-          // Swipe Up -> Next Screen
-          navigateStep(1);
+          // Swipe Up / Scroll Down -> Next Screen (unless on curtain)
+          if (currentStep > 0 || stageOpened) {
+            navigateStep(1);
+          }
         } else {
-          // Swipe Down -> Prev Screen
+          // Swipe Down / Scroll Up -> Previous Screen (all the way to curtain!)
           navigateStep(-1);
         }
         isScrollCoolingDown = true;
@@ -1442,10 +1577,13 @@
     }, { passive: true });
 
     window.addEventListener('wheel', (e) => {
-      if (currentStep === 0 || isScrollCoolingDown) return;
+      if (isScrollCoolingDown) return;
       if (Math.abs(e.deltaY) > 30) {
-        if (e.deltaY > 0) navigateStep(1);
-        else navigateStep(-1);
+        if (e.deltaY > 0) {
+          if (currentStep > 0 || stageOpened) navigateStep(1);
+        } else {
+          navigateStep(-1);
+        }
         isScrollCoolingDown = true;
         setTimeout(() => { isScrollCoolingDown = false; }, 600);
       }
