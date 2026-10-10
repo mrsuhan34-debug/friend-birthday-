@@ -742,7 +742,7 @@
       cursor: pointer;
     }
 
-    /* SCREEN 8: BRAND NEW CANVAS-BASED 3D GIFT & METALLIC IPHONE 18 PRO MAX */
+    /* SCREEN 8: BRAND NEW HIGH-FIDELITY SEALED GIFT BOX & REAL SKETCHFAB 3D IPHONE */
     #page-gift {
       background: radial-gradient(circle at center, #260f17 0%, #0a0408 100%);
       padding: 20px 16px 85px;
@@ -760,10 +760,10 @@
       margin-bottom: 12px;
     }
 
-    /* Realistic Sealed Gift Box Graphic */
+    /* 100% FLUSH SEALED BOX */
     .gift-box-wrapper {
-      width: 170px;
-      height: 170px;
+      width: 175px;
+      height: 175px;
       position: relative;
       margin: 15px auto 20px;
       cursor: pointer;
@@ -783,35 +783,32 @@
       filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
     }
 
-    /* Canvas 3D Phone Container (Zero Corner Gaps!) */
-    .phone-canvas-stage {
-      width: 250px;
-      height: 440px;
+    /* Official 3D Interactive Model Stage */
+    .phone-model-stage {
+      width: 280px;
+      height: 480px;
       position: absolute;
-      top: 45%;
+      top: 48%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.2);
       opacity: 0;
       pointer-events: none;
       transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 50;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+      border: 3px solid #6b1d2e;
     }
-    .phone-canvas-stage.revealed {
+    .phone-model-stage.revealed {
       transform: translate(-50%, -50%) scale(1);
       opacity: 1;
       pointer-events: auto;
     }
-    #phone3dCanvas {
+    .sketchfab-iframe {
       width: 100%;
       height: 100%;
-      cursor: grab;
-      touch-action: none;
-    }
-    #phone3dCanvas:active {
-      cursor: grabbing;
+      border: none;
     }
 
     .unbox-instruction-btn {
@@ -1143,7 +1140,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 8: 100% SEALED GIFT BOX & HIGH-FIDELITY 3D IPHONE 18 PRO MAX -->
+  <!-- SCREEN 8: BRAND NEW HIGH-FIDELITY SEALED GIFT BOX & REAL SKETCHFAB 3D IPHONE -->
   <div class="screen-view" id="page-gift">
     <h1 class="gift-title">A Special Gift 🎁</h1>
     <p class="gift-sub">Because you deserve the very best on your 20th</p>
@@ -1151,29 +1148,18 @@
     <!-- 100% Perfectly Sealed Gift Box (SVG Vector Isometric 3D) -->
     <div class="gift-box-wrapper" id="giftBox" onclick="unboxIPhoneGift()">
       <svg class="sealed-box-svg" viewBox="0 0 200 200">
-        <!-- Box Bottom Shadow -->
         <ellipse cx="100" cy="180" rx="75" ry="16" fill="rgba(0,0,0,0.5)" />
-        
-        <!-- Box Base Body -->
         <polygon points="100,85 170,120 170,170 100,140" fill="#420815" />
         <polygon points="30,120 100,85 100,140 30,170" fill="#630f23" />
-        
-        <!-- Yellow Ribbons on Base -->
         <polygon points="90,90 110,80 110,135 90,145" fill="#ffbe0b" opacity="0.9" />
         <polygon points="30,140 100,110 100,125 30,155" fill="#ffbe0b" opacity="0.9" />
         <polygon points="100,110 170,140 170,155 100,125" fill="#ffd166" opacity="0.95" />
-        
-        <!-- Sealed Lid Flush on Box -->
         <polygon points="100,45 180,82 100,118 20,82" fill="#80172e" stroke="#2a050d" stroke-width="2" />
         <polygon points="20,82 100,118 100,128 20,92" fill="#570d1d" />
         <polygon points="100,118 180,82 180,92 100,128" fill="#420815" />
-        
-        <!-- Lid Yellow Cross Ribbon -->
         <polygon points="92,49 108,41 108,114 92,122" fill="#ffd166" />
         <polygon points="28,86 100,53 100,67 36,97" fill="#ffbe0b" />
         <polygon points="100,53 172,86 164,97 100,67" fill="#ffbe0b" />
-        
-        <!-- Big Ribbon Bow on Top Center -->
         <circle cx="100" cy="78" r="14" fill="#ffd166" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.4))" />
         <path d="M100,78 C70,45 55,75 88,80 Z" fill="#ffbe0b" />
         <path d="M100,78 C130,45 145,75 112,80 Z" fill="#ffbe0b" />
@@ -1182,9 +1168,9 @@
       </svg>
     </div>
 
-    <!-- High-Fidelity 3D Canvas iPhone 18 Pro Max -->
-    <div class="phone-canvas-stage" id="phoneStage">
-      <canvas id="phone3dCanvas" width="500" height="880"></canvas>
+    <!-- Official 3D Interactive Model Stage (Zero Gaps / Perfect Bezel & Titanium Frame) -->
+    <div class="phone-model-stage" id="phoneStage">
+      <iframe class="sketchfab-iframe" title="Apple iPhone 18 Pro Max" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/5cb0778041a34f09b409a38c687bb1d4/embed?autostart=1&internal=1&ui_infos=0&ui_controls=0&ui_watermark=0&ui_theme=dark"></iframe>
     </div>
 
     <button class="unbox-instruction-btn" id="unboxBtn" onclick="unboxIPhoneGift()">Tap to Unbox Your Gift 🎁</button>
@@ -1587,7 +1573,7 @@
       playChatTypingAnimation();
     }
 
-    // 8. UNBOXING IPHONE 18 PRO MAX (CANVAS-BASED 3D ENGINE)
+    // 8. UNBOXING IPHONE 18 PRO MAX (REAL SKETCHFAB 3D ENGINE)
     let isUnboxed = false;
     function unboxIPhoneGift() {
       if (isUnboxed) return;
@@ -1606,195 +1592,7 @@
       setTimeout(() => {
         phoneStage.classList.add('revealed');
         rotateHint.style.display = 'block';
-        init3DCanvasPhone();
       }, 700);
-    }
-
-    // 3D Canvas iPhone 18 Pro Max Renderer (Zero Hole / Seamless Rounded Titanium Edge)
-    let phoneCanvas, pCtx;
-    let pRotY = 0.2, pRotX = -0.15;
-    let isInteractingCanvas = false;
-
-    function init3DCanvasPhone() {
-      phoneCanvas = document.getElementById('phone3dCanvas');
-      pCtx = phoneCanvas.getContext('2d');
-
-      let startX, startY;
-      phoneCanvas.addEventListener('touchstart', (e) => {
-        isInteractingCanvas = true;
-        isInteractingInternal = true;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      }, { passive: true });
-
-      phoneCanvas.addEventListener('touchmove', (e) => {
-        if (!isInteractingCanvas) return;
-        const dx = e.touches[0].clientX - startX;
-        const dy = e.touches[0].clientY - startY;
-        pRotY += dx * 0.015;
-        pRotX -= dy * 0.012;
-        pRotX = Math.max(-0.6, Math.min(0.6, pRotX));
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        render3DPhone();
-      }, { passive: true });
-
-      phoneCanvas.addEventListener('touchend', () => {
-        isInteractingCanvas = false;
-        setTimeout(() => { isInteractingInternal = false; }, 200);
-      });
-
-      render3DPhone();
-    }
-
-    function render3DPhone() {
-      if (!pCtx) return;
-      const w = phoneCanvas.width;
-      const h = phoneCanvas.height;
-      pCtx.clearRect(0, 0, w, h);
-
-      pCtx.save();
-      pCtx.translate(w / 2, h / 2);
-
-      const cosY = Math.cos(pRotY);
-      const sinY = Math.sin(pRotY);
-      const cosX = Math.cos(pRotX);
-
-      const phoneW = 340 * Math.abs(cosY);
-      const phoneH = 680 * Math.abs(cosX);
-      const radius = 54 * Math.abs(cosY);
-      const thickness = 24;
-
-      const isShowingFront = cosY > 0;
-
-      // Draw 3D Extrusion Side Rim Shell (Smooth Solid Edge - NO HOLES!)
-      const edgeSteps = 16;
-      for (let i = -thickness / 2; i <= thickness / 2; i += 2) {
-        const offset = i * sinY;
-        pCtx.fillStyle = `hsl(${345 + i}, 45%, ${15 + Math.abs(i) * 1.5}%)`;
-        pCtx.beginPath();
-        drawRoundedRect(pCtx, -phoneW / 2 + offset, -phoneH / 2, phoneW, phoneH, radius);
-        pCtx.fill();
-      }
-
-      // Metallic Titanium Polish Highlight
-      pCtx.strokeStyle = 'rgba(235, 180, 195, 0.65)';
-      pCtx.lineWidth = 4;
-      pCtx.beginPath();
-      drawRoundedRect(pCtx, -phoneW / 2, -phoneH / 2, phoneW, phoneH, radius);
-      pCtx.stroke();
-
-      if (isShowingFront) {
-        // FRONT SCREEN (iOS 18 Velvet Fluid Wallpaper + Apps + Island)
-        pCtx.save();
-        pCtx.beginPath();
-        drawRoundedRect(pCtx, -phoneW / 2 + 4, -phoneH / 2 + 4, phoneW - 8, phoneH - 8, radius - 4);
-        pCtx.clip();
-
-        // Velvet Bloom Wallpaper
-        const grad = pCtx.createRadialGradient(0, -100, 30, 0, 0, 400);
-        grad.addColorStop(0, '#75172e');
-        grad.addColorStop(0.5, '#400a16');
-        grad.addColorStop(1, '#0e0205');
-        pCtx.fillStyle = grad;
-        pCtx.fillRect(-phoneW / 2, -phoneH / 2, phoneW, phoneH);
-
-        // Status Bar & Clock
-        pCtx.fillStyle = '#ffffff';
-        pCtx.font = 'bold 24px -apple-system, sans-serif';
-        pCtx.textAlign = 'left';
-        pCtx.fillText('12:01', -phoneW / 2 + 35, -phoneH / 2 + 45);
-
-        // Dynamic Island
-        pCtx.fillStyle = '#000000';
-        pCtx.beginPath();
-        drawRoundedRect(pCtx, -55 * Math.abs(cosY), -phoneH / 2 + 25, 110 * Math.abs(cosY), 30, 15);
-        pCtx.fill();
-
-        // 4x3 App Squircle Icons
-        const appColors = [
-          '#34c759', '#007aff', '#ff9500', '#ff2d55',
-          '#1c1c1e', '#fa2d48', '#ffcc00', '#5ac8fa',
-          '#5856d6', '#af52de', '#ff3b30', '#30b0c7'
-        ];
-        const appIcons = ['📞', '💬', '📷', '🌸', '⚙️', '🎵', '📝', '🧭', '✉️', '⏰', '🗺️', '🛍️'];
-        let idx = 0;
-        for (let row = 0; row < 3; row++) {
-          for (let col = 0; col < 4; col++) {
-            const ax = (-phoneW / 2 + 30 + col * (phoneW / 4 - 6)) * Math.abs(cosY);
-            const ay = -phoneH / 2 + 130 + row * 95;
-            pCtx.fillStyle = appColors[idx];
-            pCtx.beginPath();
-            drawRoundedRect(pCtx, ax, ay, 50 * Math.abs(cosY), 50, 14);
-            pCtx.fill();
-            pCtx.font = '24px sans-serif';
-            pCtx.textAlign = 'center';
-            pCtx.fillText(appIcons[idx], ax + 25 * Math.abs(cosY), ay + 35);
-            idx++;
-          }
-        }
-
-        // Bottom Dock
-        pCtx.fillStyle = 'rgba(255, 255, 255, 0.22)';
-        pCtx.beginPath();
-        drawRoundedRect(pCtx, -phoneW / 2 + 20, phoneH / 2 - 95, phoneW - 40, 70, 24);
-        pCtx.fill();
-
-        pCtx.restore();
-      } else {
-        // BACK FACE (Deep Velvet Maroon + Triple Camera + Apple Logo)
-        pCtx.save();
-        pCtx.beginPath();
-        drawRoundedRect(pCtx, -phoneW / 2 + 4, -phoneH / 2 + 4, phoneW - 8, phoneH - 8, radius - 4);
-        pCtx.clip();
-
-        // Deep Maroon Velvet Finish
-        const bGrad = pCtx.createLinearGradient(-phoneW / 2, -phoneH / 2, phoneW / 2, phoneH / 2);
-        bGrad.addColorStop(0, '#52101f');
-        bGrad.addColorStop(0.5, '#380914');
-        bGrad.addColorStop(1, '#20040a');
-        pCtx.fillStyle = bGrad;
-        pCtx.fillRect(-phoneW / 2, -phoneH / 2, phoneW, phoneH);
-
-        // Triple Camera Island
-        const camW = 140 * Math.abs(cosY);
-        const camH = 140;
-        pCtx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-        pCtx.beginPath();
-        drawRoundedRect(pCtx, -phoneW / 2 + 20, -phoneH / 2 + 20, camW, camH, 36);
-        pCtx.fill();
-
-        // Lenses
-        pCtx.fillStyle = '#111';
-        pCtx.beginPath();
-        pCtx.arc((-phoneW / 2 + 45) * Math.abs(cosY), -phoneH / 2 + 50, 22 * Math.abs(cosY), 0, Math.PI * 2);
-        pCtx.arc((-phoneW / 2 + 45) * Math.abs(cosY), -phoneH / 2 + 115, 22 * Math.abs(cosY), 0, Math.PI * 2);
-        pCtx.arc((-phoneW / 2 + 110) * Math.abs(cosY), -phoneH / 2 + 82, 22 * Math.abs(cosY), 0, Math.PI * 2);
-        pCtx.fill();
-        pCtx.strokeStyle = '#8f233a';
-        pCtx.lineWidth = 4;
-        pCtx.stroke();
-
-        // Official Apple Logo Center
-        pCtx.fillStyle = '#f7bfce';
-        pCtx.beginPath();
-        pCtx.arc(0, 40, 32 * Math.abs(cosY), 0, Math.PI * 2);
-        pCtx.fill();
-        pCtx.restore();
-      }
-
-      pCtx.restore();
-    }
-
-    function drawRoundedRect(ctx, x, y, width, height, radius) {
-      if (width < 2 * radius) radius = width / 2;
-      if (height < 2 * radius) radius = height / 2;
-      ctx.moveTo(x + radius, y);
-      ctx.arcTo(x + width, y, x + width, y + height, radius);
-      ctx.arcTo(x + width, y + height, x, y + height, radius);
-      ctx.arcTo(x, y + height, x, y, radius);
-      ctx.arcTo(x, y, x + width, y, radius);
-      ctx.closePath();
     }
 
     function toggleAudioPlayback(btn) {
