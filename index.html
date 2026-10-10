@@ -194,12 +194,13 @@
       z-index: 25;
     }
 
-    /* SCREEN 3: HAPPY BIRTHDAY SWEETY */
+    /* SCREEN 3: HAPPY BIRTHDAY SWEETY (Zero Auto-scroll bug) */
     #page-sweety {
       background: #faf8f5;
       color: #111;
-      padding: 60px 20px 85px;
+      padding: 50px 20px 85px;
       justify-content: center;
+      touch-action: pan-y;
     }
     .sweety-title-block {
       width: 100%;
@@ -220,7 +221,8 @@
       justify-content: center;
       gap: 10px;
       max-width: 440px;
-      margin: 10px 0 20px;
+      margin: 10px 0 15px;
+      pointer-events: auto;
     }
     .filmstrip-card {
       width: 100px;
@@ -741,9 +743,9 @@
       cursor: pointer;
     }
 
-    /* SCREEN 8: BRAND NEW 3D DEEP MAROON IPHONE 18 PRO MAX WITH REAL THICKNESS */
+    /* SCREEN 8: BRAND NEW 3D DESERT TITANIUM IPHONE 18 PRO MAX */
     #page-gift {
-      background: radial-gradient(circle at center, #220f17 0%, #080306 100%);
+      background: radial-gradient(circle at center, #261f22 0%, #0a080a 100%);
       padding: 20px 16px 85px;
       perspective: 1400px;
     }
@@ -755,12 +757,12 @@
       margin-bottom: 4px;
     }
     .gift-sub {
-      color: #e2b4c1;
+      color: #e5d2bb;
       font-size: 0.85rem;
       margin-bottom: 15px;
     }
 
-    /* 3D Gift Box */
+    /* 3D Gift Box (PERFECT TIGHT SEALED - ZERO OPENING BUG!) */
     .gift-box-3d {
       width: 150px;
       height: 150px;
@@ -775,8 +777,8 @@
       position: absolute;
       width: 150px;
       height: 150px;
-      background: linear-gradient(135deg, #670d22, #400513);
-      border: 1.5px solid #a82040;
+      background: linear-gradient(135deg, #4f1222, #300813);
+      border: 1.5px solid #8c263e;
       box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
     }
     .gift-cube-face::before {
@@ -805,18 +807,19 @@
     .face-right  { transform: rotateY(90deg) translateZ(75px); }
     .face-bottom { transform: rotateX(-90deg) translateZ(75px); }
     
+    /* Box Lid (FLUSH & SEALED ON CUBE) */
     .face-lid {
       position: absolute;
-      width: 158px;
-      height: 158px;
-      left: -4px;
-      top: -4px;
-      background: linear-gradient(135deg, #8a1330, #5c081b);
+      width: 156px;
+      height: 156px;
+      left: -3px;
+      top: -3px;
+      background: linear-gradient(135deg, #6b1a30, #420b1b);
       border: 2px solid #ffd166;
-      transform: rotateX(90deg) translateZ(77px);
+      transform: rotateX(90deg) translateZ(76px);
       transform-origin: top center;
       transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      box-shadow: 0 0 18px rgba(0,0,0,0.7);
     }
     .ribbon-bow {
       position: absolute;
@@ -837,7 +840,7 @@
       pointer-events: none;
     }
 
-    /* 3D Realistic iPhone 18 Pro Max with TRUE 16px Solid Depth */
+    /* 3D iPhone 18 Pro Max with SOLID DESERT TITANIUM RIM & NO HOLES */
     .phone-stage-3d {
       width: 200px;
       height: 410px;
@@ -866,13 +869,13 @@
       transition: transform 0.08s linear;
     }
 
-    /* Front Screen (z = +8px) */
+    /* Front Screen Face */
     .iphone-face-front {
       position: absolute;
       inset: 0;
       background: #000;
       border-radius: 38px;
-      border: 3px solid #3d0c18;
+      border: 3.5px solid #a8947f;
       transform: translateZ(8px);
       display: flex;
       flex-direction: column;
@@ -884,7 +887,7 @@
     .front-wallpaper {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 20%, #681126, #140409 85%);
+      background: radial-gradient(circle at 50% 20%, #4a3e36, #14110f 85%);
       z-index: 1;
     }
     .ios-status-row {
@@ -951,32 +954,33 @@
       margin-top: auto;
     }
 
-    /* Back Face (z = -8px) */
+    /* Back Face: Desert Gold/Titanium Finish (Clean Apple Logo Only) */
     .iphone-face-back {
       position: absolute;
       inset: 0;
-      background: linear-gradient(145deg, #4d101d, #2d0710 80%);
+      background: linear-gradient(145deg, #403630, #241d19 80%);
       border-radius: 38px;
-      border: 3px solid #5a1424;
+      border: 3.5px solid #a8947f;
       transform: rotateY(180deg) translateZ(8px);
       padding: 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       box-shadow: 0 15px 40px rgba(0,0,0,0.9);
       overflow: hidden;
       backface-visibility: hidden;
     }
     .i18-camera-bump {
+      position: absolute;
+      top: 14px;
+      left: 14px;
       width: 88px;
       height: 88px;
-      align-self: flex-start;
       background: rgba(255,255,255,0.06);
       backdrop-filter: blur(14px);
       border-radius: 26px;
       border: 1px solid rgba(255,255,255,0.18);
-      position: relative;
       box-shadow: 0 6px 14px rgba(0,0,0,0.4);
     }
     .lens {
@@ -985,7 +989,7 @@
       height: 29px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #050508 40%, #1c1c24 80%, #555);
-      border: 2px solid #731e33;
+      border: 2px solid #a8947f;
       box-shadow: 0 4px 8px rgba(0,0,0,0.7);
     }
     .lens.l1 { top: 8px; left: 8px; }
@@ -1013,29 +1017,21 @@
     }
 
     .apple-logo-svg {
-      width: 38px;
-      height: 46px;
-      fill: #e8b0bd;
-      opacity: 0.85;
-      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
-    }
-    .titanium-badge {
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      color: #df9aa8;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      font-weight: 700;
+      width: 44px;
+      height: 52px;
+      fill: #e0d0be;
+      opacity: 0.88;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
     }
 
-    /* REAL 3D METAL SIDES (Solid 16px Thickness) */
+    /* FULL SOLID METALLIC RIM SHELL (Continuous Curves - NO HOLES) */
     .iphone-side-left, .iphone-side-right {
       position: absolute;
-      top: 20px;
-      bottom: 20px;
+      top: 15px;
+      bottom: 15px;
       width: 16px;
-      background: linear-gradient(180deg, #2b0811, #571625 20%, #751f33 50%, #571625 80%, #2b0811);
-      box-shadow: inset 0 0 4px rgba(255,255,255,0.25);
+      background: linear-gradient(180deg, #382e27, #6e5e50 20%, #8f7c6b 50%, #6e5e50 80%, #382e27);
+      box-shadow: inset 0 0 4px rgba(255,255,255,0.3);
     }
     .iphone-side-left {
       left: -8px;
@@ -1046,12 +1042,11 @@
       transform: rotateY(90deg);
     }
 
-    /* Buttons on Left Side */
     .side-btn {
       position: absolute;
       left: 3px;
       width: 10px;
-      background: #8f2940;
+      background: #a8947f;
       border-radius: 2px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.6);
     }
@@ -1060,13 +1055,12 @@
     .vol-down { top: 110px; height: 35px; }
     .power-btn { top: 80px; height: 48px; }
 
-    /* Top & Bottom Curved Slices */
     .iphone-side-top, .iphone-side-bottom {
       position: absolute;
-      left: 20px;
-      right: 20px;
+      left: 15px;
+      right: 15px;
       height: 16px;
-      background: linear-gradient(90deg, #2b0811, #6b1b2e 50%, #2b0811);
+      background: linear-gradient(90deg, #382e27, #7a6859 50%, #382e27);
     }
     .iphone-side-top {
       top: -8px;
@@ -1427,12 +1421,12 @@
     </div>
   </div>
 
-  <!-- SCREEN 8: BRAND NEW 3D DEEP MAROON IPHONE 18 PRO MAX WITH REALISTIC THICKNESS -->
+  <!-- SCREEN 8: 3D UNBOXING & DESERT TITANIUM IPHONE 18 PRO MAX -->
   <div class="screen-view" id="page-gift">
     <h1 class="gift-title">A Special Gift 🎁</h1>
     <p class="gift-sub">Because you deserve the very best on your 20th</p>
 
-    <!-- 3D Luxury Sealed Gift Box -->
+    <!-- 3D Sealed Box -->
     <div class="gift-box-3d" id="giftBox" onclick="unboxIPhoneGift()">
       <div class="gift-cube-face face-front"></div>
       <div class="gift-cube-face face-back"></div>
@@ -1444,10 +1438,10 @@
       </div>
     </div>
 
-    <!-- 3D iPhone 18 Pro Max with Realistic Thickness -->
+    <!-- 3D iPhone 18 Pro Max with Desert Titanium Finish & Continuous Rim -->
     <div class="phone-stage-3d" id="phoneStage">
       <div class="iphone-18-chassis" id="i18Chassis">
-        <!-- Front Screen Face (z = +8px) -->
+        <!-- Front Screen Face -->
         <div class="iphone-face-front">
           <div class="front-wallpaper"></div>
           
@@ -1500,7 +1494,7 @@
           </div>
         </div>
 
-        <!-- Back Face (z = -8px) -->
+        <!-- Back Face: Desert Gold/Titanium Finish (Clean Apple Logo Only) -->
         <div class="iphone-face-back">
           <div class="i18-camera-bump">
             <div class="lens l1"></div>
@@ -1510,15 +1504,12 @@
             <div class="flash-dot"></div>
           </div>
 
-          <!-- Official Vector Apple Logo SVG -->
           <svg class="apple-logo-svg" viewBox="0 0 170 170">
             <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.08-7.83-8.12-12.44-15.11-6.08-9.18-10.9-19.46-14.47-30.82-3.56-11.36-5.35-22.37-5.35-33.02 0-14.28 3.56-25.9 10.67-34.87 7.11-8.97 16.03-13.56 26.75-13.78 4.22 0 9.14 1.18 14.76 3.53 5.61 2.36 9.4 3.59 11.37 3.7 2.18-.22 6.13-1.54 11.87-3.96 5.73-2.43 10.38-3.53 13.96-3.32 10.5.54 19.14 4.54 25.93 12.01-9.27 5.66-13.8 13.62-13.6 23.88.22 8.07 3.28 14.88 9.19 20.44 5.9 5.56 12.98 8.84 21.22 9.85-2.29 6.87-5.06 13.9-8.31 21.09zM119.22 31.86c0-6.76 2.45-13.11 7.35-19.06 4.9-5.94 10.87-9.69 17.92-11.23.44 1.3.66 2.61.66 3.92 0 6.64-2.5 12.93-7.51 18.88-5.02 5.95-11.13 9.64-18.34 11.08-.08-1.22-.08-2.42-.08-3.59z"/>
           </svg>
-
-          <div class="titanium-badge">Deep Maroon Titanium</div>
         </div>
 
-        <!-- 3D Metallic Sides with Buttons & Ports (Solid Thickness) -->
+        <!-- FULL SOLID CONTINUOUS TITANIUM RIM -->
         <div class="iphone-side-left">
           <div class="side-btn action-btn"></div>
           <div class="side-btn vol-up"></div>
@@ -1627,7 +1618,7 @@
     // 2. SMOOTH SCROLL NAVIGATION (Calibrated Deliberate Swipe Threshold)
     let touchStartY = 0, touchStartX = 0;
     let isScrollCoolingDown = false;
-    let isInteractingInternal = false; // Prevents page skip when dragging photos/phone
+    let isInteractingInternal = false;
 
     window.addEventListener('touchstart', (e) => {
       touchStartY = e.touches[0].clientY;
@@ -1641,7 +1632,7 @@
       const deltaY = e.changedTouches[0].clientY - touchStartY;
       const deltaX = e.changedTouches[0].clientX - touchStartX;
 
-      // Deliberate Swipe Threshold: 90px vertical & clear angle
+      // Swipe Threshold: 90px vertical & clear angle
       if (Math.abs(deltaY) > 90 && Math.abs(deltaY) > Math.abs(deltaX) * 1.6) {
         if (deltaY < 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
@@ -1971,7 +1962,7 @@
       }, 800);
     }
 
-    // 3D 360-degree rotation with side metal rim
+    // 3D 360-degree rotation with solid titanium rim
     const phoneStageEl = document.getElementById('phoneStage');
     const i18ChassisEl = document.getElementById('i18Chassis');
     let phoneRotX = 0, phoneRotY = 0;
