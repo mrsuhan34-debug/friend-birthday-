@@ -1550,9 +1550,6 @@
       <div class="filmstrip-card"><img src="photo6.jpg" /></div>
     </div>
 
-    <!-- NEW: tap hint -->
-    <p class="tap-hint">👆 Tap any photo</p>
-
     <!-- NEW: mic doodle + flowing text -->
     <div class="mic-overlay" id="micOverlay">
       <div class="mic-text" id="micText"></div>
@@ -1680,7 +1677,7 @@
         <div class="inner-sheet-frame">
           <img src="photo2.jpg" />
         </div>
-        <p class="handwritten-msg">"Out of all my random memories, you're the one I'd save forever. Thanks for being my person! 🤍"</p>
+        <p class="handwritten-msg">"Stay happy and stay well, all your life. 🤍"</p>
         <div class="page-index-label">1 / 3</div>
       </div>
 
@@ -1689,7 +1686,7 @@
         <div class="inner-sheet-frame">
           <img src="photo11.jpg" />
         </div>
-        <p class="handwritten-msg">"Thanks for every crazy laugh and silly moment. Life is way more fun with you around! 😂"</p>
+        <p class="handwritten-msg">"Thanks for every crazy laugh and silly moment. 😂"</p>
         <div class="page-index-label">2 / 3</div>
       </div>
 
@@ -2031,6 +2028,9 @@
 
         if (allScreens[currentStep] === 'page-iphone') {
           playChatTypingAnimation();
+        }
+        if (allScreens[currentStep] === 'page-sweety') {
+          startMicShow();
         }
         if (allScreens[currentStep] === 'page-galaxy') {
           setupStarsCanvas();
@@ -2550,12 +2550,14 @@
       }
     })();
 
-    // HERO PAGE: tap photo -> blur -> mic doodle + text flow
-    const MIC_TEXT = "Happy Birthday Sweety! 🎉 May this year bring you closer to everything you're chasing.";
+    // HERO PAGE: page khulle auto -> blur -> mic doodle + text flow (only once)
+    const MIC_TEXT = "Happy Birthday Sweety. May this year bring you closer to everything you're chasing.";
     let micBusy = false;
+    let micShown = false;
 
     function startMicShow() {
-      if (micBusy) return;
+      if (micBusy || micShown) return;
+      micShown = true;
       micBusy = true;
       isInteractingInternal = true;
 
@@ -2578,10 +2580,6 @@
         });
       }, 1000);
     }
-
-    document.querySelectorAll('.filmstrip-card').forEach(c => {
-      c.addEventListener('click', startMicShow);
-    });
 
     // MASTER LOOP: only the visible screen is animated
     let lastTime = performance.now();
