@@ -17,6 +17,12 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
+    /* FIX: iOS Safari cannot type in inputs when user-select is none */
+    input, textarea {
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
     html, body {
       width: 100%;
       height: 100%;
@@ -30,6 +36,7 @@
       inset: 0;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       display: none;
       flex-direction: column;
       justify-content: center;
@@ -51,10 +58,9 @@
       gap: 6px;
       z-index: 9999;
       pointer-events: none;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.55);
       padding: 6px 14px;
       border-radius: 20px;
-      backdrop-filter: blur(8px);
     }
     .indicator-dot {
       width: 7px;
@@ -351,8 +357,7 @@
     .quote-center-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.78);
       display: none;
       justify-content: center;
       align-items: center;
@@ -373,7 +378,7 @@
       from { transform: scale(0.7) translateY(20px); opacity: 0; }
       to { transform: scale(1) translateY(0); opacity: 1; }
     }
-    .quote-box h3 { font-size: 2.2rem; margin-bottom: 10px; }
+    .quote-box h3 { font-size: 2.2rem; margin-bottom: 10px; color: #111; }
     .quote-box p { font-size: 1rem; font-weight: 600; color: #333; line-height: 1.5; }
     .close-btn {
       margin-top: 18px;
@@ -562,12 +567,14 @@
       perspective: 1100px;
       position: relative;
       z-index: 10;
+      touch-action: none;
     }
     .galaxy-rotator {
       width: 100%;
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
+      will-change: transform;
     }
     .floating-orbit-pic {
       position: absolute;
@@ -580,19 +587,19 @@
       border-radius: 14px;
       object-fit: cover;
       border: 3px solid rgba(255,255,255,0.85);
-      box-shadow: 0 10px 30px rgba(255, 117, 143, 0.5), 0 0 15px rgba(255,255,255,0.3);
-      background: #111;
+      box-shadow: 0 6px 18px rgba(255, 117, 143, 0.45);
+      background: linear-gradient(135deg, #2a1020, #111);
       cursor: pointer;
+      backface-visibility: visible;
     }
     .enlarged-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.88);
+      background: rgba(0, 0, 0, 0.92);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 99999;
-      backdrop-filter: blur(8px);
     }
     .enlarged-modal img {
       max-width: 85%;
@@ -602,7 +609,7 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
 
-    /* SCREEN 7: IPHONE SCREEN */
+    /* SCREEN 7: IPHONE CHAT SCREEN */
     #page-iphone {
       background: #0a0b10;
       padding: 30px 16px 85px;
@@ -610,7 +617,8 @@
     .iphone-device {
       width: 100%;
       max-width: 345px;
-      height: 620px;
+      height: min(620px, calc(100vh - 130px));
+      height: min(620px, calc(100dvh - 130px));
       background: #000;
       border-radius: 46px;
       border: 4px solid #28282b;
@@ -629,6 +637,7 @@
       height: 32px;
       position: relative;
       margin-bottom: 6px;
+      flex-shrink: 0;
     }
     .island-cutout {
       position: absolute;
@@ -650,6 +659,7 @@
       gap: 10px;
       padding: 8px 6px 12px;
       border-bottom: 1px solid #1a1a1c;
+      flex-shrink: 0;
     }
     .user-avatar-round {
       width: 36px;
@@ -671,6 +681,7 @@
     }
     .chat-scroll-area {
       flex: 1;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
@@ -712,6 +723,9 @@
       box-shadow: 0 4px 14px rgba(11, 132, 254, 0.3);
       display: none;
       min-height: 48px;
+      align-self: flex-end;
+      max-width: 92%;
+      word-wrap: break-word;
     }
     .delivery-receipt {
       font-size: 0.65rem;
@@ -728,6 +742,7 @@
       border-radius: 26px;
       padding: 6px 8px 6px 16px;
       margin-top: 10px;
+      flex-shrink: 0;
     }
     .input-box-mimic { flex: 1; font-size: 0.85rem; color: #999; }
     .audio-play-round {
@@ -743,11 +758,13 @@
       cursor: pointer;
     }
 
-    /* SCREEN 8: SURPRISE GUESS GAME & 3D IPHONE 18 PRO MAX REVEAL */
+    /* SCREEN 8: SURPRISE FOR YOU + 3D IPHONE 18 PRO MAX */
     #page-gift {
-      background: radial-gradient(circle at center, #260914 0%, #060204 100%);
-      padding: 20px 16px 85px;
-      perspective: 1200px;
+      background: radial-gradient(circle at center, #260f17 0%, #0a0408 100%);
+      justify-content: flex-start;
+      padding: 62px 16px 85px;
+      perspective: 1400px;
+      text-align: center;
     }
     .gift-title {
       font-family: 'Playfair Display', serif;
@@ -755,92 +772,192 @@
       color: #ffd166;
       text-shadow: 0 0 20px rgba(255, 209, 102, 0.4);
       margin-bottom: 4px;
+      position: relative;
+      z-index: 5;
     }
     .gift-sub {
       color: #e5b3c2;
-      font-size: 0.85rem;
-      margin-bottom: 12px;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 5;
     }
 
-    /* Interactive Guess Card (English) */
-    .guess-card-container {
-      width: 90%;
-      max-width: 340px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1.5px solid rgba(255, 209, 102, 0.35);
-      backdrop-filter: blur(16px);
-      border-radius: 26px;
-      padding: 24px 20px;
-      text-align: center;
-      margin: 15px auto 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-      transition: all 0.5s ease;
-    }
-    .guess-card-container h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.45rem;
-      color: #ffd166;
-      margin-bottom: 8px;
-    }
-    .guess-card-container p {
-      font-size: 0.95rem;
-      color: #ddd;
-      margin-bottom: 16px;
-      line-height: 1.4;
-    }
-    .guess-input-field {
+    /* Guess input */
+    .guess-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
       width: 100%;
-      padding: 12px 16px;
-      border-radius: 18px;
-      border: 1.5px solid rgba(255, 209, 102, 0.5);
-      background: rgba(0, 0, 0, 0.45);
+      max-width: 320px;
+      margin-top: 8px;
+      position: relative;
+      z-index: 120;
+      transition: opacity 0.4s ease;
+    }
+    .guess-panel.hide { opacity: 0; pointer-events: none; }
+    #guessInput {
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid #ffd166;
       color: #fff;
-      font-size: 0.95rem;
-      outline: none;
+      border-radius: 28px;
+      padding: 13px 20px;
+      font-size: 16px;
+      font-weight: 600;
       text-align: center;
-      margin-bottom: 14px;
-      user-select: text !important;
-      -webkit-user-select: text !important;
+      outline: none;
+      box-shadow: 0 0 18px rgba(255, 209, 102, 0.25);
     }
-    .guess-submit-btn {
-      background: linear-gradient(135deg, #ffd166, #ffbe0b);
-      color: #111;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 20px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 209, 102, 0.35);
-    }
-    .guess-feedback-msg {
-      font-family: 'Caveat', cursive;
-      font-size: 1.4rem;
-      color: #ffd166;
-      margin-top: 12px;
-      min-height: 32px;
-      display: none;
+    #guessInput::placeholder { color: #c99aa9; font-weight: 400; }
+    #guessInput.shake { animation: shakeInput 0.4s; }
+    @keyframes shakeInput {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
     }
 
-    /* 3D iPhone 18 Pro Max with Seamless Velvet Maroon Finish & Solid Rim */
-    .phone-stage-3d {
-      width: 200px;
-      height: 410px;
-      perspective: 1400px;
+    .guess-result {
       position: absolute;
-      top: 44%;
+      top: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 330px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: #fff5d6;
+      text-shadow: 0 0 14px rgba(255, 209, 102, 0.5);
+      display: none;
+      z-index: 130;
+      min-height: 30px;
+    }
+
+    /* 3D Gift Box */
+    .gift-box-3d {
+      width: 150px;
+      height: 150px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-15deg) rotateY(25deg);
+      cursor: pointer;
+      margin: 34px auto 24px;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      flex-shrink: 0;
+    }
+    .gift-box-3d.float { animation: boxFloat 2.4s ease-in-out infinite alternate; }
+    @keyframes boxFloat {
+      from { transform: rotateX(-15deg) rotateY(15deg) translateY(0); }
+      to   { transform: rotateX(-15deg) rotateY(35deg) translateY(-8px); }
+    }
+    .gift-cube-face {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(135deg, #4f1222, #300813);
+      border: 1.5px solid #8c263e;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+    }
+    .gift-cube-face::before {
+      content: '';
+      position: absolute;
+      left: 62px;
+      top: 0;
+      width: 26px;
+      height: 100%;
+      background: linear-gradient(90deg, #ffd166, #ffbe0b);
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+    }
+    .gift-cube-face::after {
+      content: '';
+      position: absolute;
+      top: 62px;
+      left: 0;
+      width: 100%;
+      height: 26px;
+      background: linear-gradient(180deg, #ffd166, #ffbe0b);
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+    }
+    .face-front  { transform: translateZ(75px); }
+    .face-back   { transform: rotateY(180deg) translateZ(75px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(75px); }
+    .face-right  { transform: rotateY(90deg) translateZ(75px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+    /* Lid sits flush on top */
+    .face-lid {
+      position: absolute;
+      width: 158px;
+      height: 158px;
+      left: -4px;
+      top: -4px;
+      background: linear-gradient(135deg, #6b1a30, #420b1b);
+      border: 2px solid #ffd166;
+      transform: rotateX(90deg) translateZ(75px);
+      transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.9s ease;
+      box-shadow: 0 0 18px rgba(0,0,0,0.7);
+    }
+    .face-lid::before {
+      content: '';
+      position: absolute;
+      left: 66px; top: 0; width: 26px; height: 100%;
+      background: linear-gradient(90deg, #ffd166, #ffbe0b);
+    }
+    .face-lid::after {
+      content: '';
+      position: absolute;
+      top: 66px; left: 0; width: 100%; height: 26px;
+      background: linear-gradient(180deg, #ffd166, #ffbe0b);
+    }
+    .ribbon-bow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.6rem;
+      z-index: 2;
+      filter: drop-shadow(0 4px 10px rgba(255, 209, 102, 0.8));
+    }
+
+    .gift-box-3d.opened { animation: none; transform: rotateX(-15deg) rotateY(25deg) scale(0.6); opacity: 0; pointer-events: none; }
+    .gift-box-3d.opened .face-lid {
+      transform: translateY(-140px) rotateX(90deg) translateZ(75px) rotateX(-35deg);
+      opacity: 0;
+    }
+
+    /* 3D iPhone 18 Pro Max  (196 x 412 body, 20px thick, 42px corner radius) */
+    .phone-stage-3d {
+      width: 196px;
+      height: 412px;
+      perspective: 1500px;
+      position: absolute;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.2);
       opacity: 0;
       pointer-events: none;
-      transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 1s ease;
       z-index: 50;
       touch-action: none;
     }
     .phone-stage-3d.revealed {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(var(--ps, 1));
       opacity: 1;
       pointer-events: auto;
+    }
+    .phone-ground-shadow {
+      position: absolute;
+      left: 50%;
+      bottom: -38px;
+      width: 180px;
+      height: 28px;
+      margin-left: -90px;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.7), rgba(0,0,0,0) 70%);
+      pointer-events: none;
     }
 
     .iphone-18-chassis {
@@ -848,29 +965,104 @@
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
-      transition: transform 0.08s linear;
+      will-change: transform;
     }
 
-    /* Front Screen Face (z = +7px) */
-    .iphone-face-front {
+    /* Rounded titanium body = 21 stacked rounded rectangles, so the corners are truly round */
+    .rim-stack {
       position: absolute;
       inset: 0;
+      transform-style: preserve-3d;
+    }
+    .rim-layer {
+      position: absolute;
+      inset: 0;
+      border-radius: 42px;
+    }
+
+    /* Straight titanium side walls (stop where the rounded corners start) */
+    .wall { position: absolute; }
+    .wall-l, .wall-r {
+      top: 42px;
+      width: 20px;
+      height: 328px;
+      background: linear-gradient(90deg, #3d0d1a 0%, #8e2a45 30%, #b13a58 50%, #8e2a45 70%, #3d0d1a 100%);
+    }
+    .wall-l { left: -10px; transform: rotateY(90deg); }
+    .wall-r { left: 186px; transform: rotateY(90deg); }
+    .wall-t, .wall-b {
+      left: 42px;
+      width: 112px;
+      height: 20px;
+      background: linear-gradient(180deg, #3d0d1a 0%, #8e2a45 30%, #b13a58 50%, #8e2a45 70%, #3d0d1a 100%);
+    }
+    .wall-t { top: -10px; transform: rotateX(90deg); }
+    .wall-b {
+      top: 402px;
+      transform: rotateX(90deg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .usbc-port {
+      width: 24px;
+      height: 6px;
+      background: #0a0a0c;
+      border-radius: 3px;
+      border: 1px solid #5a2433;
+    }
+    .speaker-holes { display: flex; gap: 3px; }
+    .speaker-hole {
+      width: 3px;
+      height: 3px;
+      background: #0a0a0c;
+      border-radius: 50%;
+    }
+
+    /* Side buttons (sit just outside the walls) */
+    .hw-btn {
+      position: absolute;
+      width: 9px;
+      transform: rotateY(90deg);
+      background: linear-gradient(90deg, #4a1020, #b13a58 50%, #4a1020);
+      border-radius: 2px;
+    }
+    .hw-btn.left { left: -5.7px; }
+    .hw-btn.right { left: 192.7px; }
+    .hw-action { top: 72px; height: 24px; }
+    .hw-volup  { top: 112px; height: 42px; }
+    .hw-voldn  { top: 162px; height: 42px; }
+    .hw-power  { top: 150px; height: 66px; }
+    .hw-camctl { top: 300px; height: 36px; }
+
+    /* Front glass */
+    .iphone-face-front {
+      position: absolute;
+      inset: 4px;
       background: #000;
       border-radius: 38px;
-      border: 3.5px solid #6b1d2e;
-      transform: translateZ(7px);
+      transform: translateZ(10.6px);
       display: flex;
       flex-direction: column;
-      padding: 10px 12px 14px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+      padding: 10px 11px 10px;
       overflow: hidden;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
     .front-wallpaper {
       position: absolute;
-      inset: 0;
+      inset: 2px;
+      border-radius: 36px;
       background: radial-gradient(circle at 50% 20%, #571324, #120308 85%);
       z-index: 1;
+    }
+    .front-glare {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      background: linear-gradient(115deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 38%);
     }
     .ios-status-row {
       position: relative;
@@ -878,27 +1070,27 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 6px;
+      padding: 0 8px;
       margin-bottom: 4px;
     }
-    .ios-clock { font-size: 0.72rem; font-weight: 700; color: #fff; }
+    .ios-clock { font-size: 0.7rem; font-weight: 700; color: #fff; }
     .i18-island {
-      width: 66px;
-      height: 18px;
+      width: 62px;
+      height: 17px;
       background: #000;
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    .ios-icons { font-size: 0.65rem; color: #fff; }
+    .ios-icons { font-size: 0.6rem; color: #fff; }
 
     .ios-app-grid {
       position: relative;
       z-index: 5;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px 8px;
-      margin-top: 25px;
-      padding: 0 4px;
+      gap: 12px 6px;
+      margin-top: 24px;
+      padding: 0 2px;
     }
     .ios-app-item {
       display: flex;
@@ -917,17 +1109,15 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
     .app-label {
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       color: #fff;
       font-weight: 600;
       letter-spacing: -0.2px;
     }
-
     .ios-dock {
       position: relative;
       z-index: 5;
       background: rgba(255,255,255,0.22);
-      backdrop-filter: blur(15px);
       border-radius: 20px;
       display: flex;
       justify-content: space-around;
@@ -935,160 +1125,155 @@
       padding: 6px 4px;
       margin-top: auto;
     }
+    .home-bar {
+      position: relative;
+      z-index: 6;
+      width: 64px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.75);
+      margin: 8px auto 0;
+    }
 
-    /* Back Face: Deep Velvet Maroon Titanium (Clean Apple Logo Only) */
+    /* Back glass */
     .iphone-face-back {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(145deg, #4a0f1d, #24050d 80%);
+      inset: 4px;
       border-radius: 38px;
-      border: 3.5px solid #6b1d2e;
-      transform: rotateY(180deg) translateZ(7px);
-      padding: 14px;
+      transform: rotateY(180deg) translateZ(10.6px);
+      background: linear-gradient(150deg, #6a1429 0%, #3d0a18 45%, #260511 100%);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.9);
       overflow: hidden;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .iphone-face-back::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(115deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 42%);
     }
     .i18-camera-bump {
       position: absolute;
-      top: 14px;
-      left: 14px;
-      width: 88px;
-      height: 88px;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(14px);
+      top: 11px;
+      left: 11px;
+      width: 94px;
+      height: 94px;
       border-radius: 26px;
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+      background: linear-gradient(145deg, rgba(255,255,255,0.24), rgba(255,255,255,0.07) 55%, rgba(0,0,0,0.2));
+      border: 1px solid rgba(255,255,255,0.28);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.35);
     }
     .lens {
       position: absolute;
-      width: 29px;
-      height: 29px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #050508 40%, #1c1c24 80%, #555);
-      border: 2px solid #822238;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+      background: conic-gradient(from 210deg, #d8c3c9, #5d4a50, #efe1e5, #4d3b42, #d8c3c9);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.65);
+    }
+    .lens::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #4b4f8a 0, #15162a 28%, #07070d 62%, #000 100%);
+    }
+    .lens::after {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(190, 200, 255, 0.55);
     }
     .lens.l1 { top: 8px; left: 8px; }
-    .lens.l2 { bottom: 8px; left: 8px; }
-    .lens.l3 { top: 29px; right: 8px; }
-    .lidar-dot {
-      position: absolute;
-      bottom: 12px;
-      right: 14px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #111;
-      border: 1px solid #444;
-    }
+    .lens.l2 { top: 50px; left: 8px; }
+    .lens.l3 { top: 29px; left: 50px; }
     .flash-dot {
       position: absolute;
-      top: 12px;
-      right: 14px;
-      width: 11px;
-      height: 11px;
+      top: 10px;
+      right: 9px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: #fff9db;
-      border: 1px solid #d4af37;
+      background: radial-gradient(circle, #fffbe6 30%, #e6c872 100%);
+      border: 1px solid rgba(255,255,255,0.4);
     }
-
+    .mic-dot {
+      position: absolute;
+      top: 16px;
+      left: 58px;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #0a0306;
+    }
+    .lidar-dot {
+      position: absolute;
+      bottom: 9px;
+      right: 10px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #000 35%, #2a1a20 100%);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
     .apple-logo-svg {
-      width: 44px;
-      height: 52px;
+      width: 40px;
+      height: 48px;
       fill: #f5bccc;
       opacity: 0.9;
+      margin-top: 40px;
       filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
     }
 
-    /* FULL SOLID CONTINUOUS TITANIUM RIM WITH ZERO CORNER GAPS */
-    .iphone-side-left, .iphone-side-right {
-      position: absolute;
-      top: 4px;
-      bottom: 4px;
-      width: 14px;
-      background: linear-gradient(180deg, #360b15, #6b1b2d 20%, #8c243c 50%, #6b1b2d 80%, #360b15);
-      box-shadow: inset 0 0 3px rgba(255,255,255,0.3);
-    }
-    .iphone-side-left {
-      left: -7px;
-      transform: rotateY(-90deg);
-    }
-    .iphone-side-right {
-      right: -7px;
-      transform: rotateY(90deg);
+    .unbox-instruction-btn {
+      background: linear-gradient(135deg, #ffd166, #ffbe0b);
+      color: #111;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(255, 209, 102, 0.4);
+      z-index: 100;
     }
 
-    .side-btn {
-      position: absolute;
-      left: 2px;
-      width: 10px;
-      background: #9e2a44;
-      border-radius: 2px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    /* once the phone shows up, only the swipe hint stays (at the bottom) */
+    .gift-title, .gift-sub, .guess-result { transition: opacity 0.5s ease; }
+    #page-gift.phone-mode .gift-title,
+    #page-gift.phone-mode .gift-sub,
+    #page-gift.phone-mode .guess-result,
+    #page-gift.phone-mode .guess-panel,
+    #page-gift.phone-mode .gift-box-3d {
+      opacity: 0;
+      pointer-events: none;
     }
-    .action-btn { top: 35px; height: 18px; }
-    .vol-up { top: 65px; height: 35px; }
-    .vol-down { top: 110px; height: 35px; }
-    .power-btn { top: 80px; height: 48px; }
-
-    .iphone-side-top, .iphone-side-bottom {
-      position: absolute;
-      left: 4px;
-      right: 4px;
-      height: 14px;
-      background: linear-gradient(90deg, #360b15, #7a1f33 50%, #360b15);
-    }
-    .iphone-side-top {
-      top: -7px;
-      transform: rotateX(90deg);
-    }
-    .iphone-side-bottom {
-      bottom: -7px;
-      transform: rotateX(-90deg);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-    .usbc-port {
-      width: 22px;
-      height: 6px;
-      background: #111;
-      border-radius: 3px;
-      border: 1px solid #444;
-    }
-    .speaker-holes {
-      display: flex;
-      gap: 3px;
-    }
-    .speaker-hole {
-      width: 3px;
-      height: 3px;
-      background: #111;
-      border-radius: 50%;
-    }
-
     .rotate-hint-3d {
       color: #ffd166;
       font-size: 0.82rem;
       position: absolute;
-      bottom: 64px;
+      bottom: 74px;
       left: 50%;
       transform: translateX(-50%);
-      white-space: nowrap;
+      width: max-content;
+      max-width: 92%;
+      text-align: center;
+      white-space: normal;
+      text-wrap: balance;
       display: none;
       z-index: 100;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       background: rgba(0,0,0,0.6);
-      padding: 5px 16px;
+      padding: 6px 16px;
       border-radius: 20px;
-      backdrop-filter: blur(8px);
     }
 
     /* Spotify Floating Dock */
@@ -1097,9 +1282,8 @@
       bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(18, 18, 18, 0.95);
+      background: rgba(18, 18, 18, 0.96);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(14px);
       border-radius: 40px;
       padding: 5px 14px;
       display: flex;
@@ -1107,7 +1291,7 @@
       gap: 12px;
       width: 90%;
       max-width: 340px;
-      z-index: 99999;
+      z-index: 99998;
       box-shadow: 0 10px 28px rgba(0,0,0,0.6);
     }
     .music-album-icon {
@@ -1173,7 +1357,7 @@
       <div class="number-reveal-20" id="number20">20</div>
       <div class="sub-welcome-20" id="welcome20Text">WELCOME TO 20! ✨</div>
       <p style="color: #ff9e00; margin-top: 30px; letter-spacing: 2px; font-size: 0.85rem;" id="burnGuideText">
-        Tap to kiss 19 goodbye & welcome 20 ✨
+        Tap to kiss 19 goodbye &amp; welcome 20 ✨
       </p>
     </div>
   </div>
@@ -1186,7 +1370,7 @@
       <p style="color: #666; font-size: 0.95rem; margin-top: 6px;">May this year bring you closer to everything you're chasing.</p>
     </div>
 
-    <div class="filmstrip-grid" id="filmGrid">
+    <div class="filmstrip-grid">
       <div class="filmstrip-card"><img src="photo1.jpg" /></div>
       <div class="filmstrip-card"><img src="photo2.jpg" /></div>
       <div class="filmstrip-card"><img src="photo3.jpg" /></div>
@@ -1332,15 +1516,15 @@
   <!-- SCREEN 6: 3D CYLINDER CAROUSEL -->
   <div class="screen-view" id="page-galaxy">
     <canvas id="starsLayer"></canvas>
-    
+
     <div class="galaxy-viewport" id="galaxyZone">
       <div class="galaxy-rotator" id="galaxyOrbitWorld">
-        <img src="photo13.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(0deg) translateZ(240px);" />
-        <img src="photo6.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(60deg) translateZ(240px);" />
-        <img src="photo8.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(120deg) translateZ(240px);" />
-        <img src="photo1.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(180deg) translateZ(240px);" />
-        <img src="photo14.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(240deg) translateZ(240px);" />
-        <img src="photo5.jpg" class="floating-orbit-pic" onclick="openZoomImage(this.src)" style="transform: rotateY(300deg) translateZ(240px);" />
+        <img src="photo13.jpg" class="floating-orbit-pic" decoding="async" onclick="openZoomImage(this.src)" style="transform: rotateY(0deg) translateZ(240px);" />
+        <img src="photo6.jpg" class="floating-orbit-pic" decoding="async" onclick="openZoomImage(this.src)" style="transform: rotateY(60deg) translateZ(240px);" />
+        <img src="photo8.jpg" class="floating-orbit-pic" decoding="async" onclick="openZoomImage(this.src)" style="transform: rotateY(120deg) translateZ(240px);" />
+        <img src="photo1.jpg" class="floating-orbit-pic" decoding="async" onclick="openZoomImage(this.src)" style="transform: rotateY(180deg) translateZ(240px);" />
+        <img src="photo14.jpg" class="floating-orbit-pic" decoding="async" onclick="openZoomImage(this.src)" style="transform: rotateY(240deg) translateZ(240px);" />
+        <img src="photo5.jpg" class="floating-orbit-pic" decoding="async" onclick="openZoomImage(this.src)" style="transform: rotateY(300deg) translateZ(240px);" />
       </div>
     </div>
 
@@ -1349,7 +1533,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: IPHONE SCREEN -->
+  <!-- SCREEN 7: IPHONE CHAT -->
   <div class="screen-view" id="page-iphone">
     <div class="iphone-device">
       <div class="iphone-vessel-notch">
@@ -1371,7 +1555,7 @@
 
       <div class="chat-scroll-area">
         <div class="chat-timestamp-badge">TODAY 12:01 AM</div>
-        
+
         <div class="typing-indicator" id="typeIndicator">
           <div class="typing-dot"></div>
           <div class="typing-dot"></div>
@@ -1389,28 +1573,66 @@
     </div>
   </div>
 
-  <!-- SCREEN 8: SURPRISE GUESS GAME & 3D IPHONE 18 PRO MAX REVEAL -->
+  <!-- SCREEN 8: SURPRISE FOR YOU -->
   <div class="screen-view" id="page-gift">
-    <h1 class="gift-title">A Special Surprise ✨</h1>
-    <p class="gift-sub">Guess what's waiting for you on your 20th</p>
+    <h1 class="gift-title">Surprise for you! 🎁</h1>
+    <p class="gift-sub" id="giftSub">Guess what's inside and type it below ✍️</p>
 
-    <!-- Interactive Guess Card -->
-    <div class="guess-card-container" id="guessCard">
-      <h3>🎁 Surprise for you!</h3>
-      <p>Tomar jonno akta surprise ache, guess koro dekhi ki hote pare? 🤔</p>
-      <input type="text" id="userGuessInput" class="guess-input-field" placeholder="Type your guess here..." autocomplete="off" />
-      <br/>
-      <button class="guess-submit-btn" id="guessBtn" onclick="submitGuessAnswer()">Submit Guess 💫</button>
-      <div class="guess-feedback-msg" id="guessFeedback"></div>
+    <div class="guess-result" id="guessResult"></div>
+
+    <!-- 3D Gift Box -->
+    <div class="gift-box-3d float" id="giftBox" onclick="document.getElementById('guessInput').focus()">
+      <div class="gift-cube-face face-front"></div>
+      <div class="gift-cube-face face-back"></div>
+      <div class="gift-cube-face face-left"></div>
+      <div class="gift-cube-face face-right"></div>
+      <div class="gift-cube-face face-bottom"></div>
+      <div class="face-lid">
+        <div class="ribbon-bow">🎀</div>
+      </div>
     </div>
 
-    <!-- 3D iPhone 18 Pro Max with Seamless Velvet Maroon Finish & Solid Rim -->
+    <!-- Guess input -->
+    <div class="guess-panel" id="guessPanel">
+      <input id="guessInput" type="text" placeholder="Type your guess here..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" />
+      <button class="unbox-instruction-btn" onclick="submitGuess()">Reveal 🎁</button>
+    </div>
+
+    <!-- 3D iPhone 18 Pro Max -->
     <div class="phone-stage-3d" id="phoneStage">
+      <div class="phone-ground-shadow"></div>
       <div class="iphone-18-chassis" id="i18Chassis">
-        <!-- Front Screen Face (z = +7px) -->
+
+        <!-- rounded titanium body (filled by script) -->
+        <div class="rim-stack" id="rimStack"></div>
+
+        <!-- straight side walls -->
+        <div class="wall wall-l"></div>
+        <div class="wall wall-r"></div>
+        <div class="wall wall-t"></div>
+        <div class="wall wall-b">
+          <div class="speaker-holes">
+            <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
+            <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
+          </div>
+          <div class="usbc-port"></div>
+          <div class="speaker-holes">
+            <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
+            <div class="speaker-hole"></div><div class="speaker-hole"></div><div class="speaker-hole"></div>
+          </div>
+        </div>
+
+        <!-- buttons -->
+        <div class="hw-btn left hw-action"></div>
+        <div class="hw-btn left hw-volup"></div>
+        <div class="hw-btn left hw-voldn"></div>
+        <div class="hw-btn right hw-power"></div>
+        <div class="hw-btn right hw-camctl"></div>
+
+        <!-- Front glass -->
         <div class="iphone-face-front">
           <div class="front-wallpaper"></div>
-          
+
           <div class="ios-status-row">
             <span class="ios-clock">12:01</span>
             <div class="i18-island"></div>
@@ -1458,16 +1680,19 @@
             <div class="app-icon-squircle" style="background: #5856d6; width: 30px; height: 30px; font-size: 0.95rem;">🧭</div>
             <div class="app-icon-squircle" style="background: #ff2d55; width: 30px; height: 30px; font-size: 0.95rem;">🎵</div>
           </div>
+          <div class="home-bar"></div>
+          <div class="front-glare"></div>
         </div>
 
-        <!-- Back Face: Deep Velvet Maroon Titanium -->
+        <!-- Back glass -->
         <div class="iphone-face-back">
           <div class="i18-camera-bump">
             <div class="lens l1"></div>
             <div class="lens l2"></div>
             <div class="lens l3"></div>
-            <div class="lidar-dot"></div>
             <div class="flash-dot"></div>
+            <div class="mic-dot"></div>
+            <div class="lidar-dot"></div>
           </div>
 
           <svg class="apple-logo-svg" viewBox="0 0 170 170">
@@ -1475,33 +1700,10 @@
           </svg>
         </div>
 
-        <!-- FULL SOLID CONTINUOUS TITANIUM RIM WITH ZERO CORNER GAPS -->
-        <div class="iphone-side-left">
-          <div class="side-btn action-btn"></div>
-          <div class="side-btn vol-up"></div>
-          <div class="side-btn vol-down"></div>
-        </div>
-        <div class="iphone-side-right">
-          <div class="side-btn power-btn"></div>
-        </div>
-        <div class="iphone-side-top"></div>
-        <div class="iphone-side-bottom">
-          <div class="speaker-holes">
-            <div class="speaker-hole"></div>
-            <div class="speaker-hole"></div>
-            <div class="speaker-hole"></div>
-          </div>
-          <div class="usbc-port"></div>
-          <div class="speaker-holes">
-            <div class="speaker-hole"></div>
-            <div class="speaker-hole"></div>
-            <div class="speaker-hole"></div>
-          </div>
-        </div>
       </div>
     </div>
 
-    <div class="rotate-hint-3d" id="rotateHint">✨ Swipe finger on the phone to rotate in 3D! ✨</div>
+    <div class="rotate-hint-3d" id="rotateHint">✨ Swipe on the phone to rotate your iPhone 18 Pro Max ✨</div>
   </div>
 
   <!-- Spotify Floating Dock -->
@@ -1528,6 +1730,26 @@
     let currentStep = 0;
     const audioTrack = document.getElementById('bgSong');
 
+    function boom(opts) {
+      try { if (window.confetti) window.confetti(opts); } catch (e) {}
+    }
+
+    /* Emoji-safe typewriter (Array.from keeps emoji whole) */
+    function typeText(el, text, speed, onDone) {
+      const chars = Array.from(text);
+      let i = 0;
+      el.textContent = '';
+      const id = setInterval(() => {
+        if (i < chars.length) {
+          el.textContent += chars[i++];
+        } else {
+          clearInterval(id);
+          if (onDone) onDone();
+        }
+      }, speed);
+      return id;
+    }
+
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) audioTrack.pause();
       else if (currentStep > 0) audioTrack.play().catch(() => {});
@@ -1546,9 +1768,12 @@
     function navigateStep(direction) {
       const targetStep = currentStep + direction;
       if (targetStep >= 0 && targetStep < allScreens.length) {
-        const curEl = document.getElementById(allScreens[currentStep]);
+        const prevId = allScreens[currentStep];
+        const curEl = document.getElementById(prevId);
         curEl.classList.remove('visible');
         curEl.style.display = 'none';
+
+        if (prevId === 'page-iphone') stopChatTyping();
 
         currentStep = targetStep;
         const nextEl = document.getElementById(allScreens[currentStep]);
@@ -1562,12 +1787,14 @@
           stageOpened = false;
         }
 
-        if (allScreens[currentStep] === 'page-galaxy') {
-          currentVelocity = baseCarouselSpeed;
-        }
-
         if (allScreens[currentStep] === 'page-iphone') {
           playChatTypingAnimation();
+        }
+        if (allScreens[currentStep] === 'page-galaxy') {
+          setupStarsCanvas();
+        }
+        if (allScreens[currentStep] === 'page-gift') {
+          positionPhone();
         }
       }
     }
@@ -1578,13 +1805,13 @@
       if (stageOpened) return;
       stageOpened = true;
       audioTrack.play().catch(e => console.log('Audio init'));
-      
+
       document.getElementById('curtainIntro').style.opacity = '0';
       document.getElementById('theatreCurtains').classList.add('opened');
       setTimeout(() => navigateStep(1), 1400);
     }
 
-    // 2. SMOOTH SCROLL NAVIGATION (Calibrated Deliberate Swipe Threshold)
+    // 2. SWIPE / WHEEL NAVIGATION
     let touchStartY = 0, touchStartX = 0;
     let isScrollCoolingDown = false;
     let isInteractingInternal = false;
@@ -1597,32 +1824,36 @@
     window.addEventListener('touchend', (e) => {
       if (isInteractingInternal) return;
       if (isScrollCoolingDown) return;
-      if (e.target && e.target.id === 'userGuessInput') return;
 
       const deltaY = e.changedTouches[0].clientY - touchStartY;
       const deltaX = e.changedTouches[0].clientX - touchStartX;
 
-      if (Math.abs(deltaY) > 80 && Math.abs(deltaY) > Math.abs(deltaX) * 1.5) {
+      if (Math.abs(deltaY) > 90 && Math.abs(deltaY) > Math.abs(deltaX) * 1.6) {
         if (deltaY < 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
           navigateStep(-1);
         }
         isScrollCoolingDown = true;
-        setTimeout(() => { isScrollCoolingDown = false; }, 600);
+        setTimeout(() => { isScrollCoolingDown = false; }, 700);
       }
+    }, { passive: true });
+
+    // safety: never leave navigation locked if a touch is cancelled
+    window.addEventListener('touchcancel', () => {
+      setTimeout(() => { isInteractingInternal = false; }, 200);
     }, { passive: true });
 
     window.addEventListener('wheel', (e) => {
       if (isInteractingInternal || isScrollCoolingDown) return;
-      if (Math.abs(e.deltaY) > 40) {
+      if (Math.abs(e.deltaY) > 45) {
         if (e.deltaY > 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
           navigateStep(-1);
         }
         isScrollCoolingDown = true;
-        setTimeout(() => { isScrollCoolingDown = false; }, 600);
+        setTimeout(() => { isScrollCoolingDown = false; }, 700);
       }
     }, { passive: true });
 
@@ -1672,7 +1903,7 @@
       fireIntervalId = setInterval(renderCombustionStep, 20);
       const num19 = document.getElementById('number19');
       num19.classList.add('combustion-on');
-      confetti({ particleCount: 75, spread: 80 });
+      boom({ particleCount: 75, spread: 80 });
 
       setTimeout(() => {
         clearInterval(fireIntervalId);
@@ -1683,7 +1914,7 @@
         const welcomeTxt = document.getElementById('welcome20Text');
         num20.style.display = 'block';
         welcomeTxt.style.display = 'block';
-        confetti({ particleCount: 150, spread: 100 });
+        boom({ particleCount: 150, spread: 100 });
 
         setTimeout(() => {
           navigateStep(1);
@@ -1691,7 +1922,7 @@
       }, 2100);
     }
 
-    // 4. BUTTERFLIES ROAMING & DRAGGING
+    // 4. BUTTERFLIES + DRAGGING
     const butterflyNodes = [
       { el: document.getElementById('bf0'), x: 50, y: 80, vx: 0.8, vy: 0.6, t: 0 },
       { el: document.getElementById('bf1'), x: 260, y: 120, vx: -0.7, vy: 0.5, t: 1.2 },
@@ -1700,15 +1931,15 @@
       { el: document.getElementById('bf4'), x: 160, y: 220, vx: 0.7, vy: 0.7, t: 4.9 }
     ];
 
-    function roamButterflies() {
+    function roamButterflies(k) {
       const maxX = window.innerWidth - 60;
       const maxY = window.innerHeight - 120;
 
       butterflyNodes.forEach(b => {
         if (!b.isDragging) {
-          b.t += 0.03;
-          b.x += b.vx + Math.sin(b.t) * 1.2;
-          b.y += b.vy + Math.cos(b.t) * 1.2;
+          b.t += 0.03 * k;
+          b.x += (b.vx + Math.sin(b.t) * 1.2) * k;
+          b.y += (b.vy + Math.cos(b.t) * 1.2) * k;
 
           if (b.x <= 15) { b.x = 15; b.vx = Math.abs(b.vx); }
           if (b.x >= maxX) { b.x = maxX; b.vx = -Math.abs(b.vx); }
@@ -1721,9 +1952,7 @@
           b.el.style.transform = `rotate(${angle}deg)`;
         }
       });
-      requestAnimationFrame(roamButterflies);
     }
-    roamButterflies();
 
     function applyDraggable(element, bfObj) {
       let dragging = false, sX, sY, oX, oY;
@@ -1747,6 +1976,7 @@
         if (bfObj) { bfObj.x = nx; bfObj.y = ny; }
       };
       const end = () => {
+        if (!dragging) return;
         dragging = false;
         setTimeout(() => { isInteractingInternal = false; }, 200);
         if (bfObj) {
@@ -1762,6 +1992,7 @@
       element.addEventListener('touchstart', start, { passive: true });
       window.addEventListener('touchmove', move, { passive: true });
       window.addEventListener('touchend', end);
+      window.addEventListener('touchcancel', end);
     }
 
     document.querySelectorAll('.drag-photo-item').forEach(el => applyDraggable(el, null));
@@ -1769,7 +2000,7 @@
 
     function showButterflyQuote() {
       document.getElementById('quoteModal').style.display = 'flex';
-      confetti({ particleCount: 40, spread: 60 });
+      boom({ particleCount: 40, spread: 60 });
     }
     function hideButterflyQuote() {
       document.getElementById('quoteModal').style.display = 'none';
@@ -1800,7 +2031,7 @@
       else flipPrevSheet();
     });
 
-    // 6. 3D CYLINDER CAROUSEL & STARS
+    // 6. 3D CYLINDER CAROUSEL + STARS (FIXED: single loop, runs only on its own screen)
     const sCanvas = document.getElementById('starsLayer');
     const sCtx = sCanvas.getContext('2d');
     let starsArr = [];
@@ -1809,7 +2040,7 @@
       sCanvas.width = window.innerWidth;
       sCanvas.height = window.innerHeight;
       starsArr = [];
-      for (let i = 0; i < 110; i++) {
+      for (let i = 0; i < 70; i++) {
         starsArr.push({
           x: Math.random() * sCanvas.width,
           y: Math.random() * sCanvas.height,
@@ -1819,173 +2050,272 @@
       }
     }
     setupStarsCanvas();
-    window.addEventListener('resize', setupStarsCanvas);
+    window.addEventListener('resize', () => {
+      setupStarsCanvas();
+      positionPhone();
+    });
 
-    function loopStars() {
+    let starFrame = 0;
+    function drawStars() {
+      starFrame++;
+      if (starFrame % 2) return;
       sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
       sCtx.fillStyle = '#ffffff';
       starsArr.forEach(st => {
-        st.alpha += (Math.random() - 0.5) * 0.04;
+        st.alpha += (Math.random() - 0.5) * 0.08;
         st.alpha = Math.max(0.2, Math.min(1, st.alpha));
         sCtx.globalAlpha = st.alpha;
         sCtx.beginPath();
-        sCtx.arc(st.x, st.y, s.radius, 0, Math.PI * 2);
+        sCtx.arc(st.x, st.y, st.radius, 0, Math.PI * 2);
         sCtx.fill();
       });
-      requestAnimationFrame(loopStars);
     }
-    loopStars();
 
     let carouselAngle = 0;
-    let baseCarouselSpeed = 0.5;
-    let currentVelocity = baseCarouselSpeed;
+    const baseCarouselSpeed = 0.45;
+    let carouselVel = baseCarouselSpeed;
+    let galDragging = false;
+    let galMoved = 0;
+    let galLastX = 0;
     const carouselWorld = document.getElementById('galaxyOrbitWorld');
 
-    function animateCarouselShowcase() {
-      carouselAngle += currentVelocity;
-      currentVelocity += (baseCarouselSpeed - currentVelocity) * 0.05;
+    function stepCarousel(k) {
+      if (!galDragging) {
+        carouselVel += (baseCarouselSpeed - carouselVel) * 0.04 * k;
+      }
+      if (!isFinite(carouselVel)) carouselVel = baseCarouselSpeed;
+      if (!galDragging) carouselAngle += carouselVel * k;
       carouselWorld.style.transform = `rotateY(${carouselAngle}deg)`;
-      requestAnimationFrame(animateCarouselShowcase);
     }
-    animateCarouselShowcase();
 
     const galaxyTouchZone = document.getElementById('galaxyZone');
-    let touchStartX_C = 0;
-    galaxyTouchZone.addEventListener('touchstart', (e) => {
+    galaxyTouchZone.addEventListener('pointerdown', (e) => {
+      galDragging = true;
+      galMoved = 0;
+      galLastX = e.clientX;
       isInteractingInternal = true;
-      touchStartX_C = e.touches[0].clientX;
-    }, { passive: true });
-    galaxyTouchZone.addEventListener('touchmove', (e) => {
-      const deltaX = e.touches[0].clientX - touchStartX_C;
-      currentVelocity = deltaX * 0.35;
-      touchStartX_C = e.touches[0].clientX;
-    }, { passive: true });
-    galaxyTouchZone.addEventListener('touchend', () => {
-      setTimeout(() => { isInteractingInternal = false; }, 200);
     });
+    window.addEventListener('pointermove', (e) => {
+      if (!galDragging) return;
+      const dx = e.clientX - galLastX;
+      galLastX = e.clientX;
+      galMoved += Math.abs(dx);
+      carouselAngle += dx * 0.5;
+      carouselVel = dx * 0.5;
+    });
+    function endGalaxyDrag() {
+      if (!galDragging) return;
+      galDragging = false;
+      setTimeout(() => { isInteractingInternal = false; }, 200);
+    }
+    window.addEventListener('pointerup', endGalaxyDrag);
+    window.addEventListener('pointercancel', endGalaxyDrag);
 
     function openZoomImage(src) {
+      if (galMoved > 8) return; // it was a drag, not a tap
       document.getElementById('enlargedImg').src = src;
       document.getElementById('zoomModal').style.display = 'flex';
     }
 
-    // 7. iPHONE CHAT LIVE TYPING
-    let isTypingRunning = false;
+    // 7. iPHONE CHAT LIVE TYPING (FIXED: emoji-safe, restartable, timers cleaned up)
+    let chatTimers = [];
+    let chatInterval = null;
+    const CHAT_TEXT = "Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨";
+
+    function stopChatTyping() {
+      chatTimers.forEach(t => clearTimeout(t));
+      chatTimers = [];
+      if (chatInterval) { clearInterval(chatInterval); chatInterval = null; }
+    }
+
     function playChatTypingAnimation() {
-      if (isTypingRunning) return;
-      isTypingRunning = true;
+      stopChatTyping();
 
       const indicator = document.getElementById('typeIndicator');
       const bubble = document.getElementById('liveWishBubble');
       const receipt = document.getElementById('delivReceipt');
-      const fullText = "Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨";
 
       bubble.style.display = 'none';
-      bubble.innerHTML = '';
+      bubble.textContent = '';
       receipt.style.display = 'none';
       indicator.style.display = 'flex';
 
-      setTimeout(() => {
+      chatTimers.push(setTimeout(() => {
         indicator.style.display = 'none';
         bubble.style.display = 'block';
-
-        let charPos = 0;
-        const typeInterval = setInterval(() => {
-          if (charPos < fullText.length) {
-            bubble.innerHTML += fullText.charAt(charPos);
-            charPos++;
-          } else {
-            clearInterval(typeInterval);
-            receipt.style.display = 'block';
-            confetti({ particleCount: 140, spread: 90 });
-            isTypingRunning = false;
-          }
-        }, 32);
-      }, 1000);
+        chatInterval = typeText(bubble, CHAT_TEXT, 32, () => {
+          chatInterval = null;
+          receipt.style.display = 'block';
+          boom({ particleCount: 140, spread: 90 });
+        });
+      }, 1100));
     }
 
     function replayChatTyping() {
-      isTypingRunning = false;
       playChatTypingAnimation();
     }
 
-    // 8. SURPRISE GUESS GAME & 3D IPHONE 18 PRO MAX REVEAL
-    let guessAnswered = false;
-    function submitGuessAnswer() {
-      if (guessAnswered) return;
-      const inputEl = document.getElementById('userGuessInput');
-      const rawVal = (inputEl.value || '').trim().toLowerCase();
-      const val = rawVal.replace(/\s+/g, ''); // Removes spaces (handles "18promax", "18 pro max", "iphone18", etc.)
-      const feedbackEl = document.getElementById('guessFeedback');
-      const cardEl = document.getElementById('guessCard');
-      const phoneStage = document.getElementById('phoneStage');
-      const rotateHint = document.getElementById('rotateHint');
-
-      guessAnswered = true;
-      feedbackEl.style.display = 'block';
-
-      // Smart Matching (checks for 18, promax, iphone 18)
-      if (val.includes('18') || val.includes('promax') || val.includes('iphone18') || val.includes('apple')) {
-        feedbackEl.innerHTML = "You are always correct cutie! 🥰💖";
-        confetti({ particleCount: 220, spread: 100 });
-      } else {
-        feedbackEl.innerHTML = "Kono byapar na cutie, ekhon dekhe nao! 😉✨";
-        confetti({ particleCount: 150, spread: 80 });
-      }
-
-      setTimeout(() => {
-        cardEl.style.transform = 'scale(0.2) translateY(240px)';
-        cardEl.style.opacity = '0';
-        setTimeout(() => {
-          cardEl.style.display = 'none';
-          phoneStage.classList.add('revealed');
-          rotateHint.style.display = 'block';
-        }, 400);
-      }, 1400);
-    }
-
-    // 3D 360-degree rotation with seamless rim shell
+    // 8. SURPRISE: GUESS -> MESSAGE -> 3D iPHONE 18 PRO MAX
     const phoneStageEl = document.getElementById('phoneStage');
     const i18ChassisEl = document.getElementById('i18Chassis');
-    let phoneRotX = 0, phoneRotY = 0;
-    let pStartX = 0, pStartY = 0;
-    let isPhoneRotating = false;
+    const guessInput = document.getElementById('guessInput');
+    let giftStarted = false;
 
-    phoneStageEl.addEventListener('touchstart', (e) => {
-      isPhoneRotating = true;
+    guessInput.addEventListener('focus', () => { isInteractingInternal = true; });
+    guessInput.addEventListener('blur', () => {
+      setTimeout(() => { isInteractingInternal = false; }, 250);
+    });
+    guessInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); submitGuess(); }
+    });
+
+    function normalizeGuess(s) {
+      return s.toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    function positionPhone() {
+      const vh = window.innerHeight;
+      const topPad = 62;      // page dots
+      const bottomPad = 150;  // swipe hint + music dock
+      const avail = Math.max(300, vh - topPad - bottomPad);
+      const ps = Math.max(0.55, Math.min(1.2, avail / 440));
+      phoneStageEl.style.setProperty('--ps', ps);
+      phoneStageEl.style.top = (topPad + avail / 2) + 'px';
+    }
+
+    function submitGuess() {
+      if (giftStarted) return;
+      const raw = guessInput.value.trim();
+
+      if (!raw) {
+        guessInput.classList.remove('shake');
+        void guessInput.offsetWidth;
+        guessInput.classList.add('shake');
+        guessInput.placeholder = 'Type something first 😄';
+        return;
+      }
+
+      giftStarted = true;
+      guessInput.blur();
+
+      const isCorrect = normalizeGuess(raw).includes('18promax');
+      const message = isCorrect
+        ? "You are always right, cutie! 💖 Now see your surprise..."
+        : "Oops, not quite! 😄 You're not always right, but it's totally okay, no problem. Now see your surprise!";
+
+      document.getElementById('guessPanel').classList.add('hide');
+      document.getElementById('giftSub').style.visibility = 'hidden';
+      boom({ particleCount: 120, spread: 100, origin: { y: 0.6 } });
+
+      const box = document.getElementById('giftBox');
+      box.classList.remove('float');
+      box.classList.add('opened');
+
+      setTimeout(() => {
+        const resultEl = document.getElementById('guessResult');
+        resultEl.style.display = 'block';
+        typeText(resultEl, message, 38, () => {
+          boom({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
+          setTimeout(revealPhone, 500);
+        });
+      }, 900);
+    }
+
+    let phoneRotX = -6, phoneRotY = -25;
+    let phoneVelY = 0;
+    let phoneAutoSpin = true;
+    let phoneDragging = false;
+    let pLastX = 0, pLastY = 0;
+
+    function revealPhone() {
+      positionPhone();
+      document.getElementById('page-gift').classList.add('phone-mode');
+      phoneStageEl.classList.add('revealed');
+      document.getElementById('rotateHint').style.display = 'block';
+    }
+
+    phoneStageEl.addEventListener('pointerdown', (e) => {
+      phoneDragging = true;
+      phoneAutoSpin = false;
+      phoneVelY = 0;
       isInteractingInternal = true;
-      pStartX = e.touches[0].clientX;
-      pStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    phoneStageEl.addEventListener('touchmove', (e) => {
-      if (!isPhoneRotating) return;
-      const dX = e.touches[0].clientX - pStartX;
-      const dY = e.touches[0].clientY - pStartY;
-
+      pLastX = e.clientX;
+      pLastY = e.clientY;
+      try { phoneStageEl.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    phoneStageEl.addEventListener('pointermove', (e) => {
+      if (!phoneDragging) return;
+      const dX = e.clientX - pLastX;
+      const dY = e.clientY - pLastY;
+      pLastX = e.clientX;
+      pLastY = e.clientY;
       phoneRotY += dX * 0.9;
+      phoneVelY = dX * 0.9;
       phoneRotX -= dY * 0.7;
       phoneRotX = Math.max(-50, Math.min(50, phoneRotX));
-
-      i18ChassisEl.style.transform = `rotateX(${phoneRotX}deg) rotateY(${phoneRotY}deg)`;
-      pStartX = e.touches[0].clientX;
-      pStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    phoneStageEl.addEventListener('touchend', () => {
-      isPhoneRotating = false;
-      setTimeout(() => { isInteractingInternal = false; }, 200);
     });
+    function endPhoneDrag() {
+      if (!phoneDragging) return;
+      phoneDragging = false;
+      setTimeout(() => { isInteractingInternal = false; }, 200);
+    }
+    phoneStageEl.addEventListener('pointerup', endPhoneDrag);
+    phoneStageEl.addEventListener('pointercancel', endPhoneDrag);
+
+    function stepPhone(k) {
+      if (!phoneStageEl.classList.contains('revealed')) return;
+      if (!phoneDragging) {
+        if (phoneAutoSpin) {
+          phoneRotY += 0.55 * k;
+        } else {
+          phoneRotY += phoneVelY * k;
+          phoneVelY *= 0.95;
+        }
+      }
+      i18ChassisEl.style.transform = `rotateX(${phoneRotX}deg) rotateY(${phoneRotY}deg)`;
+    }
 
     function toggleAudioPlayback(btn) {
       if (audioTrack.paused) {
-        audioTrack.play();
+        audioTrack.play().catch(() => {});
         btn.innerText = '❚❚';
       } else {
         audioTrack.pause();
         btn.innerText = '▶';
       }
     }
+
+    // Build the rounded titanium body: 21 stacked rounded rectangles
+    (function buildRim() {
+      const stack = document.getElementById('rimStack');
+      const N = 21;
+      for (let i = 0; i < N; i++) {
+        const t = i / (N - 1);
+        let l = 13 + 33 * Math.pow(Math.sin(Math.PI * t), 0.8);
+        if (i === 0 || i === N - 1) l = 30;
+        const d = document.createElement('div');
+        d.className = 'rim-layer';
+        d.style.transform = 'translateZ(' + (i - 10) + 'px)';
+        d.style.background = 'hsl(345, 52%, ' + l.toFixed(1) + '%)';
+        stack.appendChild(d);
+      }
+    })();
+
+    // MASTER LOOP: only the visible screen is animated
+    let lastTime = performance.now();
+    function masterLoop(now) {
+      const dt = Math.min(40, now - lastTime);
+      lastTime = now;
+      const k = dt / 16.67;
+      const id = allScreens[currentStep];
+
+      if (id === 'page-canvas') roamButterflies(k);
+      else if (id === 'page-galaxy') { stepCarousel(k); drawStars(); }
+      else if (id === 'page-gift') stepPhone(k);
+
+      requestAnimationFrame(masterLoop);
+    }
+    requestAnimationFrame(masterLoop);
   </script>
 </body>
 </html>
