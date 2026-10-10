@@ -244,7 +244,7 @@
       box-shadow: 0 10px 24px rgba(247, 127, 0, 0.3);
     }
 
-    /* SCREEN 4: CANVAS (photo7.jpg to photo10.jpg) */
+    /* SCREEN 4: CANVAS (photo7 to photo10) */
     #page-canvas {
       background: #eee8de;
       touch-action: none;
@@ -295,7 +295,7 @@
       font-size: 1.2rem;
     }
 
-    /* Detailed Realistic Butterfly */
+    /* Realistic Monarch Butterfly */
     .realistic-butterfly {
       position: absolute;
       width: 48px;
@@ -389,18 +389,26 @@
       cursor: pointer;
     }
 
-    /* SCREEN 5: SCRAPBOOK */
+    /* SCREEN 5: REALISTIC SWIPE SCRAPBOOK (No clunky bottom buttons!) */
     #page-scrapbook {
       background: #f4efe6;
-      padding: 60px 16px 85px;
-      perspective: 1200px;
+      padding: 50px 16px 85px;
+      perspective: 1400px;
+    }
+    .swipe-hint-badge {
+      font-family: 'Caveat', cursive;
+      font-size: 1.25rem;
+      color: #6d5d52;
+      margin-bottom: 12px;
+      animation: pulseAnim 1.4s infinite alternate;
     }
     .sketchbook-stage {
       width: 100%;
-      max-width: 400px;
-      height: 490px;
+      max-width: 380px;
+      height: 485px;
       position: relative;
       transform-style: preserve-3d;
+      cursor: pointer;
     }
     .spiral-coils-spine {
       position: absolute;
@@ -424,8 +432,8 @@
     .sketch-sheet {
       position: absolute;
       inset: 0;
-      border-radius: 10px 16px 16px 10px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      border-radius: 12px 18px 18px 12px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.22);
       transform-origin: left center;
       transition: transform 0.85s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.4s;
       backface-visibility: hidden;
@@ -433,7 +441,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 18px 18px 18px 36px;
+      padding: 18px 18px 18px 38px;
     }
     .sketch-sheet.flipped {
       transform: rotateY(-140deg);
@@ -441,64 +449,64 @@
       pointer-events: none;
     }
 
+    /* Vintage Cover Art */
     .cover-art-theme {
-      background: #18191c;
+      background: radial-gradient(circle at 50% 30%, #292a2e, #121316 80%);
+      border: 3px solid #3c3d42;
       color: #fff;
       z-index: 40;
-      position: relative;
     }
     .cover-stickers-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 10px;
-      font-size: 2rem;
+      padding: 0 6px;
+      font-size: 2.1rem;
     }
     .cover-title-tag {
       font-family: 'Special Elite', cursive, sans-serif;
-      font-size: 1.55rem;
-      letter-spacing: 5px;
-      background: #fff;
+      font-size: 1.65rem;
+      letter-spacing: 6px;
+      background: #fbfbfb;
       color: #111;
-      padding: 4px 10px;
+      padding: 5px 12px;
       text-align: center;
-      margin: 8px 0 12px;
+      margin: 10px 0 14px;
       border-radius: 4px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
     }
     .retro-cam-art {
       width: 100%;
       height: 220px;
-      background: linear-gradient(135deg, #c7beab, #dfd7c6);
-      border-radius: 14px;
-      border: 3px solid #7a7060;
+      background: linear-gradient(145deg, #c4baa4, #ded5c2);
+      border-radius: 16px;
+      border: 3px solid #736958;
       position: relative;
-      padding: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.25);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
     }
     .cam-lens-cutout {
-      width: 140px;
-      height: 140px;
+      width: 145px;
+      height: 145px;
       border-radius: 50%;
-      background: radial-gradient(circle, #f3f3f3, #999 70%, #222);
-      border: 4px solid #444;
+      background: radial-gradient(circle, #f9f9f9, #a39c8f 70%, #201e1b);
+      border: 5px solid #36322b;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.5rem;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+      font-size: 3.6rem;
+      box-shadow: inset 0 0 24px rgba(0,0,0,0.6);
     }
     .cam-dial-knob {
       position: absolute;
-      right: 15px;
-      top: 15px;
-      width: 36px;
-      height: 36px;
-      background: radial-gradient(circle, #eee, #666);
+      right: 14px;
+      top: 14px;
+      width: 38px;
+      height: 38px;
+      background: radial-gradient(circle, #fff, #777);
       border-radius: 50%;
       border: 2px solid #333;
     }
@@ -509,6 +517,7 @@
       margin-top: 8px;
     }
 
+    /* Inner Paper Sheets */
     .inner-paper-theme { background: #fbf8f2; color: #2b2b2b; }
     #sketchPage1 { z-index: 30; }
     #sketchPage2 { z-index: 20; }
@@ -525,30 +534,20 @@
     }
     .inner-sheet-frame {
       width: 100%;
-      height: 230px;
+      height: 270px;
       background: #fff;
       padding: 6px 6px 14px 6px;
       border-radius: 6px;
       box-shadow: 0 8px 18px rgba(0,0,0,0.15);
       margin: 10px 0;
     }
-    .inner-sheet-frame img { width: 100%; height: 195px; object-fit: cover; border-radius: 4px; }
+    .inner-sheet-frame img { width: 100%; height: 235px; object-fit: cover; border-radius: 4px; }
     .handwritten-msg { font-family: 'Caveat', cursive; font-size: 1.35rem; line-height: 1.4; color: #333; }
-    .page-flip-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid #ddd6ca;
-      padding-top: 8px;
-    }
-    .action-flip-btn {
-      background: #2b2b2b;
-      color: #fff;
-      border: none;
-      padding: 7px 16px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      cursor: pointer;
+    .page-index-label {
+      text-align: right;
+      font-size: 0.75rem;
+      color: #888;
+      font-weight: 600;
     }
 
     /* SCREEN 6: 3D CYLINDER CAROUSEL */
@@ -609,7 +608,7 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
 
-    /* SCREEN 7: IPHONE SCREEN */
+    /* SCREEN 7: IPHONE SCREEN (12:01 AM & Solid Text Reveal) */
     #page-iphone {
       background: #0a0b10;
       padding: 30px 16px 85px;
@@ -685,13 +684,14 @@
     .bubble-delivered-text {
       background: #0b84fe;
       color: #fff;
-      padding: 12px 16px;
+      padding: 14px 18px;
       border-radius: 20px 20px 4px 20px;
       font-size: 0.95rem;
-      line-height: 1.45;
-      margin-left: 20px;
+      line-height: 1.5;
+      margin-left: 10px;
       margin-bottom: 6px;
       box-shadow: 0 4px 14px rgba(11, 132, 254, 0.3);
+      animation: popZoom 0.4s ease;
     }
     .delivery-receipt {
       font-size: 0.65rem;
@@ -797,7 +797,7 @@
       <div class="number-reveal-20" id="number20">20</div>
       <div class="sub-welcome-20" id="welcome20Text">WELCOME TO 20! ✨</div>
       <p style="color: #ff9e00; margin-top: 30px; letter-spacing: 2px; font-size: 0.85rem;" id="burnGuideText">
-        TAP THE 19 TO BURN 🔥
+        Tap to kiss 19 goodbye & welcome 20 ✨
       </p>
     </div>
   </div>
@@ -820,7 +820,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: CANVAS (photo7.jpg, photo8.jpg, photo9.jpg, photo10.jpg) -->
+  <!-- SCREEN 4: CANVAS (photo7 to photo10) -->
   <div class="screen-view" id="page-canvas">
     <div class="canvas-dots-pattern"></div>
 
@@ -886,9 +886,10 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: SCRAPBOOK (Cover + photo2.jpg, photo11.jpg, photo12.jpg) -->
+  <!-- SCREEN 5: SCRAPBOOK (Finger Swipe & Tap Flip - Zero cluttered buttons!) -->
   <div class="screen-view" id="page-scrapbook">
-    <div class="sketchbook-stage">
+    <div class="swipe-hint-badge">👉 Swipe / Tap page to flip</div>
+    <div class="sketchbook-stage" id="bookStage">
       <div class="spiral-coils-spine">
         <div class="coil-loop"></div>
         <div class="coil-loop"></div>
@@ -899,7 +900,7 @@
         <div class="coil-loop"></div>
       </div>
 
-      <!-- Front Cover -->
+      <!-- Front Cover Art -->
       <div class="sketch-sheet cover-art-theme" id="sketchPage0">
         <div>
           <div class="cover-stickers-top">
@@ -921,52 +922,37 @@
           <span>🕊️</span>
           <span>💋</span>
         </div>
-        <div class="page-flip-footer">
-          <span style="font-size: 0.8rem; color: #aaa;">Aug 11 Edition</span>
-          <button class="action-flip-btn" onclick="flipSketchPage(0, true)">Open Cover →</button>
-        </div>
+        <div class="page-index-label" style="color: #aaa;">Aug 11 • Tap to open</div>
       </div>
 
       <!-- Page 1: photo2.jpg -->
       <div class="sketch-sheet inner-paper-theme" id="sketchPage1">
-        <div class="scrap-washi-tape">Page 1 • Core Memory</div>
+        <div class="scrap-washi-tape">Core Memory</div>
         <div class="inner-sheet-frame">
           <img src="photo2.jpg" />
         </div>
         <p class="handwritten-msg">"You are the stars in my dark and cold nights—shining and unwavering."</p>
-        <div class="page-flip-footer">
-          <button class="action-flip-btn" onclick="flipSketchPage(0, false)">← Cover</button>
-          <span>Page 1 / 3</span>
-          <button class="action-flip-btn" onclick="flipSketchPage(1, true)">Next →</button>
-        </div>
+        <div class="page-index-label">1 / 3</div>
       </div>
 
       <!-- Page 2: photo11.jpg -->
       <div class="sketch-sheet inner-paper-theme" id="sketchPage2">
-        <div class="scrap-washi-tape">Page 2 • Crazy Times</div>
+        <div class="scrap-washi-tape">Crazy Times</div>
         <div class="inner-sheet-frame">
           <img src="photo11.jpg" />
         </div>
         <p class="handwritten-msg">"May the flowers remind us why the rain was so necessary. Keep glowing!"</p>
-        <div class="page-flip-footer">
-          <button class="action-flip-btn" onclick="flipSketchPage(1, false)">← Back</button>
-          <span>Page 2 / 3</span>
-          <button class="action-flip-btn" onclick="flipSketchPage(2, true)">Next →</button>
-        </div>
+        <div class="page-index-label">2 / 3</div>
       </div>
 
       <!-- Page 3: photo12.jpg -->
       <div class="sketch-sheet inner-paper-theme" id="sketchPage3">
-        <div class="scrap-washi-tape">Page 3 • Forever Bond</div>
+        <div class="scrap-washi-tape">Forever Bond</div>
         <div class="inner-sheet-frame">
           <img src="photo12.jpg" />
         </div>
         <p class="handwritten-msg">"Wishing you endless laughs, smiles, and dreams accomplished. Happy Birthday! 💖"</p>
-        <div class="page-flip-footer">
-          <button class="action-flip-btn" onclick="flipSketchPage(2, false)">← Back</button>
-          <span>Page 3 / 3</span>
-          <span>✨</span>
-        </div>
+        <div class="page-index-label">3 / 3 ✨</div>
       </div>
     </div>
   </div>
@@ -991,11 +977,11 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: IPHONE SCREEN -->
+  <!-- SCREEN 7: IPHONE SCREEN (12:01 AM & Solid Text) -->
   <div class="screen-view" id="page-iphone">
     <div class="iphone-device">
       <div class="iphone-vessel-notch">
-        <span class="status-clock">8:03 PM</span>
+        <span class="status-clock">12:01 AM</span>
         <div class="island-cutout"></div>
         <div class="status-icons">
           <span>5G</span>
@@ -1012,14 +998,16 @@
       </div>
 
       <div class="chat-scroll-area">
-        <div class="chat-timestamp-badge">TODAY 8:03 PM</div>
-        <div class="bubble-delivered-text" id="liveWishBubble"></div>
-        <div class="delivery-receipt">Delivered • Just now</div>
+        <div class="chat-timestamp-badge">TODAY 12:01 AM</div>
+        <div class="bubble-delivered-text" id="liveWishBubble">
+          Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨
+        </div>
+        <div class="delivery-receipt">Delivered • 12:01 AM</div>
       </div>
 
       <div class="iphone-bottom-typing-bar">
         <div class="input-box-mimic">Happpyyeee birthday</div>
-        <div class="audio-play-round" onclick="replayTypingWish()">▶</div>
+        <div class="audio-play-round" onclick="celebrateWishBurst()">🎉</div>
       </div>
     </div>
   </div>
@@ -1065,7 +1053,7 @@
       });
 
       if (allScreens[currentStep] === 'page-iphone') {
-        typeWishMessage();
+        confetti({ particleCount: 160, spread: 100 });
       }
     }
 
@@ -1213,7 +1201,7 @@
         const ny = (oY + p.clientY - sY);
         element.style.left = nx + 'px';
         element.style.top = ny + 'px';
-        if (bfObj) { bfObj.x = nx; bfObj.y = ny; }
+        if (bfObj) { b.x = nx; b.y = ny; }
       };
       const end = () => {
         dragging = false;
@@ -1243,12 +1231,48 @@
       document.getElementById('quoteModal').style.display = 'none';
     }
 
-    // 5. 3D Scrapbook Page Turning
-    function flipSketchPage(pageNum, forward) {
-      const page = document.getElementById('sketchPage' + pageNum);
-      if (forward) page.classList.add('flipped');
-      else page.classList.remove('flipped');
+    // 5. SCRAPBOOK NATURAL SWIPE & TAP FLIP ENGINE
+    let currentFlippedSheet = 0;
+    const totalSheets = 4; // Cover(0), Page1(1), Page2(2), Page3(3)
+
+    function flipNextSheet() {
+      if (currentFlippedSheet < totalSheets - 1) {
+        document.getElementById('sketchPage' + currentFlippedSheet).classList.add('flipped');
+        currentFlippedSheet++;
+      }
     }
+
+    function flipPrevSheet() {
+      if (currentFlippedSheet > 0) {
+        currentFlippedSheet--;
+        document.getElementById('sketchPage' + currentFlippedSheet).classList.remove('flipped');
+      }
+    }
+
+    const bookStage = document.getElementById('bookStage');
+    let bStartX = 0, bStartY = 0;
+
+    bookStage.addEventListener('touchstart', (e) => {
+      bStartX = e.touches[0].clientX;
+      bStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    bookStage.addEventListener('touchend', (e) => {
+      const diffX = e.changedTouches[0].clientX - bStartX;
+      const diffY = e.changedTouches[0].clientY - bStartY;
+      
+      // Horizontal Swipe
+      if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) flipNextSheet(); // Swipe Left -> Next Page
+        else flipPrevSheet(); // Swipe Right -> Prev Page
+      } else if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15) {
+        // Tap: Right half turns forward, Left half turns back
+        const rect = bookStage.getBoundingClientRect();
+        const clickX = e.changedTouches[0].clientX - rect.left;
+        if (clickX > rect.width * 0.4) flipNextSheet();
+        else flipPrevSheet();
+      }
+    });
 
     // 6. Stars Canvas & 3D Carousel Cylinder
     const sCanvas = document.getElementById('starsLayer');
@@ -1279,7 +1303,7 @@
         st.alpha = Math.max(0.2, Math.min(1, st.alpha));
         sCtx.globalAlpha = st.alpha;
         sCtx.beginPath();
-        sCtx.arc(st.x, st.y, s.radius, 0, Math.PI * 2);
+        sCtx.arc(st.x, st.y, st.radius, 0, Math.PI * 2);
         sCtx.fill();
       });
       requestAnimationFrame(loopStars);
@@ -1315,29 +1339,9 @@
       document.getElementById('zoomModal').style.display = 'flex';
     }
 
-    // 7. iPhone Chat Wish Delivery
-    let messageSent = false;
-    function typeWishMessage() {
-      if (messageSent) return;
-      messageSent = true;
-      const wishText = "Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨";
-      let charIdx = 0;
-      const bubble = document.getElementById('liveWishBubble');
-      bubble.innerHTML = '';
-      const typingTimer = setInterval(() => {
-        if (charIdx < wishText.length) {
-          bubble.innerHTML += wishText.charAt(charIdx);
-          charIdx++;
-        } else {
-          clearInterval(typingTimer);
-          confetti({ particleCount: 160, spread: 100 });
-        }
-      }, 35);
-    }
-
-    function replayTypingWish() {
-      messageSent = false;
-      typeWishMessage();
+    // 7. iPhone Celebration
+    function celebrateWishBurst() {
+      confetti({ particleCount: 160, spread: 100 });
     }
 
     function toggleAudioPlayback(btn) {
