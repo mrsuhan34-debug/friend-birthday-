@@ -23,39 +23,10 @@
       overflow: hidden;
       background: #0d0103;
       color: #fff;
+      touch-action: none;
     }
 
-    .top-nav {
-      position: fixed;
-      top: 14px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 16px;
-      z-index: 99999;
-      pointer-events: none;
-    }
-    .nav-btn {
-      background: rgba(255, 255, 255, 0.22);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      color: #fff;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      backdrop-filter: blur(12px);
-      pointer-events: auto;
-      transition: transform 0.15s;
-    }
-    .nav-btn:active { transform: scale(0.92); }
-    .nav-btn.dark-btn {
-      background: rgba(0, 0, 0, 0.12);
-      border-color: rgba(0, 0, 0, 0.25);
-      color: #111;
-    }
-
+    /* Screen Views - Smooth Transitions */
     .screen-view {
       position: absolute;
       inset: 0;
@@ -67,16 +38,39 @@
       align-items: center;
       overflow: hidden;
       z-index: 10;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     .screen-view.visible {
       display: flex !important;
+      opacity: 1;
+      transform: translateY(0);
+      z-index: 20;
+    }
+
+    /* Subtle Swipe Hint on all pages */
+    .scroll-hint-bar {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+      z-index: 9999;
+      pointer-events: none;
+      background: rgba(0,0,0,0.35);
+      padding: 4px 14px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
     }
 
     /* SCREEN 1: THEATRE CURTAIN */
     #page-curtain {
       background: #0d0103;
       cursor: pointer;
-      z-index: 50;
     }
     .theatre-curtains {
       position: absolute;
@@ -197,7 +191,7 @@
       z-index: 25;
     }
 
-    /* SCREEN 3: HAPPY BIRTHDAY SWEETY (photo1.jpg to photo6.jpg) */
+    /* SCREEN 3: HAPPY BIRTHDAY SWEETY */
     #page-sweety {
       background: #faf8f5;
       color: #111;
@@ -247,7 +241,6 @@
     /* SCREEN 4: CANVAS (photo7 to photo10) */
     #page-canvas {
       background: #eee8de;
-      touch-action: none;
       position: relative;
     }
     .canvas-dots-pattern {
@@ -295,7 +288,7 @@
       font-size: 1.2rem;
     }
 
-    /* Realistic Monarch Butterfly */
+    /* Monarch Butterfly */
     .realistic-butterfly {
       position: absolute;
       width: 48px;
@@ -389,7 +382,7 @@
       cursor: pointer;
     }
 
-    /* SCREEN 5: REALISTIC SWIPE SCRAPBOOK (No clunky bottom buttons!) */
+    /* SCREEN 5: REALISTIC SWIPE SCRAPBOOK */
     #page-scrapbook {
       background: #f4efe6;
       padding: 50px 16px 85px;
@@ -449,7 +442,6 @@
       pointer-events: none;
     }
 
-    /* Vintage Cover Art */
     .cover-art-theme {
       background: radial-gradient(circle at 50% 30%, #292a2e, #121316 80%);
       border: 3px solid #3c3d42;
@@ -517,7 +509,6 @@
       margin-top: 8px;
     }
 
-    /* Inner Paper Sheets */
     .inner-paper-theme { background: #fbf8f2; color: #2b2b2b; }
     #sketchPage1 { z-index: 30; }
     #sketchPage2 { z-index: 20; }
@@ -554,7 +545,6 @@
     #page-galaxy {
       background: #020206;
       overflow: hidden;
-      touch-action: none;
     }
     #starsLayer {
       position: absolute;
@@ -608,7 +598,7 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
 
-    /* SCREEN 7: IPHONE SCREEN (12:01 AM & Solid Text Reveal) */
+    /* SCREEN 7: IPHONE SCREEN (12:01 AM & Real Typewriter) */
     #page-iphone {
       background: #0a0b10;
       padding: 30px 16px 85px;
@@ -681,6 +671,32 @@
       flex-direction: column;
       overflow-y: auto;
     }
+
+    /* Typing Dots Indicator */
+    .typing-indicator {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      background: #262629;
+      padding: 10px 14px;
+      border-radius: 18px;
+      width: fit-content;
+      margin-bottom: 8px;
+    }
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      background: #8e8e93;
+      border-radius: 50%;
+      animation: bounceDot 1.4s infinite ease-in-out;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounceDot {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+      40% { transform: scale(1.1); opacity: 1; }
+    }
+
     .bubble-delivered-text {
       background: #0b84fe;
       color: #fff;
@@ -691,13 +707,15 @@
       margin-left: 10px;
       margin-bottom: 6px;
       box-shadow: 0 4px 14px rgba(11, 132, 254, 0.3);
-      animation: popZoom 0.4s ease;
+      display: none;
+      min-height: 48px;
     }
     .delivery-receipt {
       font-size: 0.65rem;
       color: #636366;
       align-self: flex-end;
       margin-right: 6px;
+      display: none;
     }
     .iphone-bottom-typing-bar {
       display: flex;
@@ -722,7 +740,265 @@
       cursor: pointer;
     }
 
-    /* Spotify Dock */
+    /* SCREEN 8: 3D UNBOXING GIFT BOX & IPHONE 18 PRO MAX */
+    #page-gift {
+      background: radial-gradient(circle at center, #1c1328 0%, #06030c 100%);
+      padding: 30px 16px 85px;
+      perspective: 1200px;
+    }
+    .gift-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #ffd166;
+      text-shadow: 0 0 20px rgba(255, 209, 102, 0.4);
+      margin-bottom: 6px;
+    }
+    .gift-sub {
+      color: #bfa8e0;
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+    }
+
+    /* 3D Gift Box */
+    .gift-box-3d {
+      width: 170px;
+      height: 170px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-18deg) rotateY(25deg);
+      cursor: pointer;
+      margin: 40px auto 30px;
+      transition: transform 0.4s ease;
+    }
+    .gift-box-3d:active {
+      transform: rotateX(-18deg) rotateY(25deg) scale(0.96);
+    }
+    .gift-cube-face {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      background: linear-gradient(135deg, #7b2cbf, #5a189a);
+      border: 2px solid #9d4edd;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+    }
+    /* Ribbon Stripes */
+    .gift-cube-face::before {
+      content: '';
+      position: absolute;
+      left: 70px;
+      top: 0;
+      width: 30px;
+      height: 100%;
+      background: linear-gradient(90deg, #ffd166, #ffbe0b);
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+    }
+    .gift-cube-face::after {
+      content: '';
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: linear-gradient(180deg, #ffd166, #ffbe0b);
+      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+    }
+    .face-front  { transform: translateZ(85px); }
+    .face-back   { transform: rotateY(180deg) translateZ(85px); }
+    .face-left   { transform: rotateY(-90deg) translateZ(85px); }
+    .face-right  { transform: rotateY(90deg) translateZ(85px); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(85px); }
+    .face-lid {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      left: -5px;
+      background: linear-gradient(135deg, #9d4edd, #5a189a);
+      border: 3px solid #ffbe0b;
+      transform: rotateX(90deg) translateZ(92px);
+      transform-origin: top center;
+      transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    .ribbon-bow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      filter: drop-shadow(0 4px 10px rgba(255, 209, 102, 0.8));
+    }
+
+    /* Unboxed Box State */
+    .gift-box-3d.opened .face-lid {
+      transform: rotateX(150deg) translateZ(180px) translateY(-80px);
+      opacity: 0;
+    }
+    .gift-box-3d.opened {
+      transform: rotateX(0deg) rotateY(0deg) scale(0.6) translateY(140px);
+      opacity: 0.3;
+    }
+
+    /* 3D Interactive iPhone 18 Pro Max */
+    .phone-stage-3d {
+      width: 200px;
+      height: 400px;
+      perspective: 1200px;
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 50;
+      touch-action: none;
+    }
+    .phone-stage-3d.revealed {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .iphone-18-chassis {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.08s linear;
+    }
+
+    /* Front Screen Face */
+    .iphone-face-front {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      border-radius: 40px;
+      border: 4px solid #3d3b43;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 30px rgba(157, 78, 221, 0.4);
+      transform: translateZ(10px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+    }
+    .i18-wallpaper {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, #5a189a, #03071e 80%);
+      z-index: 1;
+    }
+    .i18-island {
+      width: 65px;
+      height: 18px;
+      background: #000;
+      border-radius: 16px;
+      margin: 0 auto;
+      z-index: 5;
+      box-shadow: 0 0 4px rgba(255,255,255,0.15);
+    }
+    .i18-screen-content {
+      z-index: 5;
+      text-align: center;
+      margin-top: 80px;
+    }
+    .i18-hello {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+    .i18-sub {
+      font-size: 0.75rem;
+      color: #ffd166;
+      margin-top: 4px;
+    }
+
+    /* Back Ceramic/Titanium Face with Triple Camera Island */
+    .iphone-face-back {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #2b2833, #15141a);
+      border-radius: 40px;
+      border: 4px solid #4a4754;
+      transform: rotateY(180deg) translateZ(10px);
+      overflow: hidden;
+      padding: 16px;
+    }
+    /* Triple Camera Island */
+    .i18-camera-bump {
+      width: 85px;
+      height: 85px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.15);
+      position: relative;
+    }
+    .lens {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #050508 40%, #1c1c24 80%, #555);
+      border: 2px solid #666;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+    }
+    .lens.l1 { top: 8px; left: 8px; }
+    .lens.l2 { bottom: 8px; left: 8px; }
+    .lens.l3 { top: 28px; right: 8px; }
+    .lidar-dot {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #111;
+      border: 1px solid #333;
+    }
+    .apple-logo-laser {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.2rem;
+      opacity: 0.75;
+    }
+    .titanium-badge {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: #999;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .unbox-instruction-btn {
+      background: linear-gradient(135deg, #ffd166, #ffbe0b);
+      color: #111;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(255, 209, 102, 0.4);
+      animation: pulseAnim 1.4s infinite alternate;
+      z-index: 100;
+    }
+    .rotate-hint-3d {
+      color: #ffd166;
+      font-size: 0.85rem;
+      margin-top: 15px;
+      display: none;
+      z-index: 100;
+      letter-spacing: 1px;
+    }
+
+    /* Spotify Floating Pill */
     .spotify-floating-dock {
       position: fixed;
       bottom: 12px;
@@ -770,10 +1046,8 @@
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <div class="top-nav">
-    <button class="nav-btn" id="prevBtn" onclick="navigateStep(-1)">← Back</button>
-    <button class="nav-btn" id="nextBtn" onclick="navigateStep(1)">Next →</button>
-  </div>
+  <!-- Global Subtle Scroll Guide -->
+  <div class="scroll-hint-bar" id="swipeGuide">⇅ Scroll / Swipe to Navigate</div>
 
   <!-- SCREEN 1: THEATRE CURTAIN -->
   <div class="screen-view visible" id="page-curtain" style="display: flex;" onclick="triggerTheatreStage()">
@@ -886,9 +1160,9 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: SCRAPBOOK (Finger Swipe & Tap Flip - Zero cluttered buttons!) -->
+  <!-- SCREEN 5: SCRAPBOOK (Swipe/Tap to Turn Pages) -->
   <div class="screen-view" id="page-scrapbook">
-    <div class="swipe-hint-badge">👉 Swipe / Tap page to flip</div>
+    <div class="swipe-hint-badge">📖 Tap edges or swipe to flip pages</div>
     <div class="sketchbook-stage" id="bookStage">
       <div class="spiral-coils-spine">
         <div class="coil-loop"></div>
@@ -957,7 +1231,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 6: 3D CYLINDER CAROUSEL (photo13, photo6, photo8, photo1, photo14, photo5) -->
+  <!-- SCREEN 6: 3D CYLINDER CAROUSEL -->
   <div class="screen-view" id="page-galaxy">
     <canvas id="starsLayer"></canvas>
     
@@ -977,7 +1251,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: IPHONE SCREEN (12:01 AM & Solid Text) -->
+  <!-- SCREEN 7: IPHONE SCREEN (12:01 AM & Live Typing) -->
   <div class="screen-view" id="page-iphone">
     <div class="iphone-device">
       <div class="iphone-vessel-notch">
@@ -999,17 +1273,74 @@
 
       <div class="chat-scroll-area">
         <div class="chat-timestamp-badge">TODAY 12:01 AM</div>
-        <div class="bubble-delivered-text" id="liveWishBubble">
-          Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨
+        
+        <!-- Live iMessage Typing Indicator -->
+        <div class="typing-indicator" id="typeIndicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
         </div>
-        <div class="delivery-receipt">Delivered • 12:01 AM</div>
+
+        <!-- Delivered Wish Bubble -->
+        <div class="bubble-delivered-text" id="liveWishBubble"></div>
+        <div class="delivery-receipt" id="delivReceipt">Delivered • 12:01 AM</div>
       </div>
 
       <div class="iphone-bottom-typing-bar">
         <div class="input-box-mimic">Happpyyeee birthday</div>
-        <div class="audio-play-round" onclick="celebrateWishBurst()">🎉</div>
+        <div class="audio-play-round" onclick="replayChatTyping()">🎉</div>
       </div>
     </div>
+  </div>
+
+  <!-- SCREEN 8: BRAND NEW 3D GIFT UNBOXING (iPhone 18 Pro Max) -->
+  <div class="screen-view" id="page-gift">
+    <h1 class="gift-title">A Special Gift 🎁</h1>
+    <p class="gift-sub">Because you deserve the very best on your 20th</p>
+
+    <!-- 3D Luxury Gift Box -->
+    <div class="gift-box-3d" id="giftBox" onclick="unboxIPhoneGift()">
+      <div class="gift-cube-face face-front"></div>
+      <div class="gift-cube-face face-back"></div>
+      <div class="gift-cube-face face-left"></div>
+      <div class="gift-cube-face face-right"></div>
+      <div class="gift-cube-face face-bottom"></div>
+      <div class="face-lid">
+        <div class="ribbon-bow">🎀</div>
+      </div>
+    </div>
+
+    <!-- 3D Rotatable iPhone 18 Pro Max -->
+    <div class="phone-stage-3d" id="phoneStage">
+      <div class="iphone-18-chassis" id="i18Chassis">
+        <!-- Front Screen Face -->
+        <div class="iphone-face-front">
+          <div class="i18-wallpaper"></div>
+          <div class="i18-island"></div>
+          <div class="i18-screen-content">
+            <div class="i18-hello">iPhone 18</div>
+            <div class="i18-sub">Pro Max • 1TB</div>
+            <p style="font-size: 0.65rem; color: #fff; margin-top: 15px; opacity: 0.8;">Cosmic Titanium Edition</p>
+          </div>
+          <div style="z-index: 5; font-size: 0.65rem; text-align: center; color: #aaa;">Happy 20th Birthday! 💫</div>
+        </div>
+
+        <!-- Back Face with Triple Camera Bump & LiDAR -->
+        <div class="iphone-face-back">
+          <div class="i18-camera-bump">
+            <div class="lens l1"></div>
+            <div class="lens l2"></div>
+            <div class="lens l3"></div>
+            <div class="lidar-dot"></div>
+          </div>
+          <div class="apple-logo-laser"></div>
+          <div class="titanium-badge">iPhone 18 Pro Max • Titanium</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="unbox-instruction-btn" id="unboxBtn" onclick="unboxIPhoneGift()">Tap to Unbox Your Gift 🎁</button>
+    <div class="rotate-hint-3d" id="rotateHint">✨ Swipe finger on the phone to rotate in 3D! ✨</div>
   </div>
 
   <!-- Spotify Bar -->
@@ -1030,7 +1361,8 @@
       'page-canvas',
       'page-scrapbook',
       'page-galaxy',
-      'page-iphone'
+      'page-iphone',
+      'page-gift'
     ];
     let currentStep = 0;
     const audioTrack = document.getElementById('bgSong');
@@ -1041,21 +1373,6 @@
     });
     window.addEventListener('pagehide', () => audioTrack.pause());
     window.addEventListener('beforeunload', () => audioTrack.pause());
-
-    function updateNavUI() {
-      document.getElementById('prevBtn').style.display = currentStep === 0 ? 'none' : 'block';
-      document.getElementById('nextBtn').style.display = currentStep === allScreens.length - 1 ? 'none' : 'block';
-
-      const isLightPage = allScreens[currentStep] === 'page-sweety' || allScreens[currentStep] === 'page-canvas' || allScreens[currentStep] === 'page-scrapbook';
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        if (isLightPage) btn.classList.add('dark-btn');
-        else btn.classList.remove('dark-btn');
-      });
-
-      if (allScreens[currentStep] === 'page-iphone') {
-        confetti({ particleCount: 160, spread: 100 });
-      }
-    }
 
     function navigateStep(direction) {
       const targetStep = currentStep + direction;
@@ -1068,9 +1385,53 @@
         const nextEl = document.getElementById(allScreens[currentStep]);
         nextEl.classList.add('visible');
         nextEl.style.display = 'flex';
-        updateNavUI();
+
+        // Trigger Screen Actions
+        if (allScreens[currentStep] === 'page-iphone') {
+          playChatTypingAnimation();
+        }
       }
     }
+
+    // 1. GLOBAL TOUCH SWIPE (Scroll Down / Up to navigate smoothly)
+    let touchStartY = 0;
+    let touchStartX = 0;
+    let isTouchBusy = false;
+
+    window.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      if (isTouchBusy) return;
+      const deltaY = e.changedTouches[0].clientY - touchStartY;
+      const deltaX = e.changedTouches[0].clientX - touchStartX;
+
+      // Vertical Swipe Check (Avoid conflict with horizontal scrapbook or photo dragging)
+      if (Math.abs(deltaY) > 55 && Math.abs(deltaY) > Math.abs(deltaX) * 1.4) {
+        if (deltaY < 0) {
+          // Swipe Up / Scroll Down -> Next Page
+          navigateStep(1);
+        } else {
+          // Swipe Down / Scroll Up -> Prev Page
+          navigateStep(-1);
+        }
+        isTouchBusy = true;
+        setTimeout(() => { isTouchBusy = false; }, 650);
+      }
+    }, { passive: true });
+
+    // Wheel Scroll Support (for desktop)
+    window.addEventListener('wheel', (e) => {
+      if (isTouchBusy) return;
+      if (Math.abs(e.deltaY) > 30) {
+        if (e.deltaY > 0) navigateStep(1);
+        else navigateStep(-1);
+        isTouchBusy = true;
+        setTimeout(() => { isTouchBusy = false; }, 650);
+      }
+    }, { passive: true });
 
     // 1. Curtain Tap Music & Opening
     let stageOpened = false;
@@ -1201,7 +1562,7 @@
         const ny = (oY + p.clientY - sY);
         element.style.left = nx + 'px';
         element.style.top = ny + 'px';
-        if (bfObj) { b.x = nx; b.y = ny; }
+        if (bfObj) { bfObj.x = nx; bfObj.y = ny; }
       };
       const end = () => {
         dragging = false;
@@ -1231,9 +1592,9 @@
       document.getElementById('quoteModal').style.display = 'none';
     }
 
-    // 5. SCRAPBOOK NATURAL SWIPE & TAP FLIP ENGINE
+    // 5. SCRAPBOOK SWIPE & TAP FLIP ENGINE
     let currentFlippedSheet = 0;
-    const totalSheets = 4; // Cover(0), Page1(1), Page2(2), Page3(3)
+    const totalSheets = 4;
 
     function flipNextSheet() {
       if (currentFlippedSheet < totalSheets - 1) {
@@ -1261,12 +1622,10 @@
       const diffX = e.changedTouches[0].clientX - bStartX;
       const diffY = e.changedTouches[0].clientY - bStartY;
       
-      // Horizontal Swipe
-      if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX < 0) flipNextSheet(); // Swipe Left -> Next Page
-        else flipPrevSheet(); // Swipe Right -> Prev Page
+      if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) flipNextSheet();
+        else flipPrevSheet();
       } else if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15) {
-        // Tap: Right half turns forward, Left half turns back
         const rect = bookStage.getBoundingClientRect();
         const clickX = e.changedTouches[0].clientX - rect.left;
         if (clickX > rect.width * 0.4) flipNextSheet();
@@ -1339,10 +1698,100 @@
       document.getElementById('zoomModal').style.display = 'flex';
     }
 
-    // 7. iPhone Celebration
-    function celebrateWishBurst() {
-      confetti({ particleCount: 160, spread: 100 });
+    // 7. iPhone Real Live Typewriter Animation
+    let isTypingRunning = false;
+    function playChatTypingAnimation() {
+      if (isTypingRunning) return;
+      isTypingRunning = true;
+
+      const indicator = document.getElementById('typeIndicator');
+      const bubble = document.getElementById('liveWishBubble');
+      const receipt = document.getElementById('delivReceipt');
+      const fullText = "Happy Birthday bestie! 🎉 Wishing you endless laughter, peace, dreams coming true, and unforgettable crazy memories. Welcome to 20, always keep shining! 💖✨";
+
+      bubble.style.display = 'none';
+      bubble.innerHTML = '';
+      receipt.style.display = 'none';
+      indicator.style.display = 'flex';
+
+      // 1.2s typing dots then start typing text
+      setTimeout(() => {
+        indicator.style.display = 'none';
+        bubble.style.display = 'block';
+
+        let charPos = 0;
+        const typeInterval = setInterval(() => {
+          if (charPos < fullText.length) {
+            bubble.innerHTML += fullText.charAt(charPos);
+            charPos++;
+          } else {
+            clearInterval(typeInterval);
+            receipt.style.display = 'block';
+            confetti({ particleCount: 140, spread: 90 });
+            isTypingRunning = false;
+          }
+        }, 32);
+      }, 1200);
     }
+
+    function replayChatTyping() {
+      isTypingRunning = false;
+      playChatTypingAnimation();
+    }
+
+    // 8. UNBOXING IPHONE 18 PRO MAX 3D
+    let isUnboxed = false;
+    function unboxIPhoneGift() {
+      if (isUnboxed) return;
+      isUnboxed = true;
+
+      const giftBox = document.getElementById('giftBox');
+      const phoneStage = document.getElementById('phoneStage');
+      const unboxBtn = document.getElementById('unboxBtn');
+      const rotateHint = document.getElementById('rotateHint');
+
+      giftBox.classList.add('opened');
+      unboxBtn.style.display = 'none';
+
+      // Golden Confetti shower
+      confetti({ particleCount: 220, spread: 120, origin: { y: 0.5 } });
+
+      setTimeout(() => {
+        phoneStage.classList.add('revealed');
+        rotateHint.style.display = 'block';
+      }, 800);
+    }
+
+    // 3D 360-Degree Interactive Drag for iPhone 18 Pro Max
+    const phoneStageEl = document.getElementById('phoneStage');
+    const i18ChassisEl = document.getElementById('i18Chassis');
+    let phoneRotX = 0, phoneRotY = 0;
+    let pStartX = 0, pStartY = 0;
+    let isPhoneRotating = false;
+
+    phoneStageEl.addEventListener('touchstart', (e) => {
+      isPhoneRotating = true;
+      pStartX = e.touches[0].clientX;
+      pStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    phoneStageEl.addEventListener('touchmove', (e) => {
+      if (!isPhoneRotating) return;
+      const dX = e.touches[0].clientX - pStartX;
+      const dY = e.touches[0].clientY - pStartY;
+
+      phoneRotY += dX * 0.9;
+      phoneRotX -= dY * 0.7;
+      phoneRotX = Math.max(-50, Math.min(50, phoneRotX)); // clamp pitch
+
+      i18ChassisEl.style.transform = `rotateX(${phoneRotX}deg) rotateY(${phoneRotY}deg)`;
+      pStartX = e.touches[0].clientX;
+      pStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    phoneStageEl.addEventListener('touchend', () => {
+      isPhoneRotating = false;
+    });
 
     function toggleAudioPlayback(btn) {
       if (audioTrack.paused) {
@@ -1353,8 +1802,6 @@
         btn.innerText = '▶';
       }
     }
-
-    updateNavUI();
   </script>
 </body>
 </html>
