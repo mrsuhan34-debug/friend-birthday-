@@ -27,9 +27,12 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: none;
       background: #0d0103;
       color: #fff;
     }
+    body { position: fixed; inset: 0; }
 
     .screen-view {
       position: absolute;
@@ -206,7 +209,7 @@
       color: #111;
       padding: 50px 20px 85px;
       justify-content: center;
-      touch-action: pan-y;
+      touch-action: none;
     }
     .sweety-title-block {
       width: 100%;
@@ -837,96 +840,173 @@
       min-height: 30px;
     }
 
-    /* 3D Gift Box */
+    /* 3D Gift Box: maroon box, separate lid, satin gold ribbon and a bow */
     .gift-box-3d {
       width: 150px;
       height: 150px;
       position: relative;
       transform-style: preserve-3d;
-      transform: rotateX(-15deg) rotateY(25deg);
+      transform: rotateX(-18deg);
       cursor: pointer;
-      margin: 34px auto 24px;
-      transition: transform 0.8s ease, opacity 0.8s ease;
+      margin: 58px auto 30px;
       flex-shrink: 0;
+      transition: transform 0.9s ease, visibility 0s linear 0.9s;
     }
-    .gift-box-3d.float { animation: boxFloat 2.4s ease-in-out infinite alternate; }
-    @keyframes boxFloat {
-      from { transform: rotateX(-15deg) rotateY(15deg) translateY(0); }
-      to   { transform: rotateX(-15deg) rotateY(35deg) translateY(-8px); }
-    }
-    .gift-cube-face {
+    .gb-spin {
       position: absolute;
-      width: 150px;
-      height: 150px;
-      background: linear-gradient(135deg, #4f1222, #300813);
-      border: 1.5px solid #8c263e;
-      box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+      inset: 0;
+      transform-style: preserve-3d;
+      animation: gbSpin 7s ease-in-out infinite alternate;
     }
-    .gift-cube-face::before {
-      content: '';
-      position: absolute;
-      left: 62px;
-      top: 0;
-      width: 26px;
-      height: 100%;
-      background: linear-gradient(90deg, #ffd166, #ffbe0b);
-      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+    @keyframes gbSpin {
+      from { transform: rotateY(-38deg) translateY(0); }
+      to   { transform: rotateY(32deg) translateY(-8px); }
     }
-    .gift-cube-face::after {
-      content: '';
+    .gb-shadow {
       position: absolute;
-      top: 62px;
+      left: -15px;
+      top: 47px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,0,0,0.65), rgba(0,0,0,0) 62%);
+      transform: rotateX(90deg);
+      pointer-events: none;
+    }
+
+    /* base box: 140 x 92 x 140 */
+    .gb-base {
+      position: absolute;
+      left: 5px;
+      top: 44px;
+      width: 140px;
+      height: 92px;
+      transform-style: preserve-3d;
+    }
+    .gf {
+      position: absolute;
       left: 0;
-      width: 100%;
-      height: 26px;
-      background: linear-gradient(180deg, #ffd166, #ffbe0b);
-      box-shadow: 0 0 10px rgba(255, 209, 102, 0.6);
+      top: 0;
+      width: 140px;
+      height: 92px;
     }
-    .face-front  { transform: translateZ(75px); }
-    .face-back   { transform: rotateY(180deg) translateZ(75px); }
-    .face-left   { transform: rotateY(-90deg) translateZ(75px); }
-    .face-right  { transform: rotateY(90deg) translateZ(75px); }
-    .face-bottom { transform: rotateX(-90deg) translateZ(75px); }
-
-    /* Lid sits flush on top */
-    .face-lid {
-      position: absolute;
-      width: 158px;
-      height: 158px;
-      left: -4px;
-      top: -4px;
-      background: linear-gradient(135deg, #6b1a30, #420b1b);
-      border: 2px solid #ffd166;
-      transform: rotateX(90deg) translateZ(75px);
-      transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.9s ease;
-      box-shadow: 0 0 18px rgba(0,0,0,0.7);
-    }
-    .face-lid::before {
+    .gf-front  { transform: translateZ(70px);                background: linear-gradient(160deg, #751f3a, #4d1226); }
+    .gf-back   { transform: rotateY(180deg) translateZ(70px); background: linear-gradient(160deg, #3b0e1c, #2a0913); }
+    .gf-left   { transform: rotateY(-90deg) translateZ(70px); background: linear-gradient(160deg, #5e1a30, #3a0e1c); }
+    .gf-right  { transform: rotateY(90deg) translateZ(70px);  background: linear-gradient(160deg, #4a1226, #2f0a15); }
+    .gf-bottom { top: -24px; height: 140px; transform: rotateX(-90deg) translateZ(46px); background: #1a0509; }
+    .gf-front::before, .gf-back::before, .gf-left::before, .gf-right::before {
       content: '';
       position: absolute;
-      left: 66px; top: 0; width: 26px; height: 100%;
-      background: linear-gradient(90deg, #ffd166, #ffbe0b);
-    }
-    .face-lid::after {
-      content: '';
-      position: absolute;
-      top: 66px; left: 0; width: 100%; height: 26px;
-      background: linear-gradient(180deg, #ffd166, #ffbe0b);
-    }
-    .ribbon-bow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2.6rem;
-      z-index: 2;
-      filter: drop-shadow(0 4px 10px rgba(255, 209, 102, 0.8));
+      left: calc(50% - 11px);
+      top: 0;
+      bottom: 0;
+      width: 22px;
+      background: linear-gradient(90deg, #b07a10, #ffe28a 42%, #e2a62a 58%, #9a680c);
     }
 
-    .gift-box-3d.opened { animation: none; transform: rotateX(-15deg) rotateY(25deg) scale(0.6); opacity: 0; pointer-events: none; }
-    .gift-box-3d.opened .face-lid {
-      transform: translateY(-140px) rotateX(90deg) translateZ(75px) rotateX(-35deg);
-      opacity: 0;
+    /* lid + bow fly off together when opened */
+    .gb-topper {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .gb-lid {
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 150px;
+      height: 30px;
+      transform-style: preserve-3d;
+    }
+    .lf {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 150px;
+      height: 30px;
+    }
+    .lf-front  { transform: translateZ(75px);                background: linear-gradient(160deg, #8a2744, #5a1630); border-top: 1px solid rgba(255,255,255,0.22); }
+    .lf-back   { transform: rotateY(180deg) translateZ(75px); background: linear-gradient(160deg, #46101f, #310a16); }
+    .lf-left   { transform: rotateY(-90deg) translateZ(75px); background: linear-gradient(160deg, #70203a, #45121f); }
+    .lf-right  { transform: rotateY(90deg) translateZ(75px);  background: linear-gradient(160deg, #5a1830, #380d1b); }
+    .lf-top    { top: -60px; height: 150px; transform: rotateX(90deg) translateZ(15px); background: linear-gradient(135deg, #a33253, #6e1b36); }
+    .lf-bottom { top: -60px; height: 150px; transform: rotateX(-90deg) translateZ(15px); background: #1a0509; }
+    .lf-front::before, .lf-back::before, .lf-left::before, .lf-right::before {
+      content: '';
+      position: absolute;
+      left: calc(50% - 11px);
+      top: 0;
+      bottom: 0;
+      width: 22px;
+      background: linear-gradient(90deg, #b07a10, #ffe28a 42%, #e2a62a 58%, #9a680c);
+    }
+    .lf-top::before {
+      content: '';
+      position: absolute;
+      left: calc(50% - 11px);
+      top: 0;
+      bottom: 0;
+      width: 22px;
+      background: linear-gradient(90deg, #b07a10, #ffe28a 42%, #e2a62a 58%, #9a680c);
+    }
+    .lf-top::after {
+      content: '';
+      position: absolute;
+      top: calc(50% - 11px);
+      left: 0;
+      right: 0;
+      height: 22px;
+      background: linear-gradient(180deg, #b07a10, #ffe28a 42%, #e2a62a 58%, #9a680c);
+    }
+
+    /* bow, standing on the middle of the lid */
+    .gb-bow {
+      position: absolute;
+      left: 75px;
+      top: 14px;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+    }
+    .bw-loop {
+      position: absolute;
+      left: -23px;
+      top: -33px;
+      width: 46px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at 50% 62%, rgba(0,0,0,0) 0 34%, #ffe69a 37%, #e3a82a 62%, #9c6a0c 100%);
+    }
+    .bw-l1 { transform: translateX(-24px) rotateZ(-16deg); }
+    .bw-l2 { transform: translateX(24px) rotateZ(16deg); }
+    .bw-l3 { transform: rotateY(90deg) translateX(-24px) rotateZ(-16deg); }
+    .bw-l4 { transform: rotateY(90deg) translateX(24px) rotateZ(16deg); }
+    .bw-knot {
+      position: absolute;
+      left: -10px;
+      top: -15px;
+      width: 20px;
+      height: 16px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #b07a10, #ffe28a 45%, #e2a62a 60%, #9a680c);
+    }
+    .bw-knot.b { transform: rotateY(90deg); }
+    .bw-knot.top {
+      top: -10px;
+      height: 20px;
+      transform: translateY(-15px) rotateX(90deg);
+      background: linear-gradient(135deg, #ffe9a8, #e2a62a);
+    }
+
+    .gift-box-3d.opened {
+      transform: rotateX(-18deg) translateY(50px) scale(0.2);
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .gift-box-3d.opened .gb-topper {
+      transform: translateY(-190px) rotateZ(18deg) rotateX(-25deg);
     }
 
     /* 3D iPhone 18 Pro Max  (196 x 412 body, 20px thick, 42px corner radius) */
@@ -1135,17 +1215,14 @@
       margin: 8px auto 0;
     }
 
-    /* Back glass */
+    /* Back glass: the camera plateau and lenses are real stacked 3D layers */
     .iphone-face-back {
       position: absolute;
       inset: 4px;
       border-radius: 38px;
       transform: rotateY(180deg) translateZ(10.6px);
+      transform-style: preserve-3d;
       background: linear-gradient(150deg, #6a1429 0%, #3d0a18 45%, #260511 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
     }
@@ -1153,49 +1230,90 @@
       content: '';
       position: absolute;
       inset: 0;
+      border-radius: 38px;
       pointer-events: none;
       background: linear-gradient(115deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 42%);
     }
-    .i18-camera-bump {
+
+    .cam-plateau {
       position: absolute;
       top: 11px;
       left: 11px;
       width: 94px;
       height: 94px;
-      border-radius: 26px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.24), rgba(255,255,255,0.07) 55%, rgba(0,0,0,0.2));
-      border: 1px solid rgba(255,255,255,0.28);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.35);
+      transform-style: preserve-3d;
     }
-    .lens {
+    .pl {
+      position: absolute;
+      inset: 0;
+      border-radius: 26px;
+    }
+    .pl-shadow {
+      background: rgba(0,0,0,0.4);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.65);
+      transform: translateZ(0.4px);
+    }
+    .pl-side { background: linear-gradient(145deg, #a04a64, #6d2438); }
+    .pl-top {
+      background: linear-gradient(145deg, #a8506b, #6d2438 62%, #571b2d);
+      border: 1px solid rgba(255,255,255,0.32);
+      transform: translateZ(6.2px);
+    }
+
+    .cam-lens {
       position: absolute;
       width: 36px;
       height: 36px;
+      transform-style: preserve-3d;
+      transform: translateZ(6.2px);
+    }
+    .cam-lens.l1 { top: 8px;  left: 8px; }
+    .cam-lens.l2 { top: 50px; left: 8px; }
+    .cam-lens.l3 { top: 29px; left: 50px; }
+    .cs {
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      box-shadow: 0 3px 7px rgba(0,0,0,0.7);
+      transform: translateZ(0.3px);
+    }
+    .cl {
+      position: absolute;
+      inset: 0;
       border-radius: 50%;
       background: conic-gradient(from 210deg, #d8c3c9, #5d4a50, #efe1e5, #4d3b42, #d8c3c9);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.65);
     }
-    .lens::before {
-      content: '';
+    .cl1 { transform: translateZ(1px); }
+    .cl2 { transform: translateZ(2px); }
+    .cl3 { transform: translateZ(3px); }
+    .cl4 { transform: translateZ(4px); }
+    .cl5 { transform: translateZ(5px); }
+    .cg {
       position: absolute;
       inset: 4px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #4b4f8a 0, #15162a 28%, #07070d 62%, #000 100%);
+      background: radial-gradient(circle at 35% 30%, #5a5fa8 0, #1a1b36 26%, #07070d 62%, #000 100%);
+      transform: translateZ(5.4px);
     }
-    .lens::after {
+    .cg::before {
       content: '';
       position: absolute;
-      left: 11px;
-      top: 9px;
+      inset: 5px;
+      border-radius: 50%;
+      border: 1px solid rgba(140,150,255,0.35);
+    }
+    .cg::after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 6px;
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: rgba(190, 200, 255, 0.55);
+      background: rgba(200,210,255,0.6);
     }
-    .lens.l1 { top: 8px; left: 8px; }
-    .lens.l2 { top: 50px; left: 8px; }
-    .lens.l3 { top: 29px; left: 50px; }
-    .flash-dot {
+    .cam-flash {
       position: absolute;
       top: 10px;
       right: 9px;
@@ -1203,9 +1321,10 @@
       height: 12px;
       border-radius: 50%;
       background: radial-gradient(circle, #fffbe6 30%, #e6c872 100%);
-      border: 1px solid rgba(255,255,255,0.4);
+      border: 1px solid rgba(255,255,255,0.45);
+      transform: translateZ(6.5px);
     }
-    .mic-dot {
+    .cam-mic {
       position: absolute;
       top: 16px;
       left: 58px;
@@ -1213,8 +1332,9 @@
       height: 3px;
       border-radius: 50%;
       background: #0a0306;
+      transform: translateZ(6.5px);
     }
-    .lidar-dot {
+    .cam-lidar {
       position: absolute;
       bottom: 9px;
       right: 10px;
@@ -1222,15 +1342,19 @@
       height: 12px;
       border-radius: 50%;
       background: radial-gradient(circle, #000 35%, #2a1a20 100%);
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.28);
+      transform: translateZ(6.5px);
     }
     .apple-logo-svg {
-      width: 40px;
-      height: 48px;
-      fill: #f5bccc;
-      opacity: 0.9;
-      margin-top: 40px;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+      position: absolute;
+      left: 50%;
+      top: 57%;
+      width: 42px;
+      height: 50px;
+      margin-left: -21px;
+      margin-top: -25px;
+      transform: translateZ(0.5px);
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.55));
     }
 
     .unbox-instruction-btn {
@@ -1581,14 +1705,38 @@
     <div class="guess-result" id="guessResult"></div>
 
     <!-- 3D Gift Box -->
-    <div class="gift-box-3d float" id="giftBox" onclick="document.getElementById('guessInput').focus()">
-      <div class="gift-cube-face face-front"></div>
-      <div class="gift-cube-face face-back"></div>
-      <div class="gift-cube-face face-left"></div>
-      <div class="gift-cube-face face-right"></div>
-      <div class="gift-cube-face face-bottom"></div>
-      <div class="face-lid">
-        <div class="ribbon-bow">🎀</div>
+    <div class="gift-box-3d" id="giftBox" onclick="document.getElementById('guessInput').focus()">
+      <div class="gb-shadow"></div>
+      <div class="gb-spin">
+
+        <div class="gb-base">
+          <div class="gf gf-front"></div>
+          <div class="gf gf-back"></div>
+          <div class="gf gf-left"></div>
+          <div class="gf gf-right"></div>
+          <div class="gf gf-bottom"></div>
+        </div>
+
+        <div class="gb-topper">
+          <div class="gb-lid">
+            <div class="lf lf-front"></div>
+            <div class="lf lf-back"></div>
+            <div class="lf lf-left"></div>
+            <div class="lf lf-right"></div>
+            <div class="lf lf-top"></div>
+            <div class="lf lf-bottom"></div>
+          </div>
+          <div class="gb-bow">
+            <div class="bw-loop bw-l1"></div>
+            <div class="bw-loop bw-l2"></div>
+            <div class="bw-loop bw-l3"></div>
+            <div class="bw-loop bw-l4"></div>
+            <div class="bw-knot a"></div>
+            <div class="bw-knot b"></div>
+            <div class="bw-knot top"></div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1686,17 +1834,42 @@
 
         <!-- Back glass -->
         <div class="iphone-face-back">
-          <div class="i18-camera-bump">
-            <div class="lens l1"></div>
-            <div class="lens l2"></div>
-            <div class="lens l3"></div>
-            <div class="flash-dot"></div>
-            <div class="mic-dot"></div>
-            <div class="lidar-dot"></div>
+          <div class="cam-plateau">
+            <div class="pl pl-shadow"></div>
+            <div class="pl pl-side" style="transform: translateZ(1px)"></div>
+            <div class="pl pl-side" style="transform: translateZ(2px)"></div>
+            <div class="pl pl-side" style="transform: translateZ(3px)"></div>
+            <div class="pl pl-side" style="transform: translateZ(4px)"></div>
+            <div class="pl pl-side" style="transform: translateZ(5px)"></div>
+            <div class="pl pl-top"></div>
+            <div class="cam-lens l1">
+              <div class="cs"></div>
+              <div class="cl cl1"></div><div class="cl cl2"></div><div class="cl cl3"></div><div class="cl cl4"></div><div class="cl cl5"></div>
+              <div class="cg"></div>
+            </div>
+            <div class="cam-lens l2">
+              <div class="cs"></div>
+              <div class="cl cl1"></div><div class="cl cl2"></div><div class="cl cl3"></div><div class="cl cl4"></div><div class="cl cl5"></div>
+              <div class="cg"></div>
+            </div>
+            <div class="cam-lens l3">
+              <div class="cs"></div>
+              <div class="cl cl1"></div><div class="cl cl2"></div><div class="cl cl3"></div><div class="cl cl4"></div><div class="cl cl5"></div>
+              <div class="cg"></div>
+            </div>
+            <div class="cam-flash"></div>
+            <div class="cam-mic"></div>
+            <div class="cam-lidar"></div>
           </div>
 
-          <svg class="apple-logo-svg" viewBox="0 0 170 170">
-            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.08-7.83-8.12-12.44-15.11-6.08-9.18-10.9-19.46-14.47-30.82-3.56-11.36-5.35-22.37-5.35-33.02 0-14.28 3.56-25.9 10.67-34.87 7.11-8.97 16.03-13.56 26.75-13.78 4.22 0 9.14 1.18 14.76 3.53 5.61 2.36 9.4 3.59 11.37 3.7 2.18-.22 6.13-1.54 11.87-3.96 5.73-2.43 10.38-3.53 13.96-3.32 10.5.54 19.14 4.54 25.93 12.01-9.27 5.66-13.8 13.62-13.6 23.88.22 8.07 3.28 14.88 9.19 20.44 5.9 5.56 12.98 8.84 21.22 9.85-2.29 6.87-5.06 13.9-8.31 21.09zM119.22 31.86c0-6.76 2.45-13.11 7.35-19.06 4.9-5.94 10.87-9.69 17.92-11.23.44 1.3.66 2.61.66 3.92 0 6.64-2.5 12.93-7.51 18.88-5.02 5.95-11.13 9.64-18.34 11.08-.08-1.22-.08-2.42-.08-3.59z"/>
+          <svg class="apple-logo-svg" viewBox="0 0 24 24">
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffe6ee"/>
+                <stop offset="1" stop-color="#d596ac"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#logoGrad)" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
           </svg>
         </div>
 
@@ -1728,6 +1901,7 @@
       'page-gift'
     ];
     let currentStep = 0;
+    let lastNavTime = 0;
     const audioTrack = document.getElementById('bgSong');
 
     function boom(opts) {
@@ -1768,6 +1942,7 @@
     function navigateStep(direction) {
       const targetStep = currentStep + direction;
       if (targetStep >= 0 && targetStep < allScreens.length) {
+        lastNavTime = Date.now();
         const prevId = allScreens[currentStep];
         const curEl = document.getElementById(prevId);
         curEl.classList.remove('visible');
@@ -1816,26 +1991,32 @@
     let isScrollCoolingDown = false;
     let isInteractingInternal = false;
 
+    let touchStartT = 0, touchMulti = false;
     window.addEventListener('touchstart', (e) => {
+      touchMulti = e.touches.length > 1;
       touchStartY = e.touches[0].clientY;
       touchStartX = e.touches[0].clientX;
+      touchStartT = Date.now();
     }, { passive: true });
 
     window.addEventListener('touchend', (e) => {
-      if (isInteractingInternal) return;
-      if (isScrollCoolingDown) return;
+      if (isInteractingInternal || isScrollCoolingDown || touchMulti) return;
+      if (Date.now() - lastNavTime < 1000) return;   // never skip two screens in a row
+      if (!e.changedTouches.length) return;
 
+      const dt = Date.now() - touchStartT;
       const deltaY = e.changedTouches[0].clientY - touchStartY;
       const deltaX = e.changedTouches[0].clientX - touchStartX;
 
-      if (Math.abs(deltaY) > 90 && Math.abs(deltaY) > Math.abs(deltaX) * 1.6) {
+      // only a quick, clearly vertical flick counts as a page swipe
+      if (dt < 700 && Math.abs(deltaY) > 110 && Math.abs(deltaY) > Math.abs(deltaX) * 2) {
         if (deltaY < 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
         } else {
           navigateStep(-1);
         }
         isScrollCoolingDown = true;
-        setTimeout(() => { isScrollCoolingDown = false; }, 700);
+        setTimeout(() => { isScrollCoolingDown = false; }, 900);
       }
     }, { passive: true });
 
@@ -1846,6 +2027,7 @@
 
     window.addEventListener('wheel', (e) => {
       if (isInteractingInternal || isScrollCoolingDown) return;
+      if (Date.now() - lastNavTime < 1000) return;
       if (Math.abs(e.deltaY) > 45) {
         if (e.deltaY > 0) {
           if (currentStep > 0 || stageOpened) navigateStep(1);
